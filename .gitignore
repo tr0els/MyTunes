@@ -37,7 +37,10 @@ dist/
 nbdist/
 .nb-gradle/
 
-### Database configuration file ###
+# Java Database Connectivity (JDBC) jar file
+mssql-jdbc*.jar
+
+# Database configuration file
 *.db
 
 # End of https://www.gitignore.io/api/java,netbeans
