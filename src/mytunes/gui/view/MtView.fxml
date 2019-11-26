@@ -28,13 +28,21 @@
             <TableColumn prefWidth="75.0" text="Title" />
         </columns>
       </TableView>
-      <Button layoutX="50.0" layoutY="411.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="50.0" text="New" />
-      <Button layoutX="110.0" layoutY="411.0" mnemonicParsing="false" prefWidth="50.0" text="Edit" />
-      <Button layoutX="170.0" layoutY="411.0" mnemonicParsing="false" prefWidth="50.0" text="Delete" />
-      <Button layoutX="340.0" layoutY="411.0" mnemonicParsing="false" prefWidth="50.0" text="Delete" />
-      <Button layoutX="450.0" layoutY="411.0" mnemonicParsing="false" prefWidth="50.0" text="New" />
-      <Button layoutX="510.0" layoutY="411.0" mnemonicParsing="false" prefWidth="50.0" text="Edit" />
-      <Button layoutX="570.0" layoutY="411.0" mnemonicParsing="false" prefWidth="50.0" text="Delete" />
-      <Button layoutX="700.0" layoutY="411.0" mnemonicParsing="false" prefWidth="50.0" text="Close" />
+      <Button layoutX="340.0" layoutY="407.0" mnemonicParsing="false" prefWidth="50.0" text="Delete" />
+      <Button layoutX="699.0" layoutY="407.0" mnemonicParsing="false" prefWidth="50.0" text="Close" />
+      <AnchorPane layoutX="50.0" layoutY="400.0" prefHeight="40.0" prefWidth="200.0">
+         <children>
+            <Button layoutY="5.0" mnemonicParsing="false" prefWidth="50.0" text="New" />
+            <Button layoutX="60.0" layoutY="5.0" mnemonicParsing="false" prefWidth="50.0" text="Edit" />
+            <Button layoutX="120.0" layoutY="5.0" mnemonicParsing="false" prefWidth="50.0" text="Delete" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="450.0" layoutY="400.0" prefHeight="40.0" prefWidth="200.0">
+         <children>
+            <Button layoutY="5.0" mnemonicParsing="false" prefWidth="50.0" text="New" />
+            <Button layoutX="60.0" layoutY="5.0" mnemonicParsing="false" prefWidth="50.0" text="Edit" />
+            <Button layoutX="120.0" layoutY="5.0" mnemonicParsing="false" prefWidth="50.0" text="Delete" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
