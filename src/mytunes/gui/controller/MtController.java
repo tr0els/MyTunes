@@ -67,6 +67,8 @@ public class MtController implements Initializable {
     private MediaView mediaViewMain;
     @FXML
     private Label currentSongLabel;
+    @FXML
+    private Label volumeLabel;
     
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
