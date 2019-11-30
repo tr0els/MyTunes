@@ -15,7 +15,7 @@ public class Metadata {
     private String title;
     private int time;
     private int year;
-    private int genre;
+    private Category category;
 
     public String getArtist() {
         return artist;
@@ -49,11 +49,11 @@ public class Metadata {
         this.year = year;
     }
 
-    public int getGenre() {
-        return genre;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setGenre(int genre) {
-        this.genre = genre;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

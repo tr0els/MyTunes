@@ -10,7 +10,7 @@ package mytunes.be;
  * @author Troels Klein
  */
 public class Media {
-    private int id;
+    private final int id;
     private String source;
     private int plays;
     private Metadata metadata;
