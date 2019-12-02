@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author Troels Klein
  */
 public class Playlist {
-    private final int id;
+    private int id;
     private String name;
     private ArrayList<Media> media;
 
@@ -40,5 +40,12 @@ public class Playlist {
     public void setMedia(ArrayList<Media> media) {
         this.media = media;
     }
+    
+    public void addMedia(Media media) {
+        this.media.add(media);
+    }
+    
+    public void getMedia(int id) {
+        this.media.get(id);
+    }
 }
-

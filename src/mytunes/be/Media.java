@@ -20,7 +20,7 @@ public class Media {
     private int time;
     private int year;
     private int category;
-    private int plays;
+    private int numPlays;
 
     public Media(int id, String source) {
         this.id = id;
@@ -89,12 +89,12 @@ public class Media {
         this.category = category;
     }
     
-    public int getPlays() {
-        return plays;
+    public int getNumPlays() {
+        return numPlays;
     }
 
-    public void setPlays(int plays) {
-        this.plays = plays;
+    public void setPlays(int numPlays) {
+        this.numPlays = numPlays;
     }
 
     @Override
