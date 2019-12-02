@@ -6,15 +6,17 @@
 package mytunes.be;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Troels Klein
  */
 public class Playlist {
+
     private int id;
     private String name;
-    private ArrayList<Media> media;
+    private List<Media> medias = new ArrayList();
 
     public Playlist(int id, String name) {
         this.id = id;
@@ -33,19 +35,11 @@ public class Playlist {
         this.name = name;
     }
 
-    public ArrayList<Media> getMedia() {
-        return media;
+    public List<Media> getMedias() {
+        return medias;
     }
 
-    public void setMedia(ArrayList<Media> media) {
-        this.media = media;
-    }
-    
-    public void addMedia(Media media) {
-        this.media.add(media);
-    }
-    
-    public void getMedia(int id) {
-        this.media.get(id);
+    public void setMedias(List<Media> medias) {
+        this.medias = medias;
     }
 }
