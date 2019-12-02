@@ -24,7 +24,6 @@ import javafx.scene.media.MediaView;
  */
 public class MtController implements Initializable {
     
-    private Label label;
     @FXML
     private TableView<?> playlistTable;
     @FXML
@@ -72,7 +71,7 @@ public class MtController implements Initializable {
     
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
-        label.setText("Hello World!");
+        currentSongLabel.setText("Hello World!");
     }
     
     @Override
