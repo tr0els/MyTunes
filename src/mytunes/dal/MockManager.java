@@ -7,7 +7,6 @@ package mytunes.dal;
 
 import java.util.ArrayList;
 import java.util.List;
-import mytunes.be.Category;
 import mytunes.be.Media;
 
 /**
@@ -42,6 +41,14 @@ public class MockManager {
         medias.add(m3);
         medias.add(m4);
         medias.add(m5);
+        medias.add(m6);
+        medias.add(m7);
+        medias.add(m8);
+        medias.add(m9);
+        medias.add(m10);
+        medias.add(m11);
+        medias.add(m12);
+        medias.add(m13);
 
         return medias;
     }
