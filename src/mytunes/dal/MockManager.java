@@ -7,7 +7,6 @@ package mytunes.dal;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.print.attribute.standard.MediaSize.Other;
 import mytunes.be.Category;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
