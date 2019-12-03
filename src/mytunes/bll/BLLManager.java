@@ -21,10 +21,11 @@ public class BLLManager {
     private MockManager dal = new MockManager();
 
     // keep track of active playlist and media
-    private int currentPlaylistIndex;
-    private int currentMediaIndex;
+    private Playlist currentPlaylist;
+    private Media currentMedia;
+    // private int index needed?
 
-    public List<Media> getAllsMedias() {
+    public List<Media> getAllMedias() {
         return null;
     }
 
@@ -40,20 +41,42 @@ public class BLLManager {
 
     }
 
-    List<Media> searchMedias(String query) {
+    // search in allSongs list
+    public List<Media> searchMedias(String query) {
         return null;
     }
 
-    List<Playlist> getAllPlaylists() {
+    public Media getCurrentMedia() {
         return null;
     }
 
+    public void setCurrentMedia(Media media) {
+
+    }
+
+    public List<Playlist> getAllPlaylists() {
+        return null;
+    }
+
+    // think this functionality will be needed, maybe use with listener
     Playlist getPlaylist(int id) { // id or index?
-        // think this functionality will be needed, maybe use with listener
         return null;
     }
 
-    List<Category> getAllCategories() {
+    public Playlist getCurrentPlaylist() {
+        return null;
+    }
+
+    public void setCurrentPlaylist(Playlist playlist) {
+
+    }
+
+    // handle prev/next songs in controller instead? seems simpler
+    public Media getNextMediaInPlaylist() {
+        return null;
+    }
+
+    public List<Category> getAllCategories() {
         return null;
     }
 }
