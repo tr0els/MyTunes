@@ -32,8 +32,8 @@ public class MediaPlayerModel
         ArrayList<MediaPlayer> allSongs = new ArrayList<>();
 
         Media media1 = new Media("http://traffic.libsyn.com/dickwall/JavaPosse373.mp3");
-        Media media2 = new Media(new File("C:\\Users\\Christina\\Music\\Uncle-Kracker-Follow-Me.mp3").toURI().toString());
-        Media media3 = new Media(new File("C:\\Users\\Christina\\Music\\8-bit-music.mp3").toURI().toString());
+        Media media2 = new Media(new File("songs/Uncle-Kracker-Follow-Me.mp3").toURI().toString());
+        Media media3 = new Media(new File("songs/8-bit-music.mp3").toURI().toString());
 
         MediaPlayer mediaPlayer1 = new MediaPlayer(media1);
         MediaPlayer mediaPlayer2 = new MediaPlayer(media2);

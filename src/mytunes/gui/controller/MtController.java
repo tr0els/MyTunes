@@ -19,6 +19,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import mytunes.gui.MediaPlayerModel;
@@ -169,5 +170,12 @@ public class MtController implements Initializable {
             mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton);
             currentSong--;
         } 
+    }
+
+    @FXML
+    private void handleMusicVolume(MouseEvent event)
+    {
+        volumeSlider.valueProperty().bindBidirectional(mv.getMediaPlayer().volumeProperty());
+        mv.getMediaPlayer().setVolume(volumeSlider.getValue());
     }
 }
