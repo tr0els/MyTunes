@@ -5,6 +5,8 @@
  */
 package mytunes.gui.controller;
 
+import static com.oracle.tools.packager.RelativeFileSet.Type.data;
+import java.awt.print.Book;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.MapChangeListener;
@@ -16,26 +18,30 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import mytunes.be.Media;
+import mytunes.be.Playlist;
 import mytunes.gui.MediaPlayerModel;
+import mytunes.gui.model.MediaModel;
 
 /**
  *
  * @author Troels Klein
  */
 public class MtController implements Initializable {
-    
+
     @FXML
-    private TableView<?> playlistTable;
+    private TableView<Playlist> playlistTable;
     @FXML
-    private TableView<?> songTable;
+    private TableView<Media> playlistContentTable;
     @FXML
-    private TableView<?> playlistContentTable;
+    private TableView<Media> songTable;
     @FXML
     private Button removeSongButton;
     @FXML
@@ -78,139 +84,138 @@ public class MtController implements Initializable {
     private Button swapSongUp;
     @FXML
     private Button swapSongDown;
-    
-    MediaView mv = new MediaView();
 
-    private int currentSong = 0;
+    private MediaModel mediaModel = new MediaModel();
 
     MediaPlayerModel mpModel = new MediaPlayerModel();
-    
-    
-    
-    @FXML
-    private void openSongPopup(ActionEvent event) throws Exception {
-        
-        Stage stage = new Stage();
-        
-        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/mytunes/gui/view/SongPopupView.fxml")));
-        
-        stage.setScene(scene);
-        stage.show();
-        
-    }
-    
-    @FXML
-    private void openPlaylistPopup(ActionEvent event) throws Exception {
-        
-        Stage stage = new Stage();
-        
-        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/mytunes/gui/view/PlaylistPopupView.fxml")));
-        
-        stage.setScene(scene);
-        stage.show();
-        
-    }
-    
+    MediaView mv = new MediaView();
+    private int currentSong = 0;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        // I do magic tableview stuff here :)
+        songTable.setItems(mediaModel.getAllMedias());        
+        
+        // Setup column titles and factory that populates each column with rows
+        TableColumn titleCol = new TableColumn("Title");
+        titleCol.setCellValueFactory(new PropertyValueFactory<Media, String>("title"));
+        TableColumn authorCol = new TableColumn("Artist");
+        authorCol.setCellValueFactory(new PropertyValueFactory<Media, String>("artist"));
+        TableColumn categoryCol = new TableColumn("Category");
+        categoryCol.setCellValueFactory(new PropertyValueFactory<Media, Integer>("category"));
+        TableColumn timeCol = new TableColumn("Time");
+        timeCol.setCellValueFactory(new PropertyValueFactory<Media, String>("time"));
+        
+        // Add title to table columns
+        songTable.getColumns().setAll(titleCol, authorCol, categoryCol, timeCol);
+        songTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);        
+
         mpModel.songList = mpModel.getAllSongs();
         mv.setMediaPlayer(mpModel.songList.get(currentSong));
         getMetadata();
-
     }
-    
+
     /**
-     * Gets the MetaData from the mp3 file,
-     * by seeing if there is a change to the MetaData map. 
-     * This map doesn't load in instantly, therefore
-     * we have to check if something changes.
+     * Gets the MetaData from the mp3 file, by seeing if there is a change to
+     * the MetaData map. This map doesn't load in instantly, therefore we have
+     * to check if something changes by using a listener.
      */
-    private void getMetadata()
-    {
+    private void getMetadata() {
         mv.getMediaPlayer().getMedia().getMetadata().addListener((
-                MapChangeListener.Change<? extends String, ? extends Object> ch) ->
-        {
-            if (ch.wasAdded())
-            {
+                MapChangeListener.Change<? extends String, ? extends Object> ch)
+                -> {
+            if (ch.wasAdded()) {
                 handleMetadata(ch.getKey(), ch.getValueAdded());
             }
 
         });
 
     }
-    
+
     /**
-     * Checks if the change made to the MetaData is the title.
-     * If so, it sets the text of the currentSongLabel 
-     * to the value of the title.
-     * 
+     * Checks if the change made to the MetaData is the title. If so, it sets
+     * the text of the currentSongLabel to the value of the title.
+     *
      * @param key
-     * @param value 
+     * @param value
      */
-    public void handleMetadata(String key, Object value)
-    {
-        if (key.equals("title"))
-        {
+    public void handleMetadata(String key, Object value) {
+        if (key.equals("title")) {
             currentSongLabel.setText(value.toString() + " ... is playing");
         }
-    
+
     }
 
     /**
-     * Button that plays and pauses the song, depending on if the song is already
-     * playing or paused, when pressed. 
-     * 
-     * @param event 
+     * Button that plays and pauses the song, depending on if the song is
+     * already playing or paused, when pressed.
+     *
+     * @param event
      */
     @FXML
-    private void handlePlayAndPause(ActionEvent event)
-    {
+    private void handlePlayAndPause(ActionEvent event) {
         mpModel.playAndPause(currentSong, pauseButton);
     }
 
     /**
      * Button that skips to the next song when pressed.
-     * 
-     * @param event 
+     *
+     * @param event
      */
     @FXML
-    private void handleSkipForward(ActionEvent event)
-    {
-        if (currentSong != mpModel.songList.size() - 1)
-        {
-            int newNumber = currentSong + 1; 
-            
+    private void handleSkipForward(ActionEvent event) {
+        if (currentSong != mpModel.songList.size() - 1) {
+            int newNumber = currentSong + 1;
+
             mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton);
             currentSong++;
-        } 
-        
+        }
+
     }
 
     /**
-     * Button that skips to the song before when pressed. 
-     * 
-     * @param event 
+     * Button that skips to the song before when pressed.
+     *
+     * @param event
      */
     @FXML
-    private void handleSkipBackwards(ActionEvent event)
-    {
-        if (currentSong != 0)
-        {
+    private void handleSkipBackwards(ActionEvent event) {
+        if (currentSong != 0) {
             int newNumber = currentSong - 1;
             mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton);
             currentSong--;
-        } 
+        }
     }
 
     /**
-     * Slider that changes the volume of the song playing, when dragged. 
-     * 
-     * @param event 
+     * Slider that changes the volume of the song playing, when dragged.
+     *
+     * @param event
      */
     @FXML
-    private void handleMusicVolume(MouseEvent event)
-    {
+    private void handleMusicVolume(MouseEvent event) {
         volumeSlider.valueProperty().bindBidirectional(mv.getMediaPlayer().volumeProperty());
         mv.getMediaPlayer().setVolume(volumeSlider.getValue());
+    }
+    
+    @FXML
+    private void openSongPopup(ActionEvent event) throws Exception {
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/mytunes/gui/view/SongPopupView.fxml")));
+
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void openPlaylistPopup(ActionEvent event) throws Exception {
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/mytunes/gui/view/PlaylistPopupView.fxml")));
+
+        stage.setScene(scene);
+        stage.show();
     }
 }
