@@ -7,6 +7,10 @@ package mytunes.gui.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.MapChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,10 +23,13 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import mytunes.gui.MediaPlayerModel;
+
 
 /**
  *
@@ -210,7 +217,29 @@ public class MtController implements Initializable {
     @FXML
     private void handleMusicVolume(MouseEvent event)
     {
-        volumeSlider.valueProperty().bindBidirectional(mv.getMediaPlayer().volumeProperty());
-        mv.getMediaPlayer().setVolume(volumeSlider.getValue());
+        volumeSlider.setValue(mv.getMediaPlayer().getVolume()*100);
+        volumeSlider.valueProperty().addListener(new InvalidationListener()
+        {
+            @Override
+            public void invalidated(Observable observable)
+            {
+                mv.getMediaPlayer().setVolume(volumeSlider.getValue()/100);
+            }
+        });
+        
+        volumeSlider.valueProperty().addListener(new ChangeListener<Number>()
+        {
+            @Override
+            public void changed(
+                ObservableValue<? extends Number> observableValue,
+                Number oldValue,
+                Number newValue) 
+                {
+                    volumeLabel.textProperty().setValue(
+                        String.valueOf(newValue.intValue() + "%"));
+                            
+                }   
+        });
+        
     }
 }
