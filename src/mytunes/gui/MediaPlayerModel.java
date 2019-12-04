@@ -26,7 +26,11 @@ public class MediaPlayerModel
     public ArrayList<MediaPlayer> songList;
     
     
-    
+    /**
+     * Makes a list of songs.
+     * 
+     * @return 
+     */
     public ArrayList<MediaPlayer> getAllSongs()
     {
         ArrayList<MediaPlayer> allSongs = new ArrayList<>();
@@ -47,7 +51,13 @@ public class MediaPlayerModel
     }
     
     
-    
+    /**
+     * Checks if the current song is playing, paused or ready.
+     * Sets the button text to Play or Pause, depending on if the song is playing or paused. 
+     * 
+     * @param currentSong
+     * @param button 
+     */
     public void playAndPause(int currentSong, Button button)
     {
         if (songList.get(currentSong).getStatus() == MediaPlayer.Status.PLAYING)
@@ -66,7 +76,15 @@ public class MediaPlayerModel
     }
 
     
-
+    /**
+     * Stops the song currently playing and 
+     * changes it to the next song in the list.
+     * 
+     * @param number
+     * @param songLabel
+     * @param currentSong
+     * @param playAndPauseButton 
+     */
     public void playNewSong(int number, Label songLabel, int currentSong, Button playAndPauseButton)
     {
         songList.get(currentSong).stop();
@@ -78,7 +96,13 @@ public class MediaPlayerModel
     }
     
     
-    
+    /**
+     * Gets the title of the song playing and sets the label to display the title.
+     * If the song does not have a title, it displays the song title as unknown.
+     * 
+     * @param number
+     * @param songLabel 
+     */
     public void getNameLabel(int number, Label songLabel)
     {
         if (songList.get(number).getMedia().getMetadata().get("title") == null)

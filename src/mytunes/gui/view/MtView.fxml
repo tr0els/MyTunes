@@ -54,7 +54,7 @@
             <Slider fx:id="volumeSlider" layoutX="25.0" layoutY="60.0" onDragDetected="#handleMusicVolume" prefHeight="25.0" prefWidth="120.0" />
             <Button fx:id="nextSong" layoutX="150.0" layoutY="35.0" mnemonicParsing="false" onAction="#handleSkipForward" prefHeight="25.0" prefWidth="25.0" text="&gt;" />
             <Button fx:id="previousSong" layoutX="25.0" layoutY="35.0" mnemonicParsing="false" onAction="#handleSkipBackwards" prefHeight="25.0" prefWidth="25.0" text="&lt;" />
-            <Label fx:id="volumeLabel" contentDisplay="CENTER" layoutX="145.0" layoutY="60.0" prefHeight="25.0" prefWidth="50.0" text="100%" textAlignment="RIGHT" />
+            <Label fx:id="volumeLabel" contentDisplay="CENTER" layoutX="150.0" layoutY="60.0" prefHeight="25.0" prefWidth="50.0" text="0%" textAlignment="RIGHT" />
             <Button fx:id="pauseButton" layoutX="50.0" layoutY="35.0" mnemonicParsing="false" onAction="#handlePlayAndPause" prefHeight="26.0" prefWidth="100.0" text="Play" />
          </children>
       </AnchorPane>

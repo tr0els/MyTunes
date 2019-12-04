@@ -5,10 +5,12 @@
  */
 package mytunes.gui.controller;
 
-import static com.oracle.tools.packager.RelativeFileSet.Type.data;
-import java.awt.print.Book;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.MapChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -193,10 +195,36 @@ public class MtController implements Initializable {
      *
      * @param event
      */
+
+
+    //volumeSlider.valueProperty().bindBidirectional(mv.getMediaPlayer().volumeProperty());
+    //mv.getMediaPlayer().setVolume(volumeSlider.getValue());
     @FXML
-    private void handleMusicVolume(MouseEvent event) {
-        volumeSlider.valueProperty().bindBidirectional(mv.getMediaPlayer().volumeProperty());
-        mv.getMediaPlayer().setVolume(volumeSlider.getValue());
+    private void handleMusicVolume(MouseEvent event)
+    {
+        volumeSlider.setValue(mv.getMediaPlayer().getVolume()*100);
+        volumeSlider.valueProperty().addListener(new InvalidationListener()
+        {
+            @Override
+            public void invalidated(Observable observable)
+            {
+                mv.getMediaPlayer().setVolume(volumeSlider.getValue()/100);
+            }
+        });
+        
+        volumeSlider.valueProperty().addListener(new ChangeListener<Number>()
+        {
+            @Override
+            public void changed(
+                ObservableValue<? extends Number> observableValue,
+                Number oldValue,
+                Number newValue) 
+                {
+                    volumeLabel.textProperty().setValue(
+                        String.valueOf(newValue.intValue() + "%"));
+                            
+                }   
+        });
     }
     
     @FXML
