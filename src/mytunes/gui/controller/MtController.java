@@ -7,6 +7,7 @@ package mytunes.gui.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.MapChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import mytunes.gui.MediaPlayerModel;
 
 /**
  *
@@ -50,7 +52,7 @@ public class MtController implements Initializable {
     @FXML
     private Button deleteSongButton;
     @FXML
-    private ToggleButton pauseButton;
+    private Button pauseButton;
     @FXML
     private Slider volumeSlider;
     @FXML
@@ -75,6 +77,14 @@ public class MtController implements Initializable {
     private Button swapSongUp;
     @FXML
     private Button swapSongDown;
+    
+    MediaView mv = new MediaView();
+
+    private int currentSong = 0;
+
+    MediaPlayerModel mpModel = new MediaPlayerModel();
+    
+    
     
     @FXML
     private void openSongPopup(ActionEvent event) throws Exception {
@@ -102,7 +112,62 @@ public class MtController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        mpModel.songList = mpModel.getAllSongs();
+        mv.setMediaPlayer(mpModel.songList.get(currentSong));
+        getMetadata();
+
+    }
     
+    private void getMetadata()
+    {
+        mv.getMediaPlayer().getMedia().getMetadata().addListener((MapChangeListener.Change<? extends String, ? extends Object> ch) ->
+        {
+            if (ch.wasAdded())
+            {
+                handleMetadata(ch.getKey(), ch.getValueAdded());
+            }
+
+        });
+
+    }
+
+    public void handleMetadata(String key, Object value)
+    {
+        if (key.equals("title"))
+        {
+            currentSongLabel.setText(value.toString() + " ... is playing");
+        }
+    
+    }
+
+    @FXML
+    private void handlePlayAndPause(ActionEvent event)
+    {
+        mpModel.playAndPause(currentSong, pauseButton);
+
+    }
+
+    @FXML
+    private void handleSkipForward(ActionEvent event)
+    {
+        if (currentSong != mpModel.songList.size() - 1)
+        {
+            int newNumber = currentSong + 1; 
+            
+            mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton);
+            currentSong++;
+        } 
+        
+    }
+
+    @FXML
+    private void handleSkipBackwards(ActionEvent event)
+    {
+        if (currentSong != 0)
+        {
+            int newNumber = currentSong - 1;
+            mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton);
+            currentSong--;
+        } 
+    }
 }
