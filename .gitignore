@@ -43,4 +43,7 @@ mssql-jdbc*.jar
 # Database configuration file
 *.db
 
+# Ignore mp3 files just in case
+*.mp3
+
 # End of https://www.gitignore.io/api/java,netbeans
