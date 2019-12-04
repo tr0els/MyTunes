@@ -26,10 +26,12 @@ public class BLLManager {
     // private int index needed?
 
     public List<Media> getAllMedias() {
-        return null;
+        return dal.getAllMedias();
     }
 
     public Media createMedia(String source, String artist, String title, int time, int year, int category) {
+        //Media media = dal.createMedia(source, artist, title, time, year, category);
+        //return media;
         return null;
     }
 
