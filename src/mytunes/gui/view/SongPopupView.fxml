@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="250.0" prefWidth="350.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="mytunes.gui.controller.SongPopupController">
+<AnchorPane id="AnchorPane" prefHeight="250.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.SongPopupController">
    <children>
-      <Label layoutX="30.0" layoutY="30.0" prefHeight="25.0" prefWidth="30.0" text="Label" />
-      <TextField layoutX="60.0" layoutY="30.0" prefHeight="25.0" prefWidth="150.0" />
-      <Label layoutX="30.0" layoutY="60.0" prefHeight="25.0" prefWidth="30.0" text="Label" />
-      <Label layoutX="30.0" layoutY="90.0" prefHeight="25.0" prefWidth="30.0" text="Label" />
-      <Label layoutX="30.0" layoutY="120.0" prefHeight="25.0" prefWidth="30.0" text="Label" />
-      <Label layoutX="30.0" layoutY="150.0" prefHeight="25.0" prefWidth="30.0" text="Label" />
-      <TextField layoutX="60.0" layoutY="60.0" prefHeight="25.0" prefWidth="150.0" />
-      <TextField layoutX="60.0" layoutY="90.0" prefHeight="25.0" prefWidth="150.0" />
-      <TextField layoutX="60.0" layoutY="120.0" prefHeight="25.0" prefWidth="150.0" />
-      <TextField layoutX="60.0" layoutY="150.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="30.0" layoutY="30.0" prefHeight="25.0" prefWidth="30.0" text="Title" />
+      <TextField layoutX="80.0" layoutY="30.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="30.0" layoutY="60.0" prefHeight="25.0" prefWidth="30.0" text="Artist" />
+      <Label layoutX="30.0" layoutY="90.0" prefHeight="25.0" prefWidth="50.0" text="Category" />
+      <Label layoutX="30.0" layoutY="120.0" prefHeight="25.0" prefWidth="30.0" text="Time" />
+      <Label layoutX="30.0" layoutY="150.0" prefHeight="25.0" prefWidth="30.0" text="File" />
+      <TextField layoutX="80.0" layoutY="60.0" prefHeight="25.0" prefWidth="150.0" />
+      <TextField layoutX="80.0" layoutY="90.0" prefHeight="25.0" prefWidth="150.0" />
+      <TextField layoutX="80.0" layoutY="120.0" prefHeight="25.0" prefWidth="150.0" />
+      <TextField layoutX="80.0" layoutY="150.0" prefHeight="25.0" prefWidth="150.0" />
+      <Button layoutX="240.0" layoutY="150.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Choose" />
    </children>
 </AnchorPane>

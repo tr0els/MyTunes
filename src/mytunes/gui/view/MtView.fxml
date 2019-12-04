@@ -37,14 +37,14 @@
       <Button fx:id="closeProgram" layoutX="699.0" layoutY="407.0" mnemonicParsing="false" prefWidth="50.0" text="Close" />
       <AnchorPane layoutX="50.0" layoutY="400.0" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <Button fx:id="newPlaylistButton" layoutY="5.0" mnemonicParsing="false" prefWidth="50.0" text="New" />
+            <Button fx:id="newPlaylistButton" layoutY="5.0" mnemonicParsing="false" onAction="#openPlaylistPopup" prefWidth="50.0" text="New" />
             <Button fx:id="editPlaylistButton" layoutX="60.0" layoutY="5.0" mnemonicParsing="false" prefWidth="50.0" text="Edit" />
             <Button fx:id="deletePlaylistButton" layoutX="120.0" layoutY="5.0" mnemonicParsing="false" prefWidth="50.0" text="Delete" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="450.0" layoutY="400.0" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <Button fx:id="newSongButton" layoutY="5.0" mnemonicParsing="false" prefWidth="50.0" text="New" />
+            <Button fx:id="newSongButton" layoutY="5.0" mnemonicParsing="false" onAction="#openSongPopup" prefWidth="50.0" text="New" />
             <Button fx:id="editSongButton" layoutX="60.0" layoutY="5.0" mnemonicParsing="false" prefWidth="50.0" text="Edit" />
             <Button fx:id="deleteSongButton" layoutX="120.0" layoutY="5.0" mnemonicParsing="false" prefWidth="50.0" text="Delete" />
          </children>
@@ -68,5 +68,7 @@
       </AnchorPane>
       <Label fx:id="currentSongLabel" layoutX="280.0" prefHeight="25.0" prefWidth="250.0" text="Now Playing: All Star - by Smash Mouth" textAlignment="CENTER" />
       <MediaView fx:id="mediaViewMain" fitHeight="75.0" fitWidth="250.0" layoutX="280.0" layoutY="25.0" />
+      <Button fx:id="swapSongUp" layoutX="290.0" layoutY="407.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="/\" />
+      <Button fx:id="swapSongDown" layoutX="314.0" layoutY="407.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="\\/" />
    </children>
 </AnchorPane>

@@ -19,7 +19,7 @@ public class App extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/gui/view/MtView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/mytunes/gui/view/MtView.fxml"));
         
         Scene scene = new Scene(root);
         
