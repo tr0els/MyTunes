@@ -119,9 +119,16 @@ public class MtController implements Initializable {
 
     }
     
+    /**
+     * Gets the MetaData from the mp3 file,
+     * by seeing if there is a change to the MetaData map. 
+     * This map doesn't load in instantly, therefore
+     * we have to check if something changes.
+     */
     private void getMetadata()
     {
-        mv.getMediaPlayer().getMedia().getMetadata().addListener((MapChangeListener.Change<? extends String, ? extends Object> ch) ->
+        mv.getMediaPlayer().getMedia().getMetadata().addListener((
+                MapChangeListener.Change<? extends String, ? extends Object> ch) ->
         {
             if (ch.wasAdded())
             {
@@ -131,7 +138,15 @@ public class MtController implements Initializable {
         });
 
     }
-
+    
+    /**
+     * Checks if the change made to the MetaData is the title.
+     * If so, it sets the text of the currentSongLabel 
+     * to the value of the title.
+     * 
+     * @param key
+     * @param value 
+     */
     public void handleMetadata(String key, Object value)
     {
         if (key.equals("title"))
@@ -141,13 +156,23 @@ public class MtController implements Initializable {
     
     }
 
+    /**
+     * Button that plays and pauses the song, depending on if the song is already
+     * playing or paused, when pressed. 
+     * 
+     * @param event 
+     */
     @FXML
     private void handlePlayAndPause(ActionEvent event)
     {
         mpModel.playAndPause(currentSong, pauseButton);
-
     }
 
+    /**
+     * Button that skips to the next song when pressed.
+     * 
+     * @param event 
+     */
     @FXML
     private void handleSkipForward(ActionEvent event)
     {
@@ -161,6 +186,11 @@ public class MtController implements Initializable {
         
     }
 
+    /**
+     * Button that skips to the song before when pressed. 
+     * 
+     * @param event 
+     */
     @FXML
     private void handleSkipBackwards(ActionEvent event)
     {
@@ -172,6 +202,11 @@ public class MtController implements Initializable {
         } 
     }
 
+    /**
+     * Slider that changes the volume of the song playing, when dragged. 
+     * 
+     * @param event 
+     */
     @FXML
     private void handleMusicVolume(MouseEvent event)
     {
