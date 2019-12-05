@@ -25,7 +25,7 @@ public class MediaModel {
         medias.addAll(bll.getAllMedias());
     }
 
-    public ObservableList<Media> getMovies() {
+    public ObservableList<Media> getAllMedias() {
         return medias;
     }
 
