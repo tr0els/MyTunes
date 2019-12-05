@@ -5,17 +5,23 @@
  */
 package mytunes.gui.controller;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,11 +30,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
+import mytunes.gui.model.MediaPlayerModel;7
+import mytunes.dal.MockManager;
 import mytunes.gui.MediaPlayerModel;
 import mytunes.gui.model.MediaModel;
 
@@ -50,8 +59,6 @@ public class MtController implements Initializable {
     private TableView<Media> playlistContentTable;
     @FXML
     private TableView<Media> songTable;
-    @FXML
-    private Button removeSongButton;
     @FXML
     private Button closeProgram;
     @FXML
@@ -77,8 +84,6 @@ public class MtController implements Initializable {
     @FXML
     private Button transferSongButton;
     @FXML
-    private Button searchButton;
-    @FXML
     private Label searchLabel;
     @FXML
     private TextField searchField;
@@ -92,6 +97,14 @@ public class MtController implements Initializable {
     private Button swapSongUp;
     @FXML
     private Button swapSongDown;
+
+    private MediaModel mediaModel = new MediaModel();
+
+    MediaPlayerModel mpModel = new MediaPlayerModel();
+    MediaView mv = new MediaView();
+    private int currentSong = 0;
+    @FXML
+    private Button deletePlaylistSongButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -201,13 +214,10 @@ public class MtController implements Initializable {
 
     /**
      * Slider that changes the volume of the song playing, when dragged.
-     *
+     * The label changes when there is a change in the sliders value. 
+     * 
      * @param event
      */
-
-
-    //volumeSlider.valueProperty().bindBidirectional(mv.getMediaPlayer().volumeProperty());
-    //mv.getMediaPlayer().setVolume(volumeSlider.getValue());
     @FXML
     private void handleMusicVolume(MouseEvent event)
     {
@@ -255,4 +265,48 @@ public class MtController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    private void handleEditSong(ActionEvent event) throws IOException
+    {
+        
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/EditSongPopUp.fxml"));
+        Parent root = loader.load();
+
+        EditSongPopUpController EditSongPopUpController = loader.getController();
+        EditSongPopUpController.transferMedia(songTable.getSelectionModel().getSelectedItem());
+        
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+ 
+    private void searchSong(KeyEvent event)
+    {
+        String input = searchField.getText();
+        ObservableList<Media> result = search(input);
+        songTable.setItems(result);
+        
+    }
+    
+    public ObservableList<Media> search(String query)
+    {
+        MockManager mM = new MockManager();
+        List<Media> searchBase = mM.getAllMedias();
+        List<Media> filter = new ArrayList<>();
+
+        for (Media song : searchBase)
+        {
+            if (song.getTitle().toLowerCase().contains(query.toLowerCase())||
+                    song.getArtist().toLowerCase().contains(query.toLowerCase()))
+            {
+                filter.add(song);
+            }
+        }
+        
+        ObservableList<Media> result = FXCollections.observableList(filter);
+        
+        return result;
+    }
+    
 }
