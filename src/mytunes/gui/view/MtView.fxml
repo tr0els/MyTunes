@@ -8,44 +8,45 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.media.MediaView?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.MtController">
    <children>
-      <TableView fx:id="playlistTable" layoutX="50.0" layoutY="100.0" prefHeight="300.0" prefWidth="225.0">
+      <TableView fx:id="playlistTable" layoutX="14.0" layoutY="100.0" prefHeight="300.0" prefWidth="225.0">
         <columns>
           <TableColumn prefWidth="75.0" text="Name" />
           <TableColumn prefWidth="75.0" text="Songs" />
             <TableColumn prefWidth="75.0" text="Time" />
         </columns>
       </TableView>
-      <TableView fx:id="songTable" layoutX="450.0" layoutY="100.0" prefHeight="300.0" prefWidth="300.0">
+      <TableView fx:id="songTable" layoutX="450.0" layoutY="100.0" prefHeight="300.0" prefWidth="335.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Title" />
-          <TableColumn prefWidth="75.0" text="Artist" />
-            <TableColumn prefWidth="75.0" text="Category" />
-            <TableColumn prefWidth="75.0" text="Time" />
+          <TableColumn text="Title" />
+          <TableColumn text="Artist" />
+            <TableColumn text="Category" />
+            <TableColumn text="Time" />
         </columns>
       </TableView>
-      <TableView fx:id="playlistContentTable" layoutX="290.0" layoutY="100.0" prefHeight="300.0" prefWidth="100.0">
+      <TableView fx:id="playlistContentTable" layoutX="252.0" layoutY="100.0" prefHeight="300.0" prefWidth="150.0">
         <columns>
           <TableColumn prefWidth="25.0" text="ID" />
             <TableColumn prefWidth="75.0" text="Title" />
         </columns>
       </TableView>
-      <Button fx:id="removeSongButton" layoutX="340.0" layoutY="407.0" mnemonicParsing="false" prefWidth="50.0" text="Delete" />
-      <Button fx:id="closeProgram" layoutX="699.0" layoutY="407.0" mnemonicParsing="false" prefWidth="50.0" text="Close" />
-      <AnchorPane layoutX="50.0" layoutY="400.0" prefHeight="40.0" prefWidth="200.0">
+      <Button fx:id="deletePlaylistSongButton" layoutX="322.0" layoutY="408.0" mnemonicParsing="false" text="Delete" />
+      <Button fx:id="closeProgram" layoutX="735.0" layoutY="408.0" mnemonicParsing="false" prefWidth="50.0" text="Close" />
+      <AnchorPane layoutX="14.0" layoutY="400.0" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <Button fx:id="newPlaylistButton" layoutY="5.0" mnemonicParsing="false" onAction="#openPlaylistPopup" prefWidth="50.0" text="New" />
-            <Button fx:id="editPlaylistButton" layoutX="60.0" layoutY="5.0" mnemonicParsing="false" prefWidth="50.0" text="Edit" />
-            <Button fx:id="deletePlaylistButton" layoutX="120.0" layoutY="5.0" mnemonicParsing="false" prefWidth="50.0" text="Delete" />
+            <Button fx:id="editPlaylistButton" layoutX="56.0" layoutY="8.0" mnemonicParsing="false" text="Edit..." />
+            <Button fx:id="deletePlaylistButton" layoutX="108.0" layoutY="8.0" mnemonicParsing="false" text="Delete" />
+            <Button fx:id="newPlaylistButton" layoutY="8.0" mnemonicParsing="false" onAction="#openPlaylistPopup" text="New..." />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="450.0" layoutY="400.0" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <Button fx:id="newSongButton" layoutY="5.0" mnemonicParsing="false" onAction="#openSongPopup" prefWidth="50.0" text="New" />
-            <Button fx:id="editSongButton" layoutX="60.0" layoutY="5.0" mnemonicParsing="false" prefWidth="50.0" text="Edit" />
-            <Button fx:id="deleteSongButton" layoutX="120.0" layoutY="5.0" mnemonicParsing="false" prefWidth="50.0" text="Delete" />
+            <Button fx:id="newSongButton" layoutY="8.0" mnemonicParsing="false" onAction="#openSongPopup" text="New..." />
+            <Button fx:id="editSongButton" layoutX="56.0" layoutY="8.0" mnemonicParsing="false" text="Edit..." />
+            <Button fx:id="deleteSongButton" layoutX="108.0" layoutY="8.0" mnemonicParsing="false" text="Delete" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="50.0" prefHeight="100.0" prefWidth="200.0">
@@ -57,17 +58,20 @@
             <Button fx:id="pauseButton" layoutX="50.0" layoutY="35.0" mnemonicParsing="false" onAction="#handlePlayAndPause" prefHeight="26.0" prefWidth="100.0" text="Play" />
          </children>
       </AnchorPane>
-      <Button fx:id="transferSongButton" layoutX="407.0" layoutY="125.0" mnemonicParsing="false" text="&lt;" />
+      <Button fx:id="transferSongButton" layoutX="413.0" layoutY="100.0" mnemonicParsing="false" text="◄">
+         <font>
+            <Font name="Verdana" size="12.0" />
+         </font></Button>
       <AnchorPane layoutX="550.0" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button fx:id="searchButton" layoutX="150.0" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="..." />
-            <Label fx:id="searchLabel" contentDisplay="CENTER" layoutY="35.0" prefHeight="25.0" prefWidth="50.0" text="Search" textAlignment="RIGHT" />
-            <TextField fx:id="searchField" layoutX="50.0" layoutY="35.0" prefHeight="25.0" prefWidth="100.0" />
+            <Button fx:id="searchButton" layoutX="178.0" layoutY="35.0" mnemonicParsing="false" text="GO" />
+            <Label fx:id="searchLabel" contentDisplay="CENTER" layoutX="8.0" layoutY="35.0" prefHeight="25.0" prefWidth="50.0" text="Search" textAlignment="RIGHT" />
+            <TextField fx:id="searchField" layoutX="50.0" layoutY="35.0" prefHeight="25.0" prefWidth="120.0" />
          </children>
       </AnchorPane>
       <Label fx:id="currentSongLabel" alignment="CENTER" layoutX="264.0" layoutY="37.0" prefHeight="25.0" prefWidth="250.0" textAlignment="CENTER" />
-      <MediaView fx:id="mediaViewMain" fitHeight="75.0" fitWidth="250.0" layoutX="275.0" layoutY="63.0" />
-      <Button fx:id="swapSongUp" layoutX="290.0" layoutY="407.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="/\" />
-      <Button fx:id="swapSongDown" layoutX="314.0" layoutY="407.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="\\/" />
+      <MediaView fx:id="mediaViewMain" fitHeight="75.0" fitWidth="250.0" layoutX="275.0" layoutY="13.0" />
+      <Button fx:id="swapSongUp" layoutX="251.0" layoutY="408.0" mnemonicParsing="false" text="▲" />
+      <Button fx:id="swapSongDown" layoutX="286.0" layoutY="408.0" mnemonicParsing="false" text="▼" />
    </children>
 </AnchorPane>
