@@ -36,9 +36,8 @@ import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
-import mytunes.gui.model.MediaPlayerModel;7
+import mytunes.gui.model.MediaPlayerModel;
 import mytunes.dal.MockManager;
-import mytunes.gui.MediaPlayerModel;
 import mytunes.gui.model.MediaModel;
 
 /**
@@ -98,11 +97,6 @@ public class MtController implements Initializable {
     @FXML
     private Button swapSongDown;
 
-    private MediaModel mediaModel = new MediaModel();
-
-    MediaPlayerModel mpModel = new MediaPlayerModel();
-    MediaView mv = new MediaView();
-    private int currentSong = 0;
     @FXML
     private Button deletePlaylistSongButton;
 
