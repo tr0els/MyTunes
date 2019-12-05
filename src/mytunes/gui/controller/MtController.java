@@ -38,6 +38,12 @@ import mytunes.gui.model.MediaModel;
  */
 public class MtController implements Initializable {
 
+    private MediaModel mediaModel = new MediaModel();
+
+    MediaPlayerModel mpModel = new MediaPlayerModel();
+    MediaView mv = new MediaView();
+    private int currentSong = 0;
+    
     @FXML
     private TableView<Playlist> playlistTable;
     @FXML
@@ -87,37 +93,40 @@ public class MtController implements Initializable {
     @FXML
     private Button swapSongDown;
 
-    private MediaModel mediaModel = new MediaModel();
-
-    MediaPlayerModel mpModel = new MediaPlayerModel();
-    MediaView mv = new MediaView();
-    private int currentSong = 0;
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        populateSongs();
         
-        // I do magic tableview stuff here :)
-        songTable.setItems(mediaModel.getAllMedias());        
-        
-        // Setup column titles and factory that populates each column with rows
-        TableColumn titleCol = new TableColumn("Title");
-        titleCol.setCellValueFactory(new PropertyValueFactory<Media, String>("title"));
-        TableColumn authorCol = new TableColumn("Artist");
-        authorCol.setCellValueFactory(new PropertyValueFactory<Media, String>("artist"));
-        TableColumn categoryCol = new TableColumn("Category");
-        categoryCol.setCellValueFactory(new PropertyValueFactory<Media, Integer>("category"));
-        TableColumn timeCol = new TableColumn("Time");
-        timeCol.setCellValueFactory(new PropertyValueFactory<Media, String>("time"));
-        
-        // Add title to table columns
-        songTable.getColumns().setAll(titleCol, authorCol, categoryCol, timeCol);
-        songTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);        
-
         mpModel.songList = mpModel.getAllSongs();
         mv.setMediaPlayer(mpModel.songList.get(currentSong));
         getMetadata();
     }
+    
+    private void populateSongs() {
+        // I do magic tableview stuff here :)
+        songTable.setItems(mediaModel.getAllMedias());        
+        
+        // Setup column titles and factory that populates each column with rows
+        TableColumn titleCol = new TableColumn("Name");
+        titleCol.setCellValueFactory(new PropertyValueFactory<Media, String>("name"));
+        TableColumn authorCol = new TableColumn("Songs");
+        authorCol.setCellValueFactory(new PropertyValueFactory<Media, String>("artist"));
+        TableColumn timeCol = new TableColumn("Time");
+        timeCol.setCellValueFactory(new PropertyValueFactory<Media, String>("time"));
+        
+        // Add title to table columns
+        songTable.getColumns().setAll(titleCol, authorCol, timeCol);
+        songTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    }
+    
+    private void populatePlaylists() {
+        
+    }
 
+    private void populateSongsOnPlaylist() {
+        
+    }
+    
     /**
      * Gets the MetaData from the mp3 file, by seeing if there is a change to
      * the MetaData map. This map doesn't load in instantly, therefore we have
