@@ -62,11 +62,10 @@
          <font>
             <Font name="Verdana" size="12.0" />
          </font></Button>
-      <AnchorPane layoutX="550.0" prefHeight="100.0" prefWidth="200.0">
+      <AnchorPane layoutX="550.0" prefHeight="100.0" prefWidth="235.0">
          <children>
-            <Button fx:id="searchButton" layoutX="178.0" layoutY="35.0" mnemonicParsing="false" text="GO" />
-            <Label fx:id="searchLabel" contentDisplay="CENTER" layoutX="8.0" layoutY="35.0" prefHeight="25.0" prefWidth="50.0" text="Search" textAlignment="RIGHT" />
-            <TextField fx:id="searchField" layoutX="50.0" layoutY="35.0" prefHeight="25.0" prefWidth="120.0" />
+            <Label fx:id="searchLabel" contentDisplay="CENTER" layoutY="35.0" prefHeight="25.0" prefWidth="50.0" text="Search" textAlignment="RIGHT" />
+            <TextField fx:id="searchField" layoutX="50.0" layoutY="35.0" onKeyTyped="#searchSong" prefHeight="25.0" prefWidth="185.0" />
          </children>
       </AnchorPane>
       <Label fx:id="currentSongLabel" alignment="CENTER" layoutX="264.0" layoutY="37.0" prefHeight="25.0" prefWidth="250.0" textAlignment="CENTER" />
