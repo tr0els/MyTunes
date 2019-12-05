@@ -36,9 +36,8 @@ import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
-import mytunes.gui.model.MediaPlayerModel;7
+import mytunes.gui.model.MediaPlayerModel;
 import mytunes.dal.MockManager;
-import mytunes.gui.MediaPlayerModel;
 import mytunes.gui.model.MediaModel;
 
 /**
@@ -251,10 +250,9 @@ public class MtController implements Initializable {
         stage.show();
     }
 
+    @FXML
     private void handleEditSong(ActionEvent event) throws IOException
     {
-        
-        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/EditSongPopUp.fxml"));
         Parent root = loader.load();
 
@@ -266,6 +264,7 @@ public class MtController implements Initializable {
         stage.show();
     }
  
+    @FXML
     private void searchSong(KeyEvent event)
     {
         String input = searchField.getText();

@@ -84,9 +84,6 @@ public class EditSongPopUpController implements Initializable
         
     }
     
-    
-    
-    
     private void categories(Media media)
     {
         comboCategory.setItems(FXCollections.observableArrayList(
