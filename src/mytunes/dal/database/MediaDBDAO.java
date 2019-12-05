@@ -38,6 +38,8 @@ public class MediaDBDAO
 //            
 //        }     
 //    
+    
+    // Creates a song to be committet in the database, returns a media
     public Media createSong(String source, String artist, String title, int time, int year, int category, int numplays) throws Exception
     {
          Connection con = dbCon.getConnection();
@@ -69,7 +71,7 @@ public class MediaDBDAO
     }
 
     
-    
+    // returns a ArrayList with all the medias from the Songs_2 tabel
     public List<Media> getAllMedias() throws Exception 
     {
         try (Connection con = dbCon.getConnection())
@@ -97,6 +99,7 @@ public class MediaDBDAO
         }
     }
      
+    //deletes a specific media form the table songs_2
     public void deleteMedia(Media media) throws Exception
     {
         try (Connection con = dbCon.getConnection())
@@ -114,6 +117,7 @@ public class MediaDBDAO
         }
     }
     
+    //updates a media with new data to be saved to the database
     public void updateMedia(Media media) throws Exception
     {
         Connection con = dbCon.getConnection();
