@@ -5,6 +5,7 @@
  */
 package mytunes.gui.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -34,6 +36,7 @@ import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
+import mytunes.gui.model.MediaPlayerModel;7
 import mytunes.dal.MockManager;
 import mytunes.gui.MediaPlayerModel;
 import mytunes.gui.model.MediaModel;
@@ -200,10 +203,6 @@ public class MtController implements Initializable {
      * 
      * @param event
      */
-
-
-    //volumeSlider.valueProperty().bindBidirectional(mv.getMediaPlayer().volumeProperty());
-    //mv.getMediaPlayer().setVolume(volumeSlider.getValue());
     @FXML
     private void handleMusicVolume(MouseEvent event)
     {
@@ -252,7 +251,21 @@ public class MtController implements Initializable {
         stage.show();
     }
 
-    @FXML
+    private void handleEditSong(ActionEvent event) throws IOException
+    {
+        
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/EditSongPopUp.fxml"));
+        Parent root = loader.load();
+
+        EditSongPopUpController EditSongPopUpController = loader.getController();
+        EditSongPopUpController.transferMedia(songTable.getSelectionModel().getSelectedItem());
+        
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+ 
     private void searchSong(KeyEvent event)
     {
         String input = searchField.getText();
