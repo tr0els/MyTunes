@@ -5,6 +5,7 @@
  */
 package mytunes.gui.controller;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -12,7 +13,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.media.Media;
+import javafx.stage.FileChooser;
 
 /**
  * FXML Controller class
@@ -41,7 +45,7 @@ public class SongPopupController implements Initializable
     @FXML
     private TextField timeTextField;
     @FXML
-    private TextField fileTextField;
+    private TextArea fileTextField;
     @FXML
     private Button selectFileButton;
     @FXML
@@ -59,11 +63,24 @@ public class SongPopupController implements Initializable
     @FXML
     private void selectFile(ActionEvent event)
     {
+        
+        String path;
+        
+        FileChooser fc = new FileChooser();
+        //fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("*.mp3"));
+        File file = fc.showOpenDialog(null);
+        path = file.getAbsolutePath();
+        path = path.replace("\\", "/");
+        fileTextField.setText(path);
+        
     }
 
     @FXML
     private void createMedia(ActionEvent event)
     {
+        
+        
+        
     }
     
 }
