@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import mytunes.be.Media;
 /**
  *
@@ -25,18 +27,17 @@ public class MediaDBDAO
         dbCon = new DatabaseConnector();
     }
     
- public static void main(String[] args) throws Exception
-    {
-        
-        
-            MediaDBDAO mediaDao = new MediaDBDAO();
-          
-            mediaDao.createSong("1.mp3", "Michael Jackson", "Fly Away", 3 * 60 + 34, 1984, 13, 0);
-            
-            
-            
-        }     
-    
+// public static void main(String[] args) throws Exception
+//    {
+//        
+//        
+//            MediaDBDAO mediaDao = new MediaDBDAO();
+//            Media lotte = new Media(5, "mp.3", "Gruli", "Gris", 4,6000,1  );
+//            mediaDao.updateMedia(lotte);
+//            
+//            
+//        }     
+//    
     public Media createSong(String source, String artist, String title, int time, int year, int category, int numplays) throws Exception
     {
          Connection con = dbCon.getConnection();
@@ -66,4 +67,91 @@ public class MediaDBDAO
               
      return null;
     }
+
+    
+    
+    public List<Media> getAllMedias() throws Exception 
+    {
+        try (Connection con = dbCon.getConnection())
+        {
+            String sql = "SELECT * FROM songs_2;";
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            ArrayList<Media> allMedia = new ArrayList<>();
+            while (rs.next())
+            {
+            int id = rs.getInt("id");
+            String source = rs.getString("source");
+            String artist = rs.getString("artist");
+            String title = rs.getString("title");
+            int time = rs.getInt("time");
+            int year = rs.getInt("year");
+            int category = rs.getInt("category");
+         
+            Media med = new Media( id,  source,  artist,  title,  time,  year,  category);
+            allMedia.add(med);
+            
+            }
+            return allMedia;
+        
+        }
+    }
+     
+    public void deleteMedia(Media media) throws Exception
+    {
+        try (Connection con = dbCon.getConnection())
+        {
+        int id = media.getId();
+        String sql = "DELETE FROM songs_2 WHERE id=?;";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        int affectedRows = ps.executeUpdate();
+        if (affectedRows != 1)
+        {
+        throw  new SQLException(); 
+        }
+        
+        }
+    }
+    
+    public void updateMedia(Media media) throws Exception
+    {
+        Connection con = dbCon.getConnection();
+        int id = media.getId();
+        String sql = "UPDATE songs_2 set source = ?, artist = ? ,title=?, time=?, year=?,category=?, numplays=? WHERE id="+id+";";
+         PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, media.getSource());
+            ps.setString(2, media.getArtist());
+            ps.setString(3, media.getTitle());
+            ps.setInt(4, media.getTime());
+            ps.setInt(5, media.getYear());
+            ps.setInt(6, media.getCategory());
+            ps.setInt(7, media.getNumPlays());
+        
+        ps.executeUpdate();
+        ps.close();
+    
+    }
+    
+    
 }
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+
+
+
+
+
+
+
+
