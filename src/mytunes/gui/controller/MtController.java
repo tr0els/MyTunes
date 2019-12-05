@@ -210,7 +210,8 @@ public class MtController implements Initializable {
     }
 
     /**
-     * Slider that changes the volume of the song playing, when dragged. 
+     * Slider that changes the volume of the song playing, when dragged.
+     * The label changes when there is a change in the sliders value. 
      * 
      * @param event 
      */
