@@ -45,7 +45,7 @@
       <AnchorPane layoutX="450.0" layoutY="400.0" prefHeight="40.0" prefWidth="200.0">
          <children>
             <Button fx:id="newSongButton" layoutY="8.0" mnemonicParsing="false" onAction="#openSongPopup" text="New..." />
-            <Button fx:id="editSongButton" layoutX="56.0" layoutY="8.0" mnemonicParsing="false" text="Edit..." />
+            <Button fx:id="editSongButton" layoutX="56.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleEditSong" text="Edit..." />
             <Button fx:id="deleteSongButton" layoutX="108.0" layoutY="8.0" mnemonicParsing="false" text="Delete" />
          </children>
       </AnchorPane>
