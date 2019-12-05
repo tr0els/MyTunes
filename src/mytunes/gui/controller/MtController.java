@@ -114,15 +114,17 @@ public class MtController implements Initializable {
         songTable.setItems(mediaModel.getAllMedias());        
         
         // Setup column titles and factory that populates each column with rows
-        TableColumn titleCol = new TableColumn("Name");
-        titleCol.setCellValueFactory(new PropertyValueFactory<Media, String>("name"));
-        TableColumn authorCol = new TableColumn("Songs");
-        authorCol.setCellValueFactory(new PropertyValueFactory<Media, String>("artist"));
-        TableColumn timeCol = new TableColumn("Time");
+        TableColumn artistCol = new TableColumn("Artist");
+        artistCol.setCellValueFactory(new PropertyValueFactory<Media, String>("artist"));
+        TableColumn titleCol = new TableColumn("Title");
+        titleCol.setCellValueFactory(new PropertyValueFactory<Media, String>("title"));
+        TableColumn categoryCol = new TableColumn("Category");
+        categoryCol.setCellValueFactory(new PropertyValueFactory<Media, String>("category"));
+        TableColumn timeCol = new TableColumn("time");
         timeCol.setCellValueFactory(new PropertyValueFactory<Media, String>("time"));
         
         // Add title to table columns
-        songTable.getColumns().setAll(titleCol, authorCol, timeCol);
+        songTable.getColumns().setAll(artistCol, titleCol, categoryCol, timeCol);
         songTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
     
