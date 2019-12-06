@@ -214,7 +214,6 @@ public class MtController implements Initializable
             mv.getMediaPlayer().setVolume(0.5);
             musicVolume(mv.getMediaPlayer());
         }
-
     }
 
     /**
@@ -316,12 +315,12 @@ public class MtController implements Initializable
         stage.setScene(new Scene(root));
         stage.show();
     }
-
+    
     @FXML
     private void searchSong(KeyEvent event)
     {
         String input = searchField.getText();
-        ObservableList<Media> result = search(input);
+        ObservableList<Media> result = mediaModel.getSearchResult(input);
         songTable.setItems(result);
 
     }
