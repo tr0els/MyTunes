@@ -191,7 +191,6 @@ public class MtController implements Initializable {
             mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton);
             currentSong++;
         }
-
     }
 
     /**
@@ -276,33 +275,14 @@ public class MtController implements Initializable {
         stage.show();
     }
  
+    
     @FXML
     private void searchSong(KeyEvent event)
     {
         String input = searchField.getText();
-        ObservableList<Media> result = search(input);
+        ObservableList<Media> result = mediaModel.getSearchResult(input);
         songTable.setItems(result);
         
-    }
-    
-    public ObservableList<Media> search(String query)
-    {
-        MockManager mM = new MockManager();
-        List<Media> searchBase = mM.getAllMedias();
-        List<Media> filter = new ArrayList<>();
-
-        for (Media song : searchBase)
-        {
-            if (song.getTitle().toLowerCase().contains(query.toLowerCase())||
-                    song.getArtist().toLowerCase().contains(query.toLowerCase()))
-            {
-                filter.add(song);
-            }
-        }
-        
-        ObservableList<Media> result = FXCollections.observableList(filter);
-        
-        return result;
     }
     
 }
