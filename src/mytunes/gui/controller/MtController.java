@@ -31,7 +31,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import mytunes.be.Media;
@@ -44,14 +44,21 @@ import mytunes.gui.model.MediaModel;
  *
  * @author Troels Klein
  */
-public class MtController implements Initializable {
+public class MtController implements Initializable
+{
 
     private MediaModel mediaModel = new MediaModel();
 
     MediaPlayerModel mpModel = new MediaPlayerModel();
     MediaView mv = new MediaView();
     private int currentSong = 0;
-    
+    private int time;
+    private String source;
+    private String title;
+    private String artist;
+    private int year;
+    private int category;
+
     @FXML
     private TableView<Playlist> playlistTable;
     @FXML
@@ -101,18 +108,21 @@ public class MtController implements Initializable {
     private Button deletePlaylistSongButton;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
         populateSongs();
-        
+
         mpModel.songList = mpModel.getAllSongs();
         mv.setMediaPlayer(mpModel.songList.get(currentSong));
         getMetadata();
+        mv.getMediaPlayer().setVolume(0.5);
     }
-    
-    private void populateSongs() {
+
+    private void populateSongs()
+    {
         // I do magic tableview stuff here :)
-        songTable.setItems(mediaModel.getAllMedias());        
-        
+        songTable.setItems(mediaModel.getAllMedias());
+
         // Setup column titles and factory that populates each column with rows
         TableColumn artistCol = new TableColumn("Artist");
         artistCol.setCellValueFactory(new PropertyValueFactory<Media, String>("artist"));
@@ -120,32 +130,38 @@ public class MtController implements Initializable {
         titleCol.setCellValueFactory(new PropertyValueFactory<Media, String>("title"));
         TableColumn categoryCol = new TableColumn("Category");
         categoryCol.setCellValueFactory(new PropertyValueFactory<Media, String>("category"));
-        TableColumn timeCol = new TableColumn("time");
-        timeCol.setCellValueFactory(new PropertyValueFactory<Media, String>("time"));
-        
+        TableColumn timeCol = new TableColumn("Time");
+        timeCol.setCellValueFactory(new PropertyValueFactory<Media, Integer>("time"));
+
         // Add title to table columns
         songTable.getColumns().setAll(artistCol, titleCol, categoryCol, timeCol);
         songTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        
     }
     
-    private void populatePlaylists() {
-        
+    private void populatePlaylists()
+    {
+
     }
 
-    private void populateSongsOnPlaylist() {
-        
+    private void populateSongsOnPlaylist()
+    {
+
     }
-    
+
     /**
      * Gets the MetaData from the mp3 file, by seeing if there is a change to
      * the MetaData map. This map doesn't load in instantly, therefore we have
      * to check if something changes by using a listener.
      */
-    private void getMetadata() {
+    private void getMetadata()
+    {
         mv.getMediaPlayer().getMedia().getMetadata().addListener((
                 MapChangeListener.Change<? extends String, ? extends Object> ch)
-                -> {
-            if (ch.wasAdded()) {
+                ->
+        {
+            if (ch.wasAdded())
+            {
                 handleMetadata(ch.getKey(), ch.getValueAdded());
             }
 
@@ -160,8 +176,10 @@ public class MtController implements Initializable {
      * @param key
      * @param value
      */
-    public void handleMetadata(String key, Object value) {
-        if (key.equals("title")) {
+    public void handleMetadata(String key, Object value)
+    {
+        if (key.equals("title"))
+        {
             currentSongLabel.setText(value.toString() + " ... is playing");
         }
 
@@ -174,7 +192,8 @@ public class MtController implements Initializable {
      * @param event
      */
     @FXML
-    private void handlePlayAndPause(ActionEvent event) {
+    private void handlePlayAndPause(ActionEvent event)
+    {
         mpModel.playAndPause(currentSong, pauseButton);
     }
 
@@ -184,12 +203,16 @@ public class MtController implements Initializable {
      * @param event
      */
     @FXML
-    private void handleSkipForward(ActionEvent event) {
-        if (currentSong != mpModel.songList.size() - 1) {
+    private void handleSkipForward(ActionEvent event)
+    {
+        if (currentSong != mpModel.songList.size() - 1)
+        {
             int newNumber = currentSong + 1;
 
             mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton);
             currentSong++;
+            mv.getMediaPlayer().setVolume(0.5);
+            musicVolume(mv.getMediaPlayer());
         }
 
     }
@@ -200,60 +223,78 @@ public class MtController implements Initializable {
      * @param event
      */
     @FXML
-    private void handleSkipBackwards(ActionEvent event) {
-        if (currentSong != 0) {
+    private void handleSkipBackwards(ActionEvent event)
+    {
+        if (currentSong != 0)
+        {
             int newNumber = currentSong - 1;
             mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton);
             currentSong--;
+            mv.getMediaPlayer().setVolume(0.5);
+            musicVolume(mv.getMediaPlayer());
         }
     }
 
     /**
-     * Slider that changes the volume of the song playing, when dragged.
-     * The label changes when there is a change in the sliders value. 
-     * 
+     * Slider that changes the volume of the song playing, when dragged. The
+     * label changes when there is a change in the sliders value.
+     *
      * @param event
      */
     @FXML
-    private void handleMusicVolume(MouseEvent event)
+    private void handleMusicVolume()
     {
-        volumeSlider.setValue(mv.getMediaPlayer().getVolume()*100);
+        musicVolume(mv.getMediaPlayer());
+
+    }
+
+    private void musicVolume(MediaPlayer currSong)
+    {
+        volumeSlider.setValue(currSong.getVolume() * 100);
         volumeSlider.valueProperty().addListener(new InvalidationListener()
         {
             @Override
             public void invalidated(Observable observable)
             {
-                mv.getMediaPlayer().setVolume(volumeSlider.getValue()/100);
+                currSong.setVolume(volumeSlider.getValue() / 100);
             }
         });
-        
+
         volumeSlider.valueProperty().addListener(new ChangeListener<Number>()
         {
             @Override
             public void changed(
-                ObservableValue<? extends Number> observableValue,
-                Number oldValue,
-                Number newValue) 
-                {
-                    volumeLabel.textProperty().setValue(
+                    ObservableValue<? extends Number> observableValue,
+                    Number oldValue,
+                    Number newValue)
+            {
+                volumeLabel.textProperty().setValue(
                         String.valueOf(newValue.intValue() + "%"));
-                            
-                }   
+
+            }
         });
+
     }
-    
+
+
     @FXML
-    private void openSongPopup(ActionEvent event) throws Exception {
+    private void openSongPopup(ActionEvent event) throws Exception
+    {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/SongPopupView.fxml"));
+        Parent root = loader.load();
+
+        SongPopupController SongPopupController = loader.getController();
+        //SongPopupController.createSong(mediaModel);
 
         Stage stage = new Stage();
-        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/mytunes/gui/view/SongPopupView.fxml")));
-
-        stage.setScene(scene);
+        stage.setScene(new Scene(root));
         stage.show();
     }
 
     @FXML
-    private void openPlaylistPopup(ActionEvent event) throws Exception {
+    private void openPlaylistPopup(ActionEvent event) throws Exception
+    {
 
         Stage stage = new Stage();
         Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/mytunes/gui/view/PlaylistPopupView.fxml")));
@@ -270,21 +311,21 @@ public class MtController implements Initializable {
 
         EditSongPopUpController EditSongPopUpController = loader.getController();
         EditSongPopUpController.transferMedia(songTable.getSelectionModel().getSelectedItem());
-        
+
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
     }
- 
+
     @FXML
     private void searchSong(KeyEvent event)
     {
         String input = searchField.getText();
         ObservableList<Media> result = search(input);
         songTable.setItems(result);
-        
+
     }
-    
+
     public ObservableList<Media> search(String query)
     {
         MockManager mM = new MockManager();
@@ -293,16 +334,16 @@ public class MtController implements Initializable {
 
         for (Media song : searchBase)
         {
-            if (song.getTitle().toLowerCase().contains(query.toLowerCase())||
-                    song.getArtist().toLowerCase().contains(query.toLowerCase()))
+            if (song.getTitle().toLowerCase().contains(query.toLowerCase())
+                    || song.getArtist().toLowerCase().contains(query.toLowerCase()))
             {
                 filter.add(song);
             }
         }
-        
+
         ObservableList<Media> result = FXCollections.observableList(filter);
-        
+
         return result;
     }
-    
+
 }

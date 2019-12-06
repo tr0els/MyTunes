@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="250.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.SongPopupController">
+<AnchorPane id="AnchorPane" prefHeight="335.0" prefWidth="343.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.SongPopupController">
    <children>
-      <Label fx:id="titleLabel" layoutX="30.0" layoutY="30.0" prefHeight="25.0" prefWidth="30.0" text="Title" />
-      <TextField fx:id="titleTextField" layoutX="80.0" layoutY="30.0" prefHeight="25.0" prefWidth="150.0" />
-      <Label fx:id="artistLabel" layoutX="30.0" layoutY="60.0" prefHeight="25.0" prefWidth="30.0" text="Artist" />
-      <Label fx:id="categoryLabel" layoutX="30.0" layoutY="90.0" prefHeight="25.0" prefWidth="50.0" text="Category" />
-      <Label fx:id="timeLabel" layoutX="30.0" layoutY="120.0" prefHeight="25.0" prefWidth="30.0" text="Time" />
-      <Label fx:id="fileLabel" layoutX="30.0" layoutY="150.0" prefHeight="25.0" prefWidth="30.0" text="File" />
-      <TextField fx:id="artistTextField" layoutX="80.0" layoutY="60.0" prefHeight="25.0" prefWidth="150.0" />
-      <TextField fx:id="categoryTextField" layoutX="80.0" layoutY="90.0" prefHeight="25.0" prefWidth="150.0" />
-      <TextField fx:id="timeTextField" layoutX="80.0" layoutY="120.0" prefHeight="25.0" prefWidth="150.0" />
-      <TextArea fx:id="fileTextField" layoutX="80.0" layoutY="150.0" prefHeight="75.0" prefWidth="150.0" />
-      <Button fx:id="selectFileButton" layoutX="240.0" layoutY="150.0" mnemonicParsing="false" onAction="#selectFile" prefHeight="25.0" prefWidth="60.0" text="Choose" />
-      <Button fx:id="createButton" layoutX="250.0" layoutY="200.0" mnemonicParsing="false" onAction="#createMedia" prefHeight="25.0" prefWidth="50.0" text="Create" />
+      <Label fx:id="titleLabel" layoutX="30.0" layoutY="110.0" prefHeight="25.0" prefWidth="30.0" text="Title" />
+      <TextField fx:id="titleTextField" layoutX="72.0" layoutY="110.0" prefHeight="26.0" prefWidth="170.0" />
+      <Label fx:id="artistLabel" layoutX="30.0" layoutY="141.0" prefHeight="25.0" prefWidth="30.0" text="Artist" />
+      <Label fx:id="categoryLabel" layoutX="14.0" layoutY="173.0" prefHeight="25.0" prefWidth="50.0" text="Category" />
+      <Label fx:id="timeLabel" layoutX="39.0" layoutY="205.0" prefHeight="25.0" prefWidth="30.0" text="Time" />
+      <Label fx:id="fileLabel" layoutX="34.0" layoutY="74.0" prefHeight="26.0" prefWidth="22.0" text="File" />
+      <TextField fx:id="artistTextField" layoutX="72.0" layoutY="141.0" prefHeight="26.0" prefWidth="170.0" />
+      <TextField fx:id="timeTextField" layoutX="72.0" layoutY="205.0" prefHeight="26.0" prefWidth="170.0" />
+      <TextArea fx:id="fileTextField" layoutX="72.0" layoutY="68.0" prefHeight="26.0" prefWidth="170.0" />
+      <Button fx:id="selectFileButton" layoutX="252.0" layoutY="74.0" mnemonicParsing="false" onAction="#selectFile" prefHeight="25.0" prefWidth="60.0" text="Choose" />
+      <Button fx:id="createButton" layoutX="132.0" layoutY="279.0" mnemonicParsing="false" onAction="#createMedia" prefHeight="25.0" prefWidth="50.0" text="Create" />
+      <ComboBox fx:id="comboCategory" layoutX="72.0" layoutY="173.0" prefHeight="26.0" prefWidth="170.0" />
+      <Label layoutX="40.0" layoutY="243.0" text="Year" />
+      <TextField fx:id="yearTextField" layoutX="72.0" layoutY="239.0" prefHeight="26.0" prefWidth="170.0" />
+      <Label layoutX="108.0" layoutY="24.0" text="Create Song">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
