@@ -118,7 +118,15 @@ public class MtController implements Initializable
     private MediaPlayerModel mpModel = new MediaPlayerModel();
     
     private int currentSong = 0;
+    
+    @FXML
+    private TableColumn<?, ?> playlistSongNumColumn;
+    @FXML
+    private TableColumn<?, ?> playlistSongTitleColumn;
+
+    
     private int countId = 0;
+    
     
     /**
      * Initializes the controller class. This method is automatically called
@@ -357,6 +365,18 @@ public class MtController implements Initializable
         
         return result;
     }
+    
+
+    @FXML
+    private void addSongButton(ActionEvent event)
+    {
+        
+        Playlist selectedPlaylist = playlistsTable.getSelectionModel().getSelectedItem();
+        Media selectedMedia = songsTable.getSelectionModel().getSelectedItem();
+        
+        selectedPlaylist.addMedia(selectedMedia);
+    }
+        
     
     
     private void displaySongsFromPlaylist(Playlist list)
