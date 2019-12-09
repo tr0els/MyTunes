@@ -12,17 +12,12 @@ import mytunes.bll.BLLManager;
  * @author Troels Klein
  */
 public class ConvertCategory {
-<<<<<<< HEAD
-    
-    
-    
-    
-=======
+
 
     private BLLManager bll = new BLLManager();
 
     public String idToString(int id) {
         return bll.getAllCategories().get(id);
     }
->>>>>>> f963eb14435d022ed430b547cf6d86517f5357cf
+
 }
