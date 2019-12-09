@@ -82,6 +82,11 @@ public class BLLManager {
     public Media getNextMediaInPlaylist() {
         return null;
     }
+
+    public List<String> getAllCategories() {
+        // return dal.getAllCategories(); <-- uncomment when getAllCategories is complete in dal
+        return null;
+    }
     
     public List<Media> search(String query)
     {
