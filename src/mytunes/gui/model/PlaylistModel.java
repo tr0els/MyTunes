@@ -5,9 +5,10 @@
  */
 package mytunes.gui.model;
 
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import mytunes.be.Media;
+import mytunes.be.Playlist;
 import mytunes.bll.BLLManager;
 
 /**
@@ -17,20 +18,30 @@ import mytunes.bll.BLLManager;
 public class PlaylistModel {
 
     private BLLManager bll;
-    private ObservableList<Media> medias;
+    private ObservableList<Playlist> playlists;
 
     public PlaylistModel() {
         bll = new BLLManager();
-        medias = FXCollections.observableArrayList();
-        medias.addAll(bll.getAllMedias());
+        playlists = FXCollections.observableArrayList();
+        playlists.addAll(bll.getAllPlaylists());
     }
 
-    public ObservableList<Media> getAllMedias() {
-        return medias;
+    public ObservableList<Playlist> getAllPlaylists() {
+        return playlists;
     }
 
-    public void createMovie(String source, String artist, String title, int time, int year, int category) {
-        Media media = bll.createMedia(source, artist, title, time, year, category);
-        medias.add(media);
+    public void createPlaylist(String name) {
+        Playlist playlist = bll.createPlaylist(name);
+        playlists.add(playlist);
+    }
+
+    public static void main(String[] args) {
+        BLLManager bll = new BLLManager();
+
+        List<Playlist> playlists = bll.getAllPlaylists();
+
+        for (Playlist playlist : playlists) {
+            System.out.println("playlist name is: " + playlist.getName());
+        }
     }
 }

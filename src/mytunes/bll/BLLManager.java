@@ -53,10 +53,15 @@ public class BLLManager {
     }
 
     public void setCurrentMedia(Media media) {
-
+        
     }
 
     public List<Playlist> getAllPlaylists() {
+        return dal.getAllPlaylists();
+    }
+    
+    public Playlist createPlaylist(String name) {
+        //dal.createPlaylist(name);
         return null;
     }
 

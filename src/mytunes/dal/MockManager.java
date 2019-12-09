@@ -71,6 +71,8 @@ public class MockManager {
         party2.getMedias().add(getAllMedias().get(3));
         party2.getMedias().add(getAllMedias().get(4));
         party2.getMedias().add(getAllMedias().get(5));
+        party2.getMedias().add(getAllMedias().get(6));
+        party2.getMedias().add(getAllMedias().get(7));
         
         // new list of playlists
         List<Playlist> playlists = new ArrayList();
