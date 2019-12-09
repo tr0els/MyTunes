@@ -119,10 +119,6 @@ public class MtController implements Initializable
     
     private int currentSong = 0;
     
-    @FXML
-    private TableColumn<?, ?> playlistSongNumColumn;
-    @FXML
-    private TableColumn<?, ?> playlistSongTitleColumn;
 
     
     private int countId = 0;
@@ -390,9 +386,12 @@ public class MtController implements Initializable
         
     }
 
-    private void deleteSongFromPlaylist()
+    private void deleteSongFromPlaylist(Playlist list)
     {
+        List<Media> listOfSongs = list.getMedias();
         
+        listOfSongs.remove(songsFromPlaylist.getSelectionModel().getSelectedIndex());
+        songsFromPlaylist.getItems().remove(songsFromPlaylist.getSelectionModel().getSelectedItem());
     }
     
     
@@ -403,6 +402,12 @@ public class MtController implements Initializable
         songsFromPlaylist.getItems().clear();
         countId = 0;
         displaySongsFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
+    }
+
+    @FXML
+    private void handleDeleteSongFromPlaylist(ActionEvent event)
+    {
+        deleteSongFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
     }
     
     

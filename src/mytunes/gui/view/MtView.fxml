@@ -28,7 +28,7 @@
                 <TableColumn fx:id="songsTimeColumn" text="Time" />
             </columns>
         </TableView>
-        <Button fx:id="deletePlaylistSongButton" layoutX="322.0" layoutY="473.0" mnemonicParsing="false" text="Delete" />
+        <Button fx:id="deletePlaylistSongButton" layoutX="322.0" layoutY="473.0" mnemonicParsing="false" onAction="#handleDeleteSongFromPlaylist" text="Delete" />
         <Button fx:id="closeProgram" layoutX="734.0" layoutY="473.0" mnemonicParsing="false" prefWidth="50.0" text="Close" />
         <AnchorPane layoutX="14.0" layoutY="400.0" prefHeight="40.0" prefWidth="200.0" />
         <AnchorPane layoutX="450.0" layoutY="400.0" prefHeight="40.0" prefWidth="200.0" />
