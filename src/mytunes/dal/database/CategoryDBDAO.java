@@ -5,12 +5,10 @@
  */
 package mytunes.dal.database;
 
-import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -22,15 +20,16 @@ import java.util.List;
 public class CategoryDBDAO
 {
     
-    private DatabaseConnector dbCon;
+    private final DatabaseConnector dbCon;
     
+    //connector to DB
     public CategoryDBDAO() throws Exception
     {
         dbCon = new DatabaseConnector();
     }
     
 
-    
+    //Get a list of all the Categorys 
      public List<String> getAllCategory() throws Exception 
     {
         try (Connection con = dbCon.getConnection())
@@ -43,8 +42,6 @@ public class CategoryDBDAO
             {
           
             String name = rs.getString("name");
-            
-           
             allCategory.add(name);
             
             }
