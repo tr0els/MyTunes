@@ -19,7 +19,6 @@ import javafx.scene.media.MediaView;
  */
 public class MediaPlayerModel
 {
-    MediaView mv = new MediaView();
     
     private Media media;
 
@@ -85,13 +84,14 @@ public class MediaPlayerModel
      * @param currentSong
      * @param playAndPauseButton 
      */
-    public void playNewSong(int number, Label songLabel, int currentSong, Button playAndPauseButton)
+    public void playNewSong(int number, Label songLabel, int currentSong, Button playAndPauseButton, MediaView mv)
     {
         songList.get(currentSong).stop();
         mv.setMediaPlayer(songList.get(number));
         songList.get(number).play();
         playAndPauseButton.setText("Pause");
         getNameLabel(number, songLabel);
+        mv.getMediaPlayer().setVolume(0.5);
         
     }
     
