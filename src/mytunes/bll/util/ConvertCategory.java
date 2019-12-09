@@ -5,10 +5,19 @@
  */
 package mytunes.bll.util;
 
+import mytunes.bll.BLLManager;
+
 /**
  *
  * @author Troels Klein
  */
 public class ConvertCategory {
-    
+
+
+    private BLLManager bll = new BLLManager();
+
+    public String idToString(int id) {
+        return bll.getAllCategories().get(id);
+    }
+
 }

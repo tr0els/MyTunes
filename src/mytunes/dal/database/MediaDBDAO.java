@@ -40,7 +40,7 @@ public class MediaDBDAO
 //    
     
     // Creates a song to be committet in the database, returns a media
-    public Media createSong(String source, String artist, String title, int time, int year, int category, int numplays) throws Exception
+    public Media createMedia(String source, String artist, String title, int time, int year, int category, int numplays) throws Exception
     {
          Connection con = dbCon.getConnection();
         

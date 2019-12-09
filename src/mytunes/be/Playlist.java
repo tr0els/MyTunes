@@ -5,7 +5,6 @@
  */
 package mytunes.be;
 
-import static java.lang.String.format;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -76,7 +75,6 @@ public class Playlist {
         int totalSecs = totalTime - (totalHours * 60 * 60) - (totalMins * 60);
         
         String timeFormatted = String.format("%02d:%02d:%02d", totalHours, totalMins, totalSecs);
-        
         
         return new SimpleStringProperty(timeFormatted);
     } 

@@ -7,7 +7,6 @@ package mytunes.bll;
 
 import java.util.ArrayList;
 import java.util.List;
-import mytunes.be.Category;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
 import mytunes.dal.MockManager;
@@ -84,7 +83,8 @@ public class BLLManager {
         return null;
     }
 
-    public List<Category> getAllCategories() {
+    public List<String> getAllCategories() {
+        // return dal.getAllCategories(); <-- uncomment when getAllCategories is complete in dal
         return null;
     }
     

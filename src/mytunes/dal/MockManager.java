@@ -7,7 +7,6 @@ package mytunes.dal;
 
 import java.util.ArrayList;
 import java.util.List;
-import mytunes.be.Category;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
 
@@ -83,7 +82,8 @@ public class MockManager {
         
         return playlists;
     }
-    
+
+    /*
     public List<Category> getAllCategories() {
         
         List<Category> categories = new ArrayList();
@@ -113,4 +113,6 @@ public class MockManager {
         
         return categories;
     }
+    */
+
 }

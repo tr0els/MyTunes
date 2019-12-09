@@ -6,6 +6,7 @@
 package mytunes.gui.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -16,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import mytunes.be.Media;
+import mytunes.bll.util.ConvertTime;
 
 /**
  * FXML Controller class
@@ -24,7 +26,7 @@ import mytunes.be.Media;
  */
 public class EditSongPopUpController implements Initializable
 {
-    
+
     @FXML
     private Label titleLabel;
     @FXML
@@ -45,76 +47,38 @@ public class EditSongPopUpController implements Initializable
     private Label categoryLabel;
     @FXML
     private TextField editYear;
-    
+
     private Media media;
     
-    
+    private ConvertTime CT = new ConvertTime();
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-    }    
-    
+    }
+
     public void transferMedia(Media media)
     {
         editTitle.setText(media.getTitle());
         editArtist.setText(media.getArtist());
         editYear.setText(media.getYear() + "");
-        time(media.getTime());
+        editTime.setText(CT.secToTime(media.getTime()));
         categories(media);
         this.media = media;
-    }
-    
-    private void time(int time)
-    {
-        int minutes = time/60;
-        int hours = time/60/60;
-        int seconds = time-hours*60*60-minutes*60;
-        
-        
-        if(hours == 0)
-        {
-            editTime.setText(minutes + ":" + seconds);
-            
-            if(seconds < 10)
-            {
-                editTime.setText(minutes + ":" + "0" + seconds);
-            }
-        }
-        else
-        {
-            editTime.setText(hours + ":" + minutes + ":" + seconds);
-            if(minutes < 10)
-            {
-                editTime.setText(hours + ":" + "0" + minutes + ":" + seconds);
-            }
-           
-            else if(seconds < 10)
-            {
-                editTime.setText(hours + ":" + minutes + ":" + "0" + seconds);
-            }
-             
-            else if(minutes < 10 && seconds < 10)
-            {
-                editTime.setText(hours + ":" + "0" + minutes + ":" + "0" + seconds);
-            }
-            
-           
-        }
-        
     }
     
     private void categories(Media media)
     {
         comboCategory.setItems(FXCollections.observableArrayList(
-                "Blues", 
-                "Classic Rock", 
-                "Country", 
-                "Dance", 
-                "Disco", 
-                "Funk", 
+                "Blues",
+                "Classic Rock",
+                "Country",
+                "Dance",
+                "Disco",
+                "Funk",
                 "Grunge",
                 "Hip-Hop",
                 "Jazz",
@@ -131,13 +95,10 @@ public class EditSongPopUpController implements Initializable
                 "Industrial",
                 "Alternative")
         );
-        
+
         comboCategory.getSelectionModel().select(media.getCategory());
 
     }
-    
-    
-    
 
     @FXML
     private void handleEditFile(ActionEvent event)
@@ -145,13 +106,13 @@ public class EditSongPopUpController implements Initializable
         this.media.setTitle(editTitle.getText());
         this.media.setArtist(editArtist.getText());
         this.media.setYear(Integer.parseInt(editYear.getText()));
-        //this.media.setTime(editTime.getText());
-        
+        this.media.setTime(CT.timeToSec(editTime.getText()));
+
     }
 
     @FXML
     private void handleCategory(ActionEvent event)
     {
     }
-    
+
 }
