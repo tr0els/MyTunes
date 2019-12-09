@@ -375,12 +375,6 @@ public class MtController implements Initializable
         Media selectedMedia = songsTable.getSelectionModel().getSelectedItem();
         
         selectedPlaylist.addMedia(selectedMedia);
-        
-        System.out.println("Bob");
-        System.out.println(selectedMedia.getTitle());
-        System.out.println(selectedPlaylist.getName());
-        System.out.println(selectedPlaylist.numSongsProperty());
-        
     }
         
     
