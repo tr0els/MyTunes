@@ -120,7 +120,7 @@ public class MtController implements Initializable
     
     private int currentSong = 0;
     
-
+    ObservableList<Media> songLists = null;
     
     private int countId = 0;
     
@@ -365,44 +365,46 @@ public class MtController implements Initializable
     @FXML
     private void addSongButton(ActionEvent event)
     {
-        
-        Playlist selectedPlaylist = playlistsTable.getSelectionModel().getSelectedItem();
-        Media selectedMedia = songsTable.getSelectionModel().getSelectedItem();
-        
-        selectedPlaylist.addMedia(selectedMedia);
-        
-        update();
+        addSongToPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
     }
         
+    //WORKS
+    private void addSongToPlaylist(Playlist list)
+    {
+        songLists = FXCollections.observableArrayList(list.getMedias());
+        Media selectedMedia = songsTable.getSelectionModel().getSelectedItem();
+        list.addMedia(selectedMedia);
+        countId++;
+        songsFromPlaylist.getItems().add(countId + ": " + selectedMedia.getTitle());
+    }
     
-    
+    // WORKS
     private void displaySongsFromPlaylist(Playlist list)
     {
-        List<Media> listOfSongs = list.getMedias();
-        for (Media song : listOfSongs)
+        songLists = FXCollections.observableArrayList(list.getMedias());
+        for (Media song : songLists)
         {
             countId++;
             songsFromPlaylist.getItems().add(countId + ": " + song.getTitle());
         }
-        
     }
-
+    
+    //WORKS
     private void deleteSongFromPlaylist(Playlist list)
     {
-        List<Media> listOfSongs = list.getMedias();
-        
-        listOfSongs.remove(songsFromPlaylist.getSelectionModel().getSelectedIndex());
+        songLists = FXCollections.observableArrayList(list.getMedias());
+        Media selectedMedia = songLists.get(songsFromPlaylist.getSelectionModel().getSelectedIndex()); 
+        list.deleteMedia(selectedMedia); 
         songsFromPlaylist.getItems().remove(songsFromPlaylist.getSelectionModel().getSelectedItem());
-        
-        update();
     }
     
-    
-    
+    //WORKS
     @FXML
     private void handleSongsFromPlayList(MouseEvent event)
     {
-        update();
+        songsFromPlaylist.getItems().clear();
+        countId = 0;
+        displaySongsFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
     }
 
     @FXML
@@ -425,19 +427,15 @@ public class MtController implements Initializable
     
     private void changeOrderInPlaylist(int upOrDown)
     {
-        List<Media> listOfSongs = playlistsTable.getSelectionModel().getSelectedItem().getMedias();
-       
-        Collections.swap(listOfSongs, songsFromPlaylist.getSelectionModel().getSelectedIndex(), songsFromPlaylist.getSelectionModel().getSelectedIndex() + upOrDown);
+        Collections.swap(playlistsTable.getSelectionModel().getSelectedItem().getMedias(), songsFromPlaylist.getSelectionModel().getSelectedIndex(), 
+                songsFromPlaylist.getSelectionModel().getSelectedIndex() + upOrDown);
         
-        update();
-    }
-    
-    private void update()
-    {
         songsFromPlaylist.getItems().clear();
         countId = 0;
         displaySongsFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
+        
     }
+    
 
     @FXML
     private void editPlaylist(ActionEvent event) throws IOException
