@@ -69,7 +69,7 @@ public class MtController implements Initializable
     @FXML
     private TableColumn<Media, Integer> songsCategoryColumn;
     @FXML
-    private TableColumn<Media, Integer> songsTimeColumn;
+    private TableColumn<Media, String> songsTimeColumn;
     
     @FXML
     private Button closeProgram;
