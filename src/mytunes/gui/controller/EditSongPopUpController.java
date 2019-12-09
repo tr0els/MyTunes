@@ -17,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import mytunes.be.Media;
+import mytunes.bll.util.ConvertTime;
 
 /**
  * FXML Controller class
@@ -48,6 +49,8 @@ public class EditSongPopUpController implements Initializable
     private TextField editYear;
 
     private Media media;
+    
+    private ConvertTime CT = new ConvertTime();
 
     /**
      * Initializes the controller class.
@@ -62,98 +65,11 @@ public class EditSongPopUpController implements Initializable
         editTitle.setText(media.getTitle());
         editArtist.setText(media.getArtist());
         editYear.setText(media.getYear() + "");
-        time(media.getTime());
+        editTime.setText(CT.secToTime(media.getTime()));
         categories(media);
         this.media = media;
     }
-
-    private void time(int time)
-    {
-        
-        int hours = 0;
-        int minutes = 0;
-        int seconds = 0;
-
-        while (time >= 3600)
-        {            
-            hours++;
-            time -= 3600;
-        }
-        while (time >= 60)
-        {            
-            minutes++;
-            time -= 60;
-        }
-        while (time >= 1)
-        {            
-            seconds = time;
-            time = 0;
-        }
-        
-        
-        if (hours == 0)
-        {
-            editTime.setText(minutes + ":" + seconds);
-
-            if (seconds < 10)
-            {
-                editTime.setText(minutes + ":" + "0" + seconds);
-            }
-        } else
-        {
-            editTime.setText(hours + ":" + minutes + ":" + seconds);
-            if (minutes < 10)
-            {
-                editTime.setText(hours + ":" + "0" + minutes + ":" + seconds);
-            } else if (seconds < 10)
-            {
-                editTime.setText(hours + ":" + minutes + ":" + "0" + seconds);
-            } else if (minutes < 10 && seconds < 10)
-            {
-                editTime.setText(hours + ":" + "0" + minutes + ":" + "0" + seconds);
-            }
-
-        }
-
-    }
-
-    private int convertTime(String time)
-    {
-        
-        String[] split = time.split(":");
-        
-        int count = split.length - 1;
-
-        int total = 0;
-        
-        try
-        {
-            total += (Integer.parseInt(split[count]));
-            count--;
-        } catch (Exception e)
-        {
-            System.out.println("No seconds");
-        }
-        try
-        {
-            total += (Integer.parseInt(split[count])*60);
-            count--;
-        } catch (Exception e)
-        {
-            System.out.println("No minutes");
-        }
-        try
-        {
-            total += (Integer.parseInt(split[count])*60*60);
-            count--;
-        } catch (Exception e)
-        {
-            System.out.println("No hours");
-        }
-        
-        return total;
-    }
-
+    
     private void categories(Media media)
     {
         comboCategory.setItems(FXCollections.observableArrayList(
@@ -190,7 +106,7 @@ public class EditSongPopUpController implements Initializable
         this.media.setTitle(editTitle.getText());
         this.media.setArtist(editArtist.getText());
         this.media.setYear(Integer.parseInt(editYear.getText()));
-        this.media.setTime(convertTime(editTime.getText()));
+        this.media.setTime(CT.timeToSec(editTime.getText()));
 
     }
 
