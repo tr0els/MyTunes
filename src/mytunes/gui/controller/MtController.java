@@ -370,6 +370,13 @@ public class MtController implements Initializable
         
     }
 
+    private void deleteSongFromPlaylist()
+    {
+        
+    }
+    
+    
+    
     @FXML
     private void handleSongsFromPlayList(MouseEvent event)
     {
@@ -377,4 +384,9 @@ public class MtController implements Initializable
         countId = 0;
         displaySongsFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
     }
+    
+    
+    
+    
+    
 }
