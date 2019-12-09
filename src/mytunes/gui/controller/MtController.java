@@ -69,7 +69,7 @@ public class MtController implements Initializable
     @FXML
     private TableColumn<Media, Integer> songsCategoryColumn;
     @FXML
-    private TableColumn<Media, Integer> songsTimeColumn;
+    private TableColumn<Media, String> songsTimeColumn;
     
     @FXML
     private Button closeProgram;
@@ -286,7 +286,6 @@ public class MtController implements Initializable
             {
                 volumeLabel.textProperty().setValue(
                         String.valueOf(newValue.intValue() + "%"));
-                
             }
         });
         
@@ -332,7 +331,6 @@ public class MtController implements Initializable
             stage.setScene(new Scene(root));
             stage.show();
         }
-        
     }
     
     @FXML

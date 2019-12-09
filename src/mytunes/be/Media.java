@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
+import mytunes.bll.util.ConvertTime;
 
 /**
  *
@@ -88,10 +89,14 @@ public class Media {
     public void setTime(int time) {
         this.time.set(time);
     }
-
-    public ObservableValue<Integer> timeProperty() {
-        return time.asObject();
-    }
+    
+    public StringProperty timeProperty() {
+        
+        ConvertTime convertTime = new ConvertTime();
+        String formattedTime = convertTime.secToTime(getTime());
+        
+        return new SimpleStringProperty(formattedTime);
+    } 
     
     public int getYear() {
         return year.get();
