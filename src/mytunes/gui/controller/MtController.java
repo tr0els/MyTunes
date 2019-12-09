@@ -98,7 +98,7 @@ public class MtController implements Initializable {
     @FXML
     private TextField searchField;
     @FXML
-    private MediaView mediaViewMain;
+    private MediaView mediaView;
     @FXML
     private Label currentSongLabel;
     @FXML
@@ -112,16 +112,13 @@ public class MtController implements Initializable {
 
     private MediaModel mediaModel = new MediaModel();
     private PlaylistModel playlistModel = new PlaylistModel();
-
-    //private ObservableList<Media> medias = mediaModel.getAllMedias();
-    //private ObservableList<Playlist> playlists = playlistModel.getAllPlaylists();
-    MediaPlayerModel mpModel = new MediaPlayerModel();
-    MediaView mv = new MediaView();
+    private MediaPlayerModel mpModel = new MediaPlayerModel();
+    
     private int currentSong = 0;
 
     /**
      * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
+     * after the FXML file has been loaded.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -130,9 +127,9 @@ public class MtController implements Initializable {
         populateSongsTable();
 
         mpModel.songList = mpModel.getAllSongs();
-        mv.setMediaPlayer(mpModel.songList.get(currentSong));
+        mediaView.setMediaPlayer(mpModel.songList.get(currentSong));
         getMetadata();
-        mv.getMediaPlayer().setVolume(0.5);
+        mediaView.getMediaPlayer().setVolume(0.5);
     }
 
     private void populatePlaylistsTable() {
@@ -167,7 +164,7 @@ public class MtController implements Initializable {
      * to check if something changes by using a listener.
      */
     private void getMetadata() {
-        mv.getMediaPlayer().getMedia().getMetadata().addListener((
+        mediaView.getMediaPlayer().getMedia().getMetadata().addListener((
                 MapChangeListener.Change<? extends String, ? extends Object> ch)
                 -> {
             if (ch.wasAdded()) {
@@ -210,10 +207,9 @@ public class MtController implements Initializable {
         if (currentSong != mpModel.songList.size() - 1) {
             int newNumber = currentSong + 1;
 
-            mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton);
+            mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton, mediaView);
             currentSong++;
-            mv.getMediaPlayer().setVolume(0.5);
-            musicVolume(mv.getMediaPlayer());
+            musicVolume(mediaView.getMediaPlayer());
         }
     }
 
@@ -228,10 +224,9 @@ public class MtController implements Initializable {
         if (currentSong != 0)
         {
             int newNumber = currentSong - 1;
-            mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton);
+            mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton, mediaView);
             currentSong--;
-            mv.getMediaPlayer().setVolume(0.5);
-            musicVolume(mv.getMediaPlayer());
+            musicVolume(mediaView.getMediaPlayer());
         }
     }
 
@@ -244,7 +239,7 @@ public class MtController implements Initializable {
     @FXML
     private void handleMusicVolume()
     {
-        musicVolume(mv.getMediaPlayer());
+        musicVolume(mediaView.getMediaPlayer());
 
     }
 
