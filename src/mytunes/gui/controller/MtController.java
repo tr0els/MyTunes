@@ -25,11 +25,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
@@ -56,8 +58,6 @@ public class MtController implements Initializable
     @FXML
     private TableColumn<Playlist, String> playlistsTimeTotalColumn;
     
-    @FXML
-    private TableView<Media> songsOnPlaylistTable;
     
     @FXML
     private TableView<Media> songsTable;
@@ -110,17 +110,24 @@ public class MtController implements Initializable
     private Button swapSongDown;
     @FXML
     private Button deletePlaylistSongButton;
+    @FXML
+    private ListView songsFromPlaylist;
     
     private MediaModel mediaModel = new MediaModel();
     private PlaylistModel playlistModel = new PlaylistModel();
     private MediaPlayerModel mpModel = new MediaPlayerModel();
     
     private int currentSong = 0;
+    
     @FXML
     private TableColumn<?, ?> playlistSongNumColumn;
     @FXML
     private TableColumn<?, ?> playlistSongTitleColumn;
 
+    
+    private int countId = 0;
+    
+    
     /**
      * Initializes the controller class. This method is automatically called
      * after the FXML file has been loaded.
@@ -358,6 +365,7 @@ public class MtController implements Initializable
         
         return result;
     }
+    
 
     @FXML
     private void addSongButton(ActionEvent event)
@@ -373,6 +381,26 @@ public class MtController implements Initializable
         System.out.println(selectedPlaylist.getName());
         System.out.println(selectedPlaylist.numSongsProperty());
         
+    }
+        
+    
+    
+    private void displaySongsFromPlaylist(Playlist list)
+    {
+        List<Media> listOfSongs = list.getMedias();
+        for (Media song : listOfSongs)
+        {
+            countId++;
+            songsFromPlaylist.getItems().add(countId + ": " + song.getTitle());
+        }
+        
+    }
 
+    @FXML
+    private void handleSongsFromPlayList(MouseEvent event)
+    {
+        songsFromPlaylist.getItems().clear();
+        countId = 0;
+        displaySongsFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
     }
 }
