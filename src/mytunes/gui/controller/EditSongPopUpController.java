@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import mytunes.be.Media;
 import mytunes.bll.util.ConvertTime;
 
@@ -107,6 +108,8 @@ public class EditSongPopUpController implements Initializable
         this.media.setArtist(editArtist.getText());
         this.media.setYear(Integer.parseInt(editYear.getText()));
         this.media.setTime(CT.timeToSec(editTime.getText()));
+        Stage stage = (Stage) editFileButton.getScene().getWindow();
+        stage.close();
 
     }
 

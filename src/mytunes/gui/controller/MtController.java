@@ -8,6 +8,7 @@ package mytunes.gui.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.InvalidationListener;
@@ -25,11 +26,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
@@ -56,8 +59,6 @@ public class MtController implements Initializable
     @FXML
     private TableColumn<Playlist, String> playlistsTimeTotalColumn;
     
-    @FXML
-    private TableView<Media> songsOnPlaylistTable;
     
     @FXML
     private TableView<Media> songsTable;
@@ -110,13 +111,20 @@ public class MtController implements Initializable
     private Button swapSongDown;
     @FXML
     private Button deletePlaylistSongButton;
+    @FXML
+    private ListView songsFromPlaylist;
     
     private MediaModel mediaModel = new MediaModel();
     private PlaylistModel playlistModel = new PlaylistModel();
     private MediaPlayerModel mpModel = new MediaPlayerModel();
     
     private int currentSong = 0;
+    
 
+    
+    private int countId = 0;
+    
+    
     /**
      * Initializes the controller class. This method is automatically called
      * after the FXML file has been loaded.
@@ -352,4 +360,83 @@ public class MtController implements Initializable
         
         return result;
     }
+    
+
+    @FXML
+    private void addSongButton(ActionEvent event)
+    {
+        
+        Playlist selectedPlaylist = playlistsTable.getSelectionModel().getSelectedItem();
+        Media selectedMedia = songsTable.getSelectionModel().getSelectedItem();
+        
+        selectedPlaylist.addMedia(selectedMedia);
+        
+        update();
+    }
+        
+    
+    
+    private void displaySongsFromPlaylist(Playlist list)
+    {
+        List<Media> listOfSongs = list.getMedias();
+        for (Media song : listOfSongs)
+        {
+            countId++;
+            songsFromPlaylist.getItems().add(countId + ": " + song.getTitle());
+        }
+        
+    }
+
+    private void deleteSongFromPlaylist(Playlist list)
+    {
+        List<Media> listOfSongs = list.getMedias();
+        
+        listOfSongs.remove(songsFromPlaylist.getSelectionModel().getSelectedIndex());
+        songsFromPlaylist.getItems().remove(songsFromPlaylist.getSelectionModel().getSelectedItem());
+        
+        update();
+    }
+    
+    
+    
+    @FXML
+    private void handleSongsFromPlayList(MouseEvent event)
+    {
+        update();
+    }
+
+    @FXML
+    private void handleDeleteSongFromPlaylist(ActionEvent event)
+    {
+        deleteSongFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
+    }
+
+    @FXML
+    private void moveSongUpInPlaylist(ActionEvent event)
+    {
+        changeOrderInPlaylist(-1);
+    }
+
+    @FXML
+    private void moveSongDownInPlaylist(ActionEvent event)
+    {
+        changeOrderInPlaylist(+1);
+    }
+    
+    private void changeOrderInPlaylist(int upOrDown)
+    {
+        List<Media> listOfSongs = playlistsTable.getSelectionModel().getSelectedItem().getMedias();
+       
+        Collections.swap(listOfSongs, songsFromPlaylist.getSelectionModel().getSelectedIndex(), songsFromPlaylist.getSelectionModel().getSelectedIndex() + upOrDown);
+        
+        update();
+    }
+    
+    private void update()
+    {
+        songsFromPlaylist.getItems().clear();
+        countId = 0;
+        displaySongsFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
+    }
+    
 }
