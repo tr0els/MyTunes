@@ -7,7 +7,6 @@ package mytunes.bll;
 
 import java.util.ArrayList;
 import java.util.List;
-import mytunes.be.Category;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
 import mytunes.dal.MockManager;
@@ -81,10 +80,6 @@ public class BLLManager {
 
     // handle prev/next songs in controller instead? seems simpler
     public Media getNextMediaInPlaylist() {
-        return null;
-    }
-
-    public List<Category> getAllCategories() {
         return null;
     }
     
