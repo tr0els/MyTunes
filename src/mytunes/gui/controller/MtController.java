@@ -8,6 +8,7 @@ package mytunes.gui.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.InvalidationListener;
@@ -371,6 +372,8 @@ public class MtController implements Initializable
         Media selectedMedia = songsTable.getSelectionModel().getSelectedItem();
         
         selectedPlaylist.addMedia(selectedMedia);
+        
+        update();
     }
         
     
@@ -392,6 +395,8 @@ public class MtController implements Initializable
         
         listOfSongs.remove(songsFromPlaylist.getSelectionModel().getSelectedIndex());
         songsFromPlaylist.getItems().remove(songsFromPlaylist.getSelectionModel().getSelectedItem());
+        
+        update();
     }
     
     
@@ -399,9 +404,7 @@ public class MtController implements Initializable
     @FXML
     private void handleSongsFromPlayList(MouseEvent event)
     {
-        songsFromPlaylist.getItems().clear();
-        countId = 0;
-        displaySongsFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
+        update();
     }
 
     @FXML
@@ -409,9 +412,33 @@ public class MtController implements Initializable
     {
         deleteSongFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
     }
+
+    @FXML
+    private void moveSongUpInPlaylist(ActionEvent event)
+    {
+        changeOrderInPlaylist(-1);
+    }
+
+    @FXML
+    private void moveSongDownInPlaylist(ActionEvent event)
+    {
+        changeOrderInPlaylist(+1);
+    }
     
+    private void changeOrderInPlaylist(int upOrDown)
+    {
+        List<Media> listOfSongs = playlistsTable.getSelectionModel().getSelectedItem().getMedias();
+       
+        Collections.swap(listOfSongs, songsFromPlaylist.getSelectionModel().getSelectedIndex(), songsFromPlaylist.getSelectionModel().getSelectedIndex() + upOrDown);
+        
+        update();
+    }
     
-    
-    
+    private void update()
+    {
+        songsFromPlaylist.getItems().clear();
+        countId = 0;
+        displaySongsFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
+    }
     
 }
