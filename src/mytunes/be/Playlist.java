@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
+import mytunes.bll.util.ConvertTime;
 
 /**
  *
@@ -67,15 +68,9 @@ public class Playlist {
             totalTime += media.getTime();
         }
         
-        // need seperate convert sec to time and back methods.. 
-        // if put in a util, that could be imported everywhere needed                        
-        // needs more refinement, see assignment screenshot for check on hours / mins
-        int totalHours = totalTime / 60 / 60;
-        int totalMins = (totalTime - totalHours * 60 * 60) / 60;
-        int totalSecs = totalTime - (totalHours * 60 * 60) - (totalMins * 60);
+        ConvertTime convertTime = new ConvertTime();
+        String formattedTime = convertTime.secToTime(totalTime);
         
-        String timeFormatted = String.format("%02d:%02d:%02d", totalHours, totalMins, totalSecs);
-        
-        return new SimpleStringProperty(timeFormatted);
+        return new SimpleStringProperty(formattedTime);
     } 
 }

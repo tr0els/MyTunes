@@ -278,7 +278,6 @@ public class MtController implements Initializable
             {
                 volumeLabel.textProperty().setValue(
                         String.valueOf(newValue.intValue() + "%"));
-                
             }
         });
         
@@ -324,7 +323,6 @@ public class MtController implements Initializable
             stage.setScene(new Scene(root));
             stage.show();
         }
-        
     }
     
     @FXML
