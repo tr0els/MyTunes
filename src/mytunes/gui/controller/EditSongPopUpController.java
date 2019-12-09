@@ -72,14 +72,34 @@ public class EditSongPopUpController implements Initializable
         int seconds = time-hours*60*60-minutes*60;
         
         
-        
         if(hours == 0)
         {
             editTime.setText(minutes + ":" + seconds);
+            
+            if(seconds < 10)
+            {
+                editTime.setText(minutes + ":" + "0" + seconds);
+            }
         }
         else
         {
             editTime.setText(hours + ":" + minutes + ":" + seconds);
+            if(minutes < 10)
+            {
+                editTime.setText(hours + ":" + "0" + minutes + ":" + seconds);
+            }
+           
+            else if(seconds < 10)
+            {
+                editTime.setText(hours + ":" + minutes + ":" + "0" + seconds);
+            }
+             
+            else if(minutes < 10 && seconds < 10)
+            {
+                editTime.setText(hours + ":" + "0" + minutes + ":" + "0" + seconds);
+            }
+            
+           
         }
         
     }

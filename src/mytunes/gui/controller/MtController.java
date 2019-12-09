@@ -30,7 +30,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import mytunes.be.Media;
@@ -132,6 +132,7 @@ public class MtController implements Initializable {
         mpModel.songList = mpModel.getAllSongs();
         mv.setMediaPlayer(mpModel.songList.get(currentSong));
         getMetadata();
+        mv.getMediaPlayer().setVolume(0.5);
     }
 
     private void populatePlaylistsTable() {
@@ -167,7 +168,8 @@ public class MtController implements Initializable {
      */
     private void getMetadata() {
         mv.getMediaPlayer().getMedia().getMetadata().addListener((
-                MapChangeListener.Change<? extends String, ? extends Object> ch) -> {
+                MapChangeListener.Change<? extends String, ? extends Object> ch)
+                -> {
             if (ch.wasAdded()) {
                 handleMetadata(ch.getKey(), ch.getValueAdded());
             }
@@ -210,8 +212,9 @@ public class MtController implements Initializable {
 
             mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton);
             currentSong++;
+            mv.getMediaPlayer().setVolume(0.5);
+            musicVolume(mv.getMediaPlayer());
         }
-
     }
 
     /**
@@ -220,11 +223,15 @@ public class MtController implements Initializable {
      * @param event
      */
     @FXML
-    private void handleSkipBackwards(ActionEvent event) {
-        if (currentSong != 0) {
+    private void handleSkipBackwards(ActionEvent event)
+    {
+        if (currentSong != 0)
+        {
             int newNumber = currentSong - 1;
             mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton);
             currentSong--;
+            mv.getMediaPlayer().setVolume(0.5);
+            musicVolume(mv.getMediaPlayer());
         }
     }
 
@@ -235,39 +242,58 @@ public class MtController implements Initializable {
      * @param event
      */
     @FXML
-    private void handleMusicVolume(MouseEvent event) {
-        volumeSlider.setValue(mv.getMediaPlayer().getVolume() * 100);
-        volumeSlider.valueProperty().addListener(new InvalidationListener() {
+    private void handleMusicVolume()
+    {
+        musicVolume(mv.getMediaPlayer());
+
+    }
+
+    private void musicVolume(MediaPlayer currSong)
+    {
+        volumeSlider.setValue(currSong.getVolume() * 100);
+        volumeSlider.valueProperty().addListener(new InvalidationListener()
+        {
             @Override
-            public void invalidated(Observable observable) {
-                mv.getMediaPlayer().setVolume(volumeSlider.getValue() / 100);
+            public void invalidated(Observable observable)
+            {
+                currSong.setVolume(volumeSlider.getValue() / 100);
             }
         });
 
-        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+        volumeSlider.valueProperty().addListener(new ChangeListener<Number>()
+        {
             @Override
             public void changed(
                     ObservableValue<? extends Number> observableValue,
                     Number oldValue,
-                    Number newValue) {
+                    Number newValue)
+            {
                 volumeLabel.textProperty().setValue(
                         String.valueOf(newValue.intValue() + "%"));
 
             }
         });
+
     }
 
     @FXML
-    private void openSongPopup(ActionEvent event) throws Exception {
-        Stage stage = new Stage();
-        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/mytunes/gui/view/SongPopupView.fxml")));
+    private void openSongPopup(ActionEvent event) throws Exception
+    {
 
-        stage.setScene(scene);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/SongPopupView.fxml"));
+        Parent root = loader.load();
+
+        SongPopupController SongPopupController = loader.getController();
+        //SongPopupController.createSong(mediaModel);
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
         stage.show();
     }
 
     @FXML
-    private void openPlaylistPopup(ActionEvent event) throws Exception {
+    private void openPlaylistPopup(ActionEvent event) throws Exception
+    {
         Stage stage = new Stage();
         Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/mytunes/gui/view/PlaylistPopupView.fxml")));
 
@@ -276,7 +302,8 @@ public class MtController implements Initializable {
     }
 
     @FXML
-    private void handleEditSong(ActionEvent event) throws IOException {
+    private void handleEditSong(ActionEvent event) throws IOException
+    {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/EditSongPopUp.fxml"));
         Parent root = loader.load();
 
@@ -289,20 +316,24 @@ public class MtController implements Initializable {
     }
 
     @FXML
-    private void searchSong(KeyEvent event) {
+    private void searchSong(KeyEvent event)
+    {
         String input = searchField.getText();
-        ObservableList<Media> result = search(input);
+        ObservableList<Media> result = mediaModel.getSearchResult(input);
         songsTable.setItems(result);
     }
 
-    public ObservableList<Media> search(String query) {
+    public ObservableList<Media> search(String query)
+    {
         MockManager mM = new MockManager();
         List<Media> searchBase = mM.getAllMedias();
         List<Media> filter = new ArrayList<>();
 
-        for (Media song : searchBase) {
+        for (Media song : searchBase)
+        {
             if (song.getTitle().toLowerCase().contains(query.toLowerCase())
-                    || song.getArtist().toLowerCase().contains(query.toLowerCase())) {
+                    || song.getArtist().toLowerCase().contains(query.toLowerCase()))
+            {
                 filter.add(song);
             }
         }

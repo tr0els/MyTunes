@@ -5,6 +5,7 @@
  */
 package mytunes.gui.model;
 
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mytunes.be.Media;
@@ -33,4 +34,14 @@ public class MediaModel {
         Media media = bll.createMedia(source, artist, title, time, year, category);
         medias.add(media);
     }
+    
+    public ObservableList<Media> getSearchResult(String input) {
+        
+        List<Media> filter = bll.search(input);
+        
+        ObservableList<Media> output = FXCollections.observableList(filter);
+        
+        return output;
+    }
+    
 }
