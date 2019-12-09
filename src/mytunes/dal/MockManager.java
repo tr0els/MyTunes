@@ -83,33 +83,33 @@ public class MockManager {
         return playlists;
     }
     
-    public List<Category> getAllCategories() {
-        
-        List<Category> categories = new ArrayList();
-    
-        // categories based on: https://en.wikipedia.org/wiki/List_of_ID3v1_Genres
-        categories.add(new Category(0, "Blues"));
-        categories.add(new Category(1, "Classic Rock"));
-        categories.add(new Category(2, "Country"));
-        categories.add(new Category(3, "Dance"));
-        categories.add(new Category(4, "Disco"));
-        categories.add(new Category(5, "Funk"));
-        categories.add(new Category(6, "Grunge"));
-        categories.add(new Category(7, "Hip-Hop"));
-        categories.add(new Category(8, "Jazz"));
-        categories.add(new Category(9, "Metal"));
-        categories.add(new Category(10, "New Age"));
-        categories.add(new Category(11, "Oldies"));
-        categories.add(new Category(12, "Other"));
-        categories.add(new Category(13, "Pop"));
-        categories.add(new Category(14, "Rhythm and Blues"));
-        categories.add(new Category(15, "Rap"));
-        categories.add(new Category(16, "Reggae"));
-        categories.add(new Category(17, "Rock"));
-        categories.add(new Category(18, "Techno"));
-        categories.add(new Category(19, "Industrial"));
-        categories.add(new Category(20, "Alternative"));
-        
-        return categories;
-    }
+//    public List<Category> getAllCategories() {
+//        
+//        List<Category> categories = new ArrayList();
+//    
+//        // categories based on: https://en.wikipedia.org/wiki/List_of_ID3v1_Genres
+//        categories.add(new Category(0, "Blues"));
+//        categories.add(new Category(1, "Classic Rock"));
+//        categories.add(new Category(2, "Country"));
+//        categories.add(new Category(3, "Dance"));
+//        categories.add(new Category(4, "Disco"));
+//        categories.add(new Category(5, "Funk"));
+//        categories.add(new Category(6, "Grunge"));
+//        categories.add(new Category(7, "Hip-Hop"));
+//        categories.add(new Category(8, "Jazz"));
+//        categories.add(new Category(9, "Metal"));
+//        categories.add(new Category(10, "New Age"));
+//        categories.add(new Category(11, "Oldies"));
+//        categories.add(new Category(12, "Other"));
+//        categories.add(new Category(13, "Pop"));
+//        categories.add(new Category(14, "Rhythm and Blues"));
+//        categories.add(new Category(15, "Rap"));
+//        categories.add(new Category(16, "Reggae"));
+//        categories.add(new Category(17, "Rock"));
+//        categories.add(new Category(18, "Techno"));
+//        categories.add(new Category(19, "Industrial"));
+//        categories.add(new Category(20, "Alternative"));
+//        
+//        return categories;
+//    }
 }

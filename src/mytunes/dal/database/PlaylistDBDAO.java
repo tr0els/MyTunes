@@ -28,18 +28,7 @@ public class PlaylistDBDAO
     {
         dbCon = new DatabaseConnector();
     }
-     
-     public static void main(String[] args) throws Exception
-     {
              
-     PlaylistDBDAO playlistDbdao = new PlaylistDBDAO();
-     
-     playlistDbdao.createPlaylist("Party");
-         
-         
-     }
-             
-    
      //opretter en ny playlist 
      public Playlist createPlaylist(String name) throws Exception 
      {
