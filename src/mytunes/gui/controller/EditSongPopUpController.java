@@ -46,6 +46,8 @@ public class EditSongPopUpController implements Initializable
     @FXML
     private TextField editYear;
     
+    private Media media;
+    
     
     /**
      * Initializes the controller class.
@@ -62,7 +64,7 @@ public class EditSongPopUpController implements Initializable
         editYear.setText(media.getYear() + "");
         time(media.getTime());
         categories(media);
-        
+        this.media = media;
     }
     
     private void time(int time)
@@ -140,6 +142,10 @@ public class EditSongPopUpController implements Initializable
     @FXML
     private void handleEditFile(ActionEvent event)
     {
+        this.media.setTitle(editTitle.getText());
+        this.media.setArtist(editArtist.getText());
+        this.media.setYear(Integer.parseInt(editYear.getText()));
+        //this.media.setTime(editTime.getText());
         
     }
 

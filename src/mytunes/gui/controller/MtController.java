@@ -44,8 +44,9 @@ import mytunes.gui.model.PlaylistModel;
  *
  * @author Troels Klein
  */
-public class MtController implements Initializable {
-
+public class MtController implements Initializable
+{
+    
     @FXML
     private TableView<Playlist> playlistsTable;
     @FXML
@@ -54,10 +55,10 @@ public class MtController implements Initializable {
     private TableColumn<Playlist, Integer> playlistsNumSongsColumn;
     @FXML
     private TableColumn<Playlist, String> playlistsTimeTotalColumn;
-
+    
     @FXML
     private TableView<Media> songsOnPlaylistTable;
-
+    
     @FXML
     private TableView<Media> songsTable;
     @FXML
@@ -68,7 +69,7 @@ public class MtController implements Initializable {
     private TableColumn<Media, Integer> songsCategoryColumn;
     @FXML
     private TableColumn<Media, Integer> songsTimeColumn;
-
+    
     @FXML
     private Button closeProgram;
     @FXML
@@ -109,7 +110,7 @@ public class MtController implements Initializable {
     private Button swapSongDown;
     @FXML
     private Button deletePlaylistSongButton;
-
+    
     private MediaModel mediaModel = new MediaModel();
     private PlaylistModel playlistModel = new PlaylistModel();
 
@@ -124,18 +125,20 @@ public class MtController implements Initializable {
      * after the fxml file has been loaded.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
         populatePlaylistsTable();
         //populatePlaylistMediaList();
         populateSongsTable();
-
+        
         mpModel.songList = mpModel.getAllSongs();
         mv.setMediaPlayer(mpModel.songList.get(currentSong));
         getMetadata();
         mv.getMediaPlayer().setVolume(0.5);
     }
-
-    private void populatePlaylistsTable() {
+    
+    private void populatePlaylistsTable()
+    {
         // initialize the columns
         playlistsNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         playlistsNumSongsColumn.setCellValueFactory(cellData -> cellData.getValue().numSongsProperty());
@@ -144,13 +147,15 @@ public class MtController implements Initializable {
         // add data to the table
         playlistsTable.setItems(playlistModel.getAllPlaylists());
     }
-
-    private void populateSongsInPlaylistList() {
+    
+    private void populateSongsInPlaylistList()
+    {
         //change to list view        
         //playlistTable.setItems(playlistModel.getAllPlaylists());
     }
-
-    private void populateSongsTable() {
+    
+    private void populateSongsTable()
+    {
         // initialize the columns
         songsTitleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
         songsArtistColumn.setCellValueFactory(cellData -> cellData.getValue().artistProperty());
@@ -166,11 +171,14 @@ public class MtController implements Initializable {
      * the MetaData map. This map doesn't load in instantly, therefore we have
      * to check if something changes by using a listener.
      */
-    private void getMetadata() {
+    private void getMetadata()
+    {
         mv.getMediaPlayer().getMedia().getMetadata().addListener((
                 MapChangeListener.Change<? extends String, ? extends Object> ch)
-                -> {
-            if (ch.wasAdded()) {
+                ->
+        {
+            if (ch.wasAdded())
+            {
                 handleMetadata(ch.getKey(), ch.getValueAdded());
             }
         });
@@ -183,8 +191,10 @@ public class MtController implements Initializable {
      * @param key
      * @param value
      */
-    public void handleMetadata(String key, Object value) {
-        if (key.equals("title")) {
+    public void handleMetadata(String key, Object value)
+    {
+        if (key.equals("title"))
+        {
             currentSongLabel.setText(value.toString() + " ... is playing");
         }
     }
@@ -196,7 +206,8 @@ public class MtController implements Initializable {
      * @param event
      */
     @FXML
-    private void handlePlayAndPause(ActionEvent event) {
+    private void handlePlayAndPause(ActionEvent event)
+    {
         mpModel.playAndPause(currentSong, pauseButton);
     }
 
@@ -206,10 +217,12 @@ public class MtController implements Initializable {
      * @param event
      */
     @FXML
-    private void handleSkipForward(ActionEvent event) {
-        if (currentSong != mpModel.songList.size() - 1) {
+    private void handleSkipForward(ActionEvent event)
+    {
+        if (currentSong != mpModel.songList.size() - 1)
+        {
             int newNumber = currentSong + 1;
-
+            
             mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton);
             currentSong++;
             mv.getMediaPlayer().setVolume(0.5);
@@ -245,9 +258,9 @@ public class MtController implements Initializable {
     private void handleMusicVolume()
     {
         musicVolume(mv.getMediaPlayer());
-
+        
     }
-
+    
     private void musicVolume(MediaPlayer currSong)
     {
         volumeSlider.setValue(currSong.getVolume() * 100);
@@ -259,7 +272,7 @@ public class MtController implements Initializable {
                 currSong.setVolume(volumeSlider.getValue() / 100);
             }
         });
-
+        
         volumeSlider.valueProperty().addListener(new ChangeListener<Number>()
         {
             @Override
@@ -270,19 +283,19 @@ public class MtController implements Initializable {
             {
                 volumeLabel.textProperty().setValue(
                         String.valueOf(newValue.intValue() + "%"));
-
+                
             }
         });
-
+        
     }
-
+    
     @FXML
     private void openSongPopup(ActionEvent event) throws Exception
     {
-
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/SongPopupView.fxml"));
         Parent root = loader.load();
-
+        
         SongPopupController SongPopupController = loader.getController();
         //SongPopupController.createSong(mediaModel);
 
@@ -290,31 +303,35 @@ public class MtController implements Initializable {
         stage.setScene(new Scene(root));
         stage.show();
     }
-
+    
     @FXML
     private void openPlaylistPopup(ActionEvent event) throws Exception
     {
         Stage stage = new Stage();
         Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/mytunes/gui/view/PlaylistPopupView.fxml")));
-
+        
         stage.setScene(scene);
         stage.show();
     }
-
+    
     @FXML
     private void handleEditSong(ActionEvent event) throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/EditSongPopUp.fxml"));
         Parent root = loader.load();
-
-        EditSongPopUpController EditSongPopUpController = loader.getController();
-        EditSongPopUpController.transferMedia(songsTable.getSelectionModel().getSelectedItem());
-
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
+        
+        if (songsTable.getSelectionModel().getSelectedItem() != null)
+        {
+            EditSongPopUpController EditSongPopUpController = loader.getController();
+            EditSongPopUpController.transferMedia(songsTable.getSelectionModel().getSelectedItem());
+            
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+        
     }
-
+    
     @FXML
     private void searchSong(KeyEvent event)
     {
@@ -322,13 +339,13 @@ public class MtController implements Initializable {
         ObservableList<Media> result = mediaModel.getSearchResult(input);
         songsTable.setItems(result);
     }
-
+    
     public ObservableList<Media> search(String query)
     {
         MockManager mM = new MockManager();
         List<Media> searchBase = mM.getAllMedias();
         List<Media> filter = new ArrayList<>();
-
+        
         for (Media song : searchBase)
         {
             if (song.getTitle().toLowerCase().contains(query.toLowerCase())
@@ -337,9 +354,9 @@ public class MtController implements Initializable {
                 filter.add(song);
             }
         }
-
+        
         ObservableList<Media> result = FXCollections.observableList(filter);
-
+        
         return result;
     }
 }
