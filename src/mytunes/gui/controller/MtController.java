@@ -440,5 +440,28 @@ public class MtController implements Initializable
         countId = 0;
         displaySongsFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
     }
+
+    @FXML
+    private void editPlaylist(ActionEvent event) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/EditPlaylistView.fxml"));
+        Parent root = loader.load();
+        
+        if (playlistsTable.getSelectionModel().getSelectedItem() != null)
+        {
+            EditPlaylistViewController EditPlaylistViewController = loader.getController();
+            EditPlaylistViewController.transferMedia(playlistsTable.getSelectionModel().getSelectedItem());
+            
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+    }
+
+    @FXML
+    private void deletePlaylist(ActionEvent event)
+    {
+        
+    }
     
 }

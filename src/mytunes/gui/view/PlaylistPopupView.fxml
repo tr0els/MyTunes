@@ -4,11 +4,17 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.PlaylistPopupController">
+<AnchorPane id="AnchorPane" prefHeight="191.0" prefWidth="294.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.PlaylistPopupController">
    <children>
-      <Label fx:id="titleLabel" layoutX="50.0" layoutY="60.0" prefHeight="25.0" prefWidth="30.0" text="Title" />
-      <TextField fx:id="titleTextField" layoutX="80.0" layoutY="60.0" prefHeight="25.0" prefWidth="150.0" />
-      <Button fx:id="createButton" layoutX="205.0" layoutY="100.0" mnemonicParsing="false" onAction="#createPlaylist" text="Create" />
+      <Label fx:id="titleLabel" layoutX="39.0" layoutY="88.0" prefHeight="25.0" prefWidth="30.0" text="Title" />
+      <TextField fx:id="titleTextField" layoutX="72.0" layoutY="88.0" prefHeight="25.0" prefWidth="150.0" />
+      <Button fx:id="createButton" layoutX="171.0" layoutY="131.0" mnemonicParsing="false" onAction="#createPlaylist" text="Create" />
+      <Label layoutX="73.0" layoutY="33.0" text="Create new Playlist">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

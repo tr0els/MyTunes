@@ -65,8 +65,8 @@
          </font>
       </Label>
           <Button fx:id="newPlaylistButton" layoutX="13.0" layoutY="473.0" mnemonicParsing="false" onAction="#openPlaylistPopup" text="New..." />
-          <Button fx:id="editPlaylistButton" layoutX="70.0" layoutY="473.0" mnemonicParsing="false" text="Edit..." />
-          <Button fx:id="deletePlaylistButton" layoutX="125.0" layoutY="473.0" mnemonicParsing="false" text="Delete" />
+          <Button fx:id="editPlaylistButton" layoutX="70.0" layoutY="473.0" mnemonicParsing="false" onAction="#editPlaylist" text="Edit..." />
+          <Button fx:id="deletePlaylistButton" layoutX="125.0" layoutY="473.0" mnemonicParsing="false" onAction="#deletePlaylist" text="Delete" />
           <Button fx:id="newSongButton" layoutX="450.0" layoutY="473.0" mnemonicParsing="false" onAction="#openSongPopup" text="New..." />
           <Button fx:id="editSongButton" layoutX="503.0" layoutY="473.0" mnemonicParsing="false" onAction="#handleEditSong" text="Edit..." />
           <Button fx:id="deleteSongButton" layoutX="559.0" layoutY="473.0" mnemonicParsing="false" text="Delete" />
