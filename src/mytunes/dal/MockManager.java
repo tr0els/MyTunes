@@ -82,7 +82,7 @@ public class MockManager {
         
         return playlists;
     }
-    
+    /*
     public List<Category> getAllCategories() {
         
         List<Category> categories = new ArrayList();
@@ -112,4 +112,5 @@ public class MockManager {
         
         return categories;
     }
+*/
 }
