@@ -170,7 +170,7 @@ public class MtController implements Initializable
      */
     private void getMetadata()
     {
-        mv.getMediaPlayer().getMedia().getMetadata().addListener((
+        mediaView.getMediaPlayer().getMedia().getMetadata().addListener((
                 MapChangeListener.Change<? extends String, ? extends Object> ch)
                 ->
         {
