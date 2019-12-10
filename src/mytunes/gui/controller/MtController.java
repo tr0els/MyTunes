@@ -133,8 +133,8 @@ public class MtController implements Initializable
     
     public MtController() throws Exception
     {
-     mediaModel = new MediaModel();
-     playlistModel = new PlaylistModel();
+        mediaModel = new MediaModel();
+        playlistModel = new PlaylistModel();
     }
     
 
@@ -149,12 +149,21 @@ public class MtController implements Initializable
         //populatePlaylistMediaList();
         populateSongsTable();
 
-        mpModel.songList = mpModel.getAllSongs();
-        mediaView.setMediaPlayer(mpModel.songList.get(currentSong));
-        getMetadata();
-        mediaView.getMediaPlayer().setVolume(0.5);
+        
+//        mpModel.songList = mpModel.getAllSongs(mediaModel.getAllMedias().get(int).getSource());
+//        mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
+        
     }
-
+    
+    @FXML
+    private void handleSong(MouseEvent event)
+    {
+        mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
+        //currentSongLabel.setText(songsTable.getSelectionModel().getSelectedItem().getTitle() + "... is playing");
+        mediaView.getMediaPlayer().setVolume(0.5);
+        mpModel.playNextSong(mediaView, mediaModel, songsTable, currentSongLabel, pauseButton);
+    }
+    
     private void populatePlaylistsTable()
     {
         // initialize the columns
@@ -185,39 +194,6 @@ public class MtController implements Initializable
     }
 
     /**
-     * Gets the MetaData from the mp3 file, by seeing if there is a change to
-     * the MetaData map. This map doesn't load in instantly, therefore we have
-     * to check if something changes by using a listener.
-     */
-    private void getMetadata()
-    {
-        mediaView.getMediaPlayer().getMedia().getMetadata().addListener((
-                MapChangeListener.Change<? extends String, ? extends Object> ch)
-                ->
-        {
-            if (ch.wasAdded())
-            {
-                handleMetadata(ch.getKey(), ch.getValueAdded());
-            }
-        });
-    }
-
-    /**
-     * Checks if the change made to the MetaData is the title. If so, it sets
-     * the text of the currentSongLabel to the value of the title.
-     *
-     * @param key
-     * @param value
-     */
-    public void handleMetadata(String key, Object value)
-    {
-        if (key.equals("title"))
-        {
-            currentSongLabel.setText(value.toString() + " ... is playing");
-        }
-    }
-
-    /**
      * Button that plays and pauses the song, depending on if the song is
      * already playing or paused, when pressed.
      *
@@ -226,7 +202,7 @@ public class MtController implements Initializable
     @FXML
     private void handlePlayAndPause(ActionEvent event)
     {
-        mpModel.playAndPause(currentSong, pauseButton);
+        mpModel.playAndPause(currentSong, pauseButton, mediaView);
     }
 
     /**
@@ -241,7 +217,7 @@ public class MtController implements Initializable
         {
             int newNumber = currentSong + 1;
 
-            mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton, mediaView);
+            //mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton, mediaView);
             currentSong++;
             musicVolume(mediaView.getMediaPlayer());
         }
@@ -258,7 +234,7 @@ public class MtController implements Initializable
         if (currentSong != 0)
         {
             int newNumber = currentSong - 1;
-            mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton, mediaView);
+            //mpModel.playNewSong(newNumber, currentSongLabel, currentSong, pauseButton, mediaView);
             currentSong--;
             musicVolume(mediaView.getMediaPlayer());
         }
@@ -513,4 +489,6 @@ public class MtController implements Initializable
             } 
         }
     }
+
+    
 }
