@@ -412,7 +412,6 @@ public class MtController implements Initializable
     //WORKS
     @FXML
     private void handleSongsFromPlayList(MouseEvent event)
-
     {
         songsFromPlaylist.getItems().clear();
         countId = 0;
@@ -470,7 +469,37 @@ public class MtController implements Initializable
     @FXML
     private void deletePlaylist(ActionEvent event)
     {
-
+        if(playlistsTable.getSelectionModel().getSelectedItem() != null)
+        {
+            int input = JOptionPane.showConfirmDialog(null,"Permanently delete the playlist?", "Select an Option...", 
+                JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+        
+            // 0=yes, 1=no.
+        
+            if (input == JOptionPane.YES_OPTION)
+            {
+                playlistsTable.getItems().remove(playlistsTable.getSelectionModel().getSelectedItem());
+            } 
+        }
     }
 
+    @FXML
+    private void handleDeleteSong(ActionEvent event)
+    {
+        //songLists = FXCollections.observableArrayList(mediaModel.getAllMedias());
+        //Media selectedMedia = songLists.get(songsTable.getSelectionModel().getSelectedIndex());
+        // delete song from model.
+        if(songsTable.getSelectionModel().getSelectedItem() != null)
+        {
+            int input = JOptionPane.showConfirmDialog(null,"Permanently delete the song?", "Select an Option...", 
+                JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+        
+            // 0=yes, 1=no.
+        
+            if (input == JOptionPane.YES_OPTION)
+            {
+                songsTable.getItems().remove(songsTable.getSelectionModel().getSelectedItem());
+            } 
+        }
+    }
 }
