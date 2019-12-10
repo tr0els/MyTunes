@@ -5,6 +5,8 @@
  */
 package mytunes.gui.controller;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -36,6 +38,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
 import mytunes.gui.model.MediaPlayerModel;
@@ -49,7 +53,7 @@ import mytunes.gui.model.PlaylistModel;
  */
 public class MtController implements Initializable
 {
-    
+
     @FXML
     private TableView<Playlist> playlistsTable;
     @FXML
@@ -58,8 +62,7 @@ public class MtController implements Initializable
     private TableColumn<Playlist, Integer> playlistsNumSongsColumn;
     @FXML
     private TableColumn<Playlist, String> playlistsTimeTotalColumn;
-    
-    
+
     @FXML
     private TableView<Media> songsTable;
     @FXML
@@ -70,7 +73,7 @@ public class MtController implements Initializable
     private TableColumn<Media, Integer> songsCategoryColumn;
     @FXML
     private TableColumn<Media, String> songsTimeColumn;
-    
+
     @FXML
     private Button closeProgram;
     @FXML
@@ -113,18 +116,17 @@ public class MtController implements Initializable
     private Button deletePlaylistSongButton;
     @FXML
     private ListView songsFromPlaylist;
-    
+
     private MediaModel mediaModel = new MediaModel();
     private PlaylistModel playlistModel = new PlaylistModel();
     private MediaPlayerModel mpModel = new MediaPlayerModel();
-    
+
     private int currentSong = 0;
-    
+
     ObservableList<Media> songLists = null;
-    
+
     private int countId = 0;
-    
-    
+
     /**
      * Initializes the controller class. This method is automatically called
      * after the FXML file has been loaded.
@@ -135,13 +137,13 @@ public class MtController implements Initializable
         populatePlaylistsTable();
         //populatePlaylistMediaList();
         populateSongsTable();
-        
+
         mpModel.songList = mpModel.getAllSongs();
         mediaView.setMediaPlayer(mpModel.songList.get(currentSong));
         getMetadata();
         mediaView.getMediaPlayer().setVolume(0.5);
     }
-    
+
     private void populatePlaylistsTable()
     {
         // initialize the columns
@@ -152,13 +154,13 @@ public class MtController implements Initializable
         // add data to the table
         playlistsTable.setItems(playlistModel.getAllPlaylists());
     }
-    
+
     private void populateSongsInPlaylistList()
     {
         //change to list view        
         //playlistTable.setItems(playlistModel.getAllPlaylists());
     }
-    
+
     private void populateSongsTable()
     {
         // initialize the columns
@@ -261,9 +263,9 @@ public class MtController implements Initializable
     private void handleMusicVolume()
     {
         musicVolume(mediaView.getMediaPlayer());
-        
+
     }
-    
+
     private void musicVolume(MediaPlayer currSong)
     {
         volumeSlider.setValue(currSong.getVolume() * 100);
@@ -275,7 +277,7 @@ public class MtController implements Initializable
                 currSong.setVolume(volumeSlider.getValue() / 100);
             }
         });
-        
+
         volumeSlider.valueProperty().addListener(new ChangeListener<Number>()
         {
             @Override
@@ -288,16 +290,16 @@ public class MtController implements Initializable
                         String.valueOf(newValue.intValue() + "%"));
             }
         });
-        
+
     }
-    
+
     @FXML
     private void openSongPopup(ActionEvent event) throws Exception
     {
-        
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/SongPopupView.fxml"));
         Parent root = loader.load();
-        
+
         SongPopupController SongPopupController = loader.getController();
         SongPopupController.transfer(mediaModel);
         //SongPopupController.createSong(mediaModel);
@@ -306,34 +308,34 @@ public class MtController implements Initializable
         stage.setScene(new Scene(root));
         stage.show();
     }
-    
+
     @FXML
     private void openPlaylistPopup(ActionEvent event) throws Exception
     {
         Stage stage = new Stage();
         Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/mytunes/gui/view/PlaylistPopupView.fxml")));
-        
+
         stage.setScene(scene);
         stage.show();
     }
-    
+
     @FXML
     private void handleEditSong(ActionEvent event) throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/EditSongPopUp.fxml"));
         Parent root = loader.load();
-        
+
         if (songsTable.getSelectionModel().getSelectedItem() != null)
         {
             EditSongPopUpController EditSongPopUpController = loader.getController();
             EditSongPopUpController.transferMedia(songsTable.getSelectionModel().getSelectedItem());
-            
+
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
         }
     }
-    
+
     @FXML
     private void searchSong(KeyEvent event)
     {
@@ -341,13 +343,13 @@ public class MtController implements Initializable
         ObservableList<Media> result = mediaModel.getSearchResult(input);
         songsTable.setItems(result);
     }
-    
+
     public ObservableList<Media> search(String query)
     {
         MockManager mM = new MockManager();
         List<Media> searchBase = mM.getAllMedias();
         List<Media> filter = new ArrayList<>();
-        
+
         for (Media song : searchBase)
         {
             if (song.getTitle().toLowerCase().contains(query.toLowerCase())
@@ -356,19 +358,18 @@ public class MtController implements Initializable
                 filter.add(song);
             }
         }
-        
+
         ObservableList<Media> result = FXCollections.observableList(filter);
-        
+
         return result;
     }
-    
 
     @FXML
     private void addSongButton(ActionEvent event)
     {
         addSongToPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
     }
-        
+
     //WORKS
     private void addSongToPlaylist(Playlist list)
     {
@@ -378,7 +379,7 @@ public class MtController implements Initializable
         countId++;
         songsFromPlaylist.getItems().add(countId + ": " + selectedMedia.getTitle());
     }
-    
+
     // WORKS
     private void displaySongsFromPlaylist(Playlist list)
     {
@@ -389,19 +390,29 @@ public class MtController implements Initializable
             songsFromPlaylist.getItems().add(countId + ": " + song.getTitle());
         }
     }
-    
+
     //WORKS
     private void deleteSongFromPlaylist(Playlist list)
     {
-        songLists = FXCollections.observableArrayList(list.getMedias());
-        Media selectedMedia = songLists.get(songsFromPlaylist.getSelectionModel().getSelectedIndex()); 
-        list.deleteMedia(selectedMedia); 
-        songsFromPlaylist.getItems().remove(songsFromPlaylist.getSelectionModel().getSelectedItem());
+        int input = JOptionPane.showConfirmDialog(null,"Delete the song from the playlist?", "Select an Option...", 
+                JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+        
+        // 0=yes, 1=no.
+        
+        if (input == JOptionPane.YES_OPTION)
+        {
+            songLists = FXCollections.observableArrayList(list.getMedias());
+            Media selectedMedia = songLists.get(songsFromPlaylist.getSelectionModel().getSelectedIndex());
+            list.deleteMedia(selectedMedia);
+            songsFromPlaylist.getItems().remove(songsFromPlaylist.getSelectionModel().getSelectedItem());
+        }
+
     }
-    
+
     //WORKS
     @FXML
     private void handleSongsFromPlayList(MouseEvent event)
+
     {
         songsFromPlaylist.getItems().clear();
         countId = 0;
@@ -411,7 +422,10 @@ public class MtController implements Initializable
     @FXML
     private void handleDeleteSongFromPlaylist(ActionEvent event)
     {
-        deleteSongFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
+        if(songsFromPlaylist.getSelectionModel().getSelectedItem() != null)
+        {
+            deleteSongFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
+        }
     }
 
     @FXML
@@ -425,29 +439,28 @@ public class MtController implements Initializable
     {
         changeOrderInPlaylist(+1);
     }
-    
+
     private void changeOrderInPlaylist(int upOrDown)
     {
-        Collections.swap(playlistsTable.getSelectionModel().getSelectedItem().getMedias(), songsFromPlaylist.getSelectionModel().getSelectedIndex(), 
+        Collections.swap(playlistsTable.getSelectionModel().getSelectedItem().getMedias(), songsFromPlaylist.getSelectionModel().getSelectedIndex(),
                 songsFromPlaylist.getSelectionModel().getSelectedIndex() + upOrDown);
-        
+
         songsFromPlaylist.getItems().clear();
         countId = 0;
         displaySongsFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
     }
-    
 
     @FXML
     private void editPlaylist(ActionEvent event) throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/EditPlaylistView.fxml"));
         Parent root = loader.load();
-        
+
         if (playlistsTable.getSelectionModel().getSelectedItem() != null)
         {
             EditPlaylistViewController EditPlaylistViewController = loader.getController();
             EditPlaylistViewController.transferMedia(playlistsTable.getSelectionModel().getSelectedItem());
-            
+
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
@@ -457,7 +470,7 @@ public class MtController implements Initializable
     @FXML
     private void deletePlaylist(ActionEvent event)
     {
-        
+
     }
-    
+
 }
