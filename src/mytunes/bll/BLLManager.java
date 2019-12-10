@@ -5,11 +5,14 @@
  */
 package mytunes.bll;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
 import mytunes.dal.MockManager;
+import mytunes.dal.database.MediaDBDAO;
+import mytunes.dal.database.PlaylistDBDAO;
 
 /**
  *
@@ -18,21 +21,30 @@ import mytunes.dal.MockManager;
 public class BLLManager {
 
     // connect to dal layer (mock for now)
-    private MockManager dal = new MockManager();
+   private final MockManager mock = new MockManager();
+    private final MediaDBDAO mediaDB; 
+    private final PlaylistDBDAO playlistDB;
 
     // keep track of active playlist and media
     private Playlist currentPlaylist;
     private Media currentMedia;
     // private int index needed?
 
-    public List<Media> getAllMedias() {
-        return dal.getAllMedias();
+    public BLLManager()throws Exception
+    {
+        mediaDB = new MediaDBDAO();
+        playlistDB = new PlaylistDBDAO();
     }
 
-    public Media createMedia(String source, String artist, String title, int time, int year, int category) {
-        //Media media = dal.createMedia(source, artist, title, time, year, category);
-        //return media;
-        return null;
+    public List<Media> getAllMedias() throws Exception{
+        return mediaDB.getAllMedias();
+    }
+
+    public Media createMedia(String source, String artist, String title, int time, int year, int category) throws Exception
+    {   int numplays = 0; 
+        Media media = mediaDB.createMedia(source, artist, title, time, year, category, numplays);
+        return media;
+        //return null;
     }
 
     public void updateMedia(Media media) {
@@ -56,8 +68,8 @@ public class BLLManager {
         
     }
 
-    public List<Playlist> getAllPlaylists() {
-        return dal.getAllPlaylists();
+    public List<Playlist> getAllPlaylists() throws Exception {
+        return playlistDB.getAllPlaylist();
     }
     
     public Playlist createPlaylist(String name) {
@@ -88,10 +100,10 @@ public class BLLManager {
         return null;
     }
     
-    public List<Media> search(String query)
+    public List<Media> search(String query) throws Exception
     {
         
-        List<Media> searchBase = dal.getAllMedias();
+        List<Media> searchBase = mediaDB.getAllMedias();
         List<Media> output = new ArrayList<>();
 
         for (Media song : searchBase)

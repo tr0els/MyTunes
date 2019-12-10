@@ -20,7 +20,8 @@ public class PlaylistModel {
     private BLLManager bll;
     private ObservableList<Playlist> playlists;
 
-    public PlaylistModel() {
+    public PlaylistModel() throws Exception 
+    {
         bll = new BLLManager();
         playlists = FXCollections.observableArrayList();
         playlists.addAll(bll.getAllPlaylists());
@@ -35,7 +36,8 @@ public class PlaylistModel {
         playlists.add(playlist);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception 
+    {
         BLLManager bll = new BLLManager();
 
         List<Playlist> playlists = bll.getAllPlaylists();

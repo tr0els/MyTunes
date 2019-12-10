@@ -20,7 +20,8 @@ public class MediaModel {
     private BLLManager bll;
     private ObservableList<Media> medias;
 
-    public MediaModel() {
+    public MediaModel() throws Exception
+    {
         bll = new BLLManager();
         medias = FXCollections.observableArrayList();
         medias.addAll(bll.getAllMedias());
@@ -30,12 +31,13 @@ public class MediaModel {
         return medias;
     }
 
-    public void createMovie(String source, String artist, String title, int time, int year, int category) {
+    public void createMovie(String source, String artist, String title, int time, int year, int category) throws Exception
+    {
         Media media = bll.createMedia(source, artist, title, time, year, category);
         medias.add(media);
     }
     
-    public ObservableList<Media> getSearchResult(String input) {
+    public ObservableList<Media> getSearchResult(String input) throws Exception {
         
         List<Media> filter = bll.search(input);
         

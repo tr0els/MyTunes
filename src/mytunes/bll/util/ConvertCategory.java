@@ -14,7 +14,13 @@ import mytunes.bll.BLLManager;
 public class ConvertCategory {
 
 
-    private BLLManager bll = new BLLManager();
+    private final BLLManager bll; 
+           
+
+    public ConvertCategory() throws Exception
+    {
+         bll = new BLLManager();
+    }
 
     public String idToString(int id) {
         return bll.getAllCategories().get(id);

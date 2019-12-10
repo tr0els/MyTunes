@@ -137,7 +137,7 @@ public class SongPopupController implements Initializable
     }
 
     @FXML
-    private void createMedia(ActionEvent event)
+    private void createMedia(ActionEvent event) throws Exception
     {
         handleCreateSong();
         Stage stage = (Stage) createButton.getScene().getWindow();
@@ -206,7 +206,7 @@ public class SongPopupController implements Initializable
 
     }
 
-    public void handleCreateSong()
+    public void handleCreateSong() throws Exception 
     {
         mediaModel.createMovie(fileTextField.getText(), artistTextField.getText(), titleTextField.getText(), 
                 CT.timeToSec(timeTextField.getText()), Integer.parseInt(yearTextField.getText()), 

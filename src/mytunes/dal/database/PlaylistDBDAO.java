@@ -5,6 +5,7 @@
  */
 package mytunes.dal.database;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,25 +25,13 @@ public class PlaylistDBDAO
 
     private DatabaseConnector dbCon;
 
-    public PlaylistDBDAO() throws Exception
-    {
+    public PlaylistDBDAO() throws IOException
+    { 
         dbCon = new DatabaseConnector();
+ 
     }
 
-    public static void main(String[] args) throws Exception
-    {
-     PlaylistDBDAO playlistdbdao = new PlaylistDBDAO();
-     
-     Playlist playlist = new Playlist( 2 , "hello");
-    
-    // Media meida = new Media(1, "1.mp3", "Michael Jackson", "Fly Away", 3 * 60 + 34, 1983, 13); 
-     
-     System.out.println(playlistdbdao.getAllPlaylist());
-    }
-            
-            
-    
-    
+                
     //opretter en ny playlist 
     public Playlist createPlaylist(String name) throws Exception
     {

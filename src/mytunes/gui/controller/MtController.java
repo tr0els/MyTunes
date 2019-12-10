@@ -114,8 +114,8 @@ public class MtController implements Initializable
     @FXML
     private ListView songsFromPlaylist;
     
-    private MediaModel mediaModel = new MediaModel();
-    private PlaylistModel playlistModel = new PlaylistModel();
+    private MediaModel mediaModel;
+    private PlaylistModel playlistModel;
     private MediaPlayerModel mpModel = new MediaPlayerModel();
     
     private int currentSong = 0;
@@ -124,6 +124,12 @@ public class MtController implements Initializable
     
     private int countId = 0;
     
+    
+    public MtController() throws Exception
+    {
+     mediaModel = new MediaModel();
+     playlistModel = new PlaylistModel();
+    }
     
     /**
      * Initializes the controller class. This method is automatically called
@@ -335,7 +341,7 @@ public class MtController implements Initializable
     }
     
     @FXML
-    private void searchSong(KeyEvent event)
+    private void searchSong(KeyEvent event) throws Exception 
     {
         String input = searchField.getText();
         ObservableList<Media> result = mediaModel.getSearchResult(input);
