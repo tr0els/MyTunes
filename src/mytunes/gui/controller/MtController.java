@@ -299,6 +299,7 @@ public class MtController implements Initializable
         Parent root = loader.load();
         
         SongPopupController SongPopupController = loader.getController();
+        SongPopupController.transfer(mediaModel);
         //SongPopupController.createSong(mediaModel);
 
         Stage stage = new Stage();
@@ -433,7 +434,6 @@ public class MtController implements Initializable
         songsFromPlaylist.getItems().clear();
         countId = 0;
         displaySongsFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
-        
     }
     
 

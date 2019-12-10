@@ -21,6 +21,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import mytunes.bll.util.ConvertTime;
 import mytunes.gui.model.MediaModel;
 
 /**
@@ -57,7 +59,7 @@ public class SongPopupController implements Initializable
     private TextField yearTextField;
     @FXML
     private ComboBox comboCategory;
-    
+
     private Media mainMedia;
     private String title;
     private String artist;
@@ -67,6 +69,9 @@ public class SongPopupController implements Initializable
     @FXML
     private Label noMetaData;
     
+    ConvertTime CT = new ConvertTime();
+    
+    MediaModel mediaModel;
 
     /**
      * Initializes the controller class.
@@ -75,36 +80,37 @@ public class SongPopupController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         categories();
-    }    
+    }
 
     @FXML
     private void selectFile(ActionEvent event)
     {
-        
+
         String path;
-        
+
         FileChooser fc = new FileChooser();
         //fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("*.mp3"));
         File file = fc.showOpenDialog(null);
         path = file.getAbsolutePath();
         path = path.replace("\\", "/");
         fileTextField.setText(path);
-        
+
         Media media = new Media(new File(path).toURI().toString());
         getMetaData(media);
     }
-    
+
     public void getMetaData(Media med)
     {
-       med.getMetadata().addListener((MapChangeListener<String, Object>) change -> {
+        med.getMetadata().addListener((MapChangeListener<String, Object>) change ->
+        {
             if (change.wasAdded())
             {
                 handleMetadata(change.getKey(), change.getValueAdded());
             }
-            
-        }); 
+
+        });
     }
-        
+
     public void handleMetadata(String key, Object value)
     {
         if (key.equals("title"))
@@ -127,62 +133,60 @@ public class SongPopupController implements Initializable
         {
             year = Integer.parseInt(value.toString());
         }
-        
+
     }
-    
-    
+
     @FXML
     private void createMedia(ActionEvent event)
     {
-        
-        
-        
-        
+        handleCreateSong();
+        Stage stage = (Stage) createButton.getScene().getWindow();
+        stage.close();
     }
-    
+
     @FXML
     private void handleInsertMetaData(ActionEvent event)
     {
-        if(title != null)
+        if (title != null)
         {
             titleTextField.setText(title);
         }
-        
-        if(artist != null)
+
+        if (artist != null)
         {
             artistTextField.setText(artist);
         }
-        
-        if(category != 21)
+
+        if (category != 21)
         {
             comboCategory.getSelectionModel().select(category);
         }
-        
-        if(time != 30)
+
+        if (time != 30)
         {
-            time(time);
+            CT.secToTime(time);
         }
-        
-        if(year != 30)
+
+        if (year != 30)
         {
             yearTextField.setText(year + "");
         }
-        
+
         if (title == null && artist == null && category == 21 && time == 30 && year == 30)
         {
             noMetaData.setText("No metadata found.");
         }
     }
-    
+
     private void categories()
     {
         comboCategory.setItems(FXCollections.observableArrayList(
-                "Blues", 
-                "Classic Rock", 
-                "Country", 
-                "Dance", 
-                "Disco", 
-                "Funk", 
+                "Blues",
+                "Classic Rock",
+                "Country",
+                "Dance",
+                "Disco",
+                "Funk",
                 "Grunge",
                 "Hip-Hop",
                 "Jazz",
@@ -199,44 +203,21 @@ public class SongPopupController implements Initializable
                 "Industrial",
                 "Alternative")
         );
-        
+
     }
-    
-    private void time(int time)
+
+    public void handleCreateSong()
     {
-        int minutes = time/60;
-        int hours = time/60/60;
-        int seconds = time-hours*60*60-minutes*60;
-        
-        
-        if(hours == 0)
-        {
-            timeTextField.setText(minutes + ":" + seconds);
-            
-            if(seconds < 10)
-            {
-                timeTextField.setText(minutes + ":" + "0" + seconds);
-            }
-        }
-        else
-        {
-            timeTextField.setText(hours + ":" + minutes + ":" + seconds);
-            if(minutes < 10)
-            {
-                timeTextField.setText(hours + ":" + "0" + minutes + ":" + seconds);
-            }
-           
-            else if(seconds < 10)
-            {
-                timeTextField.setText(hours + ":" + minutes + ":" + "0" + seconds);
-            }
-             
-            else if(minutes < 10 && seconds < 10)
-            {
-                timeTextField.setText(hours + ":" + "0" + minutes + ":" + "0" + seconds);
-            }
-            
-        }
+        mediaModel.createMovie(fileTextField.getText(), artistTextField.getText(), titleTextField.getText(), 
+                CT.timeToSec(timeTextField.getText()), Integer.parseInt(yearTextField.getText()), 
+                comboCategory.getItems().indexOf(comboCategory.getSelectionModel().getSelectedItem()));
+                
     }
-    
-}
+
+    public void transfer(MediaModel model)
+    {
+        mediaModel = model;
+    }
+
+}   
+
