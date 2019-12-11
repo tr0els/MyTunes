@@ -5,8 +5,6 @@
  */
 package mytunes.gui.controller;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -18,7 +16,6 @@ import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,7 +35,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
@@ -159,7 +155,7 @@ public class MtController implements Initializable
     private void handleSong(MouseEvent event)
     {
         mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
-        //currentSongLabel.setText(songsTable.getSelectionModel().getSelectedItem().getTitle() + "... is playing");
+        currentSongLabel.setText(songsTable.getSelectionModel().getSelectedItem().getTitle() + "... is playing");
         mediaView.getMediaPlayer().setVolume(0.5);
         mpModel.playNextSong(mediaView, mediaModel, songsTable, currentSongLabel, pauseButton);
     }
@@ -360,23 +356,18 @@ public class MtController implements Initializable
     //WORKS
     private void addSongToPlaylist(Playlist list)
     {
-        songLists = FXCollections.observableArrayList(list.getMedias());
         Media selectedMedia = songsTable.getSelectionModel().getSelectedItem();
         list.addMedia(selectedMedia);
         countId++;
         songsFromPlaylist.getItems().add(countId + ": " + selectedMedia.getTitle());
     }
 
-    // WORKS
-    private void displaySongsFromPlaylist(Playlist list)
-    {
-        songLists = FXCollections.observableArrayList(list.getMedias());
-        for (Media song : songLists)
-        {
-            countId++;
-            songsFromPlaylist.getItems().add(countId + ": " + song.getTitle());
-        }
-    }
+//    // WORKS
+//    private void displaySongsFromPlaylist(Playlist list)
+//    {
+//        songLists = FXCollections.observableArrayList(list.getMedias());
+//        songsFromPlaylist.setItems(songLists);
+//    }
 
     //WORKS
     private void deleteSongFromPlaylist(Playlist list)
@@ -400,8 +391,6 @@ public class MtController implements Initializable
     @FXML
     private void handleSongsFromPlayList(MouseEvent event)
     {
-        songsFromPlaylist.getItems().clear();
-        countId = 0;
         displaySongsFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
     }
 
