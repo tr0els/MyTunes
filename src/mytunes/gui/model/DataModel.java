@@ -34,7 +34,7 @@ public class DataModel {
         bll = new BLLManager();
         
         allPlaylists = FXCollections.observableArrayList();
-        songsOnSelectedPlaylist = FXCollections.observableArrayList(); // or null and make a new obslist everytime its set? this is only given an already existing obslist so no need for a new right?
+        songsOnSelectedPlaylist = null; // or null and make a new obslist everytime its set? this is only given an already existing obslist so no need for a new right?
         allSongs = FXCollections.observableArrayList();
         selectedPlaylist = new SimpleObjectProperty<>();
 
@@ -107,7 +107,7 @@ public class DataModel {
     // sets the songlist of the selected playlist as the content for the listview 
     // (should be called from controller when a playlist is selected, the listview should hopefulle update automatically since it should run on the songsOnSelectedPlaylist)
     public void displaySongsInPlaylist(Playlist playlist) { // or just Media?
-        songsOnSelectedPlaylist.setAll(playlist.getMedias());
+        songsOnSelectedPlaylist = playlist.getMedias();
     }
     
     // adds song to the currently selected playlist
