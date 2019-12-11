@@ -353,17 +353,17 @@ public class MtController implements Initializable
     @FXML
     private void addSongButton(ActionEvent event)
     {
-        addSongToPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
+        dataModel.addSongToPlaylist(songsTable.getSelectionModel().getSelectedItem());
     }
 
-    //WORKS
-    private void addSongToPlaylist(Playlist list)
-    {
-        Media selectedMedia = songsTable.getSelectionModel().getSelectedItem();
-        list.addMedia(selectedMedia);
-        countId++;
-        songsFromPlaylist.getItems().add(countId + ": " + selectedMedia.getTitle());
-    }
+//    //WORKS
+//    private void addSongToPlaylist(Playlist list)
+//    {
+//        Media selectedMedia = songsTable.getSelectionModel().getSelectedItem();
+//        list.addMedia(selectedMedia);
+//        countId++;
+//        songsFromPlaylist.getItems().add(countId + ": " + selectedMedia.getTitle());
+//    }
 
 //    // WORKS
 //    private void displaySongsFromPlaylist(Playlist list)
