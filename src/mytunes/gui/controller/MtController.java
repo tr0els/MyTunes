@@ -298,11 +298,23 @@ public class MtController implements Initializable
     @FXML
     private void openPlaylistPopup(ActionEvent event) throws Exception
     {
-        Stage stage = new Stage();
-        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/mytunes/gui/view/PlaylistPopupView.fxml")));
+        
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/PlaylistPopupView.fxml"));
+        Parent root = loader.load();
 
-        stage.setScene(scene);
+        PlaylistPopupController playlistPopupController = loader.getController();
+        playlistPopupController.transfer(playlistModel); 
+     
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
         stage.show();
+//        Stage stage = new Stage();
+//        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/mytunes/gui/view/PlaylistPopupView.fxml")));
+//
+//        stage.setScene(scene);
+//        stage.show();
     }
 
     @FXML

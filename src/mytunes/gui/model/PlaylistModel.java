@@ -31,19 +31,21 @@ public class PlaylistModel {
         return playlists;
     }
 
-    public void createPlaylist(String name) {
+    public void createPlaylist(String name) throws Exception 
+    {
         Playlist playlist = bll.createPlaylist(name);
         playlists.add(playlist);
+     
     }
 
-    public static void main(String[] args) throws Exception 
-    {
-        BLLManager bll = new BLLManager();
-
-        List<Playlist> playlists = bll.getAllPlaylists();
-
-        for (Playlist playlist : playlists) {
-            System.out.println("playlist name is: " + playlist.getName());
-        }
-    }
+//    public static void main(String[] args) throws Exception 
+//    {
+//        BLLManager bll = new BLLManager();
+//
+//        List<Playlist> playlists = bll.getAllPlaylists();
+//
+//        for (Playlist playlist : playlists) {
+//            System.out.println("playlist name is: " + playlist.getName());
+//        }
+//    }
 }

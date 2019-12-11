@@ -13,6 +13,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import mytunes.gui.model.PlaylistModel;
 
 /**
  * FXML Controller class
@@ -28,6 +30,8 @@ public class PlaylistPopupController implements Initializable
     private TextField titleTextField;
     @FXML
     private Button createButton;
+    
+    PlaylistModel playlistModel; 
 
     /**
      * Initializes the controller class.
@@ -39,9 +43,22 @@ public class PlaylistPopupController implements Initializable
     }    
 
     @FXML
-    private void createPlaylist(ActionEvent event)
+    private void createPlaylist(ActionEvent event) throws Exception
     {
-        
+        handleCreatePlaylist();
+        Stage stage = (Stage) createButton.getScene().getWindow();
+        stage.close();
     }
     
+    public void handleCreatePlaylist() throws Exception 
+    {   
+          playlistModel.createPlaylist(titleTextField.getText());
+              
+    }
+    
+    
+    public void transfer(PlaylistModel model)
+    {
+        playlistModel = model;
+    }
 }

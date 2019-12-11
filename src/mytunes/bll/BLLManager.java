@@ -21,7 +21,7 @@ import mytunes.dal.database.PlaylistDBDAO;
 public class BLLManager {
 
     // connect to dal layer (mock for now)
-   private final MockManager mock = new MockManager();
+  // private final MockManager mock = new MockManager();
     private final MediaDBDAO mediaDB; 
     private final PlaylistDBDAO playlistDB;
 
@@ -72,9 +72,10 @@ public class BLLManager {
         return playlistDB.getAllPlaylist();
     }
     
-    public Playlist createPlaylist(String name) {
-        //dal.createPlaylist(name);
-        return null;
+    public Playlist createPlaylist(String name) throws Exception 
+    {
+       Playlist playlist = playlistDB.createPlaylist(name);
+       return playlist;
     }
 
     // think this functionality will be needed, maybe use with listener
