@@ -52,6 +52,9 @@ public class EditPlaylistViewController implements Initializable
     @FXML
     private void savePlaylist(ActionEvent event)
     {
+        
+        
+        
         this.pList.setName(titleTextField.getText());
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
