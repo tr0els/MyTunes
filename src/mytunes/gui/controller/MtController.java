@@ -407,6 +407,7 @@ public class MtController implements Initializable
     private void handleSongsFromPlayList(MouseEvent event)
     {
         dataModel.displaySongsInPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
+        populateSongsInPlaylistList();
     }
 
     @FXML
