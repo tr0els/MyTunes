@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import mytunes.be.Playlist;
+import mytunes.gui.model.PlaylistModel;
 
 /**
  * FXML Controller class
@@ -33,6 +34,8 @@ public class EditPlaylistViewController implements Initializable
     private Button saveButton;
     
     private Playlist pList;
+    
+     PlaylistModel playlistModel; 
 
     /**
      * Initializes the controller class.
@@ -43,7 +46,7 @@ public class EditPlaylistViewController implements Initializable
         // TODO
     }    
     
-    public void transferMedia(Playlist pl)
+    public void transferPlaylist(Playlist pl)
     {
         titleTextField.setText(pl.getName());
         pList = pl;
@@ -52,12 +55,11 @@ public class EditPlaylistViewController implements Initializable
     @FXML
     private void savePlaylist(ActionEvent event)
     {
-        
-        
-        
         this.pList.setName(titleTextField.getText());
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
     }
+    
+   
     
 }
