@@ -106,8 +106,8 @@ public class DataModel {
     
     // sets the songlist of the selected playlist as the content for the listview 
     // (should be called from controller when a playlist is selected, the listview should hopefulle update automatically since it should run on the songsOnSelectedPlaylist)
-    public void displaySongsInPlaylist(ObservableList<Media> songlist) { // or just Media?
-        songsOnSelectedPlaylist = songlist;
+    public void displaySongsInPlaylist(Playlist playlist) { // or just Media?
+        songsOnSelectedPlaylist.addAll(playlist.getMedias());
     }
     
     // adds song to the currently selected playlist
