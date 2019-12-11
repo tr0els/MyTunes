@@ -73,7 +73,7 @@ public class MediaPlayerModel
             mv.getMediaPlayer().play();
             button.setText("Pause");
             
-            //songLabel.setText(media.getSelectionModel().getSelectedItem().getTitle() + "... is playing");
+            songLabel.setText(media.getSelectionModel().getSelectedItem().getTitle() + "... is playing");
             
         });
     }

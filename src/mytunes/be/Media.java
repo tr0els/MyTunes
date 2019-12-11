@@ -134,6 +134,13 @@ public class Media {
         return numPlays;
     }
 
+    @Override
+    public String toString()
+    {
+        return getTitle();
+    }
+    
+    
     // not using this yet, so remember to remove later if still unused
     @Override
     public boolean equals(Object obj) {
