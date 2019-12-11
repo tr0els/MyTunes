@@ -133,6 +133,7 @@ public class MtController implements Initializable
     {
         mediaModel = new MediaModel();
         playlistModel = new PlaylistModel();
+        dataModel = new DataModel();
     }
     
 
