@@ -33,6 +33,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
@@ -161,6 +162,33 @@ public class MtController implements Initializable
         currentSongLabel.setText(songsTable.getSelectionModel().getSelectedItem().getTitle() + "... is playing");
         mediaView.getMediaPlayer().setVolume(0.5);
         mpModel.playNextSong(mediaView, mediaModel, songsTable, currentSongLabel, pauseButton);
+        ;
+    }
+    
+    @FXML
+    private void handleSongFromPlaylist()
+    {
+        if(mediaView.getMediaPlayer().getStatus() == Status.PLAYING)
+        {
+            mediaView.getMediaPlayer().stop();
+            handleSongFromPlaylist2();
+            mediaView.getMediaPlayer().play();
+            pauseButton.setText("Pause");
+        }
+        else if(mediaView.getMediaPlayer().getStatus() == Status.PAUSED || mediaView.getMediaPlayer().getStatus() == Status.STOPPED)
+        {
+            handleSongFromPlaylist2();
+        }
+    }
+    
+    private void handleSongFromPlaylist2()
+    {
+        int chosenSong = songsFromPlaylist.getSelectionModel().getSelectedIndex();
+        mediaView.setMediaPlayer(mpModel.getSong(dataModel.getSongsOnPlaylist().get(chosenSong).getSource()));
+        currentSongLabel.setText(dataModel.getSongsOnPlaylist().get(chosenSong).getTitle() + "... is playing");
+        mediaView.getMediaPlayer().setVolume(0.5);
+        mpModel.playNextSongPL(mediaView, mediaModel, songsFromPlaylist, currentSongLabel, pauseButton, dataModel.getSongsOnPlaylist().get(chosenSong).getTitle(), chosenSong, dataModel);
+        
     }
     
     private void populatePlaylistsTable()
