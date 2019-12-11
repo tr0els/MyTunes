@@ -449,7 +449,7 @@ public class MtController implements Initializable
         if (playlistsTable.getSelectionModel().getSelectedItem() != null)
         {
             EditPlaylistViewController EditPlaylistViewController = loader.getController();
-            EditPlaylistViewController.transferMedia(playlistsTable.getSelectionModel().getSelectedItem());
+            EditPlaylistViewController.transferPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));

@@ -77,6 +77,8 @@ public class BLLManager {
        Playlist playlist = playlistDB.createPlaylist(name);
        return playlist;
     }
+    
+    
 
     // think this functionality will be needed, maybe use with listener
     Playlist getPlaylist(int id) { // id or index?
