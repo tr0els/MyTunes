@@ -11,6 +11,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import mytunes.bll.util.ConvertTime;
 
 /**
@@ -21,11 +23,12 @@ public class Playlist {
 
     private int id;
     private SimpleStringProperty name;
-    private List<Media> medias = new ArrayList();
+    private ObservableList<Media> medias;
 
     public Playlist(int id, String name) {
         this.id = id;
         this.name = new SimpleStringProperty(name);
+        this.medias = FXCollections.observableArrayList();
     }
  
     public int getId() {
@@ -44,7 +47,7 @@ public class Playlist {
         return name;
     }
 
-    public List<Media> getMedias() {
+    public ObservableList<Media> getMedias() {
         return medias;
     }
 

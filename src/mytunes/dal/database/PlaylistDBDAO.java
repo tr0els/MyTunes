@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
 
@@ -56,32 +58,39 @@ public class PlaylistDBDAO
     }
 
     //retunere alle playlister 
-    public List<Playlist> getAllPlaylist() throws Exception
+    public ObservableList<Playlist> getAllPlaylist() throws Exception
     {
-        try ( Connection con = dbCon.getConnection())
+        try (Connection con = dbCon.getConnection())
         {
             String sql = "SELECT * FROM playlist;";
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(sql);
-            ArrayList<Playlist> allPlaylist = new ArrayList<>();
+            
+            // new empty list to hold all playlists
+            ObservableList<Playlist> allPlaylist = FXCollections.observableArrayList();
+            
+            // get all playlists from database and put them in the list of playlists
             while (rs.next())
             {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
 
+                // save the playlist data in a new playlist object
                 Playlist playlist = new Playlist(id, name);
+                
+                // get songs in the playlist and put them in the playlists songlist
+                for (Media media : getPlaylist(playlist)) {
+                    playlist.getMedias().add(media);
+                }
+                
+                // add the complete playlist to the list of playlists
                 allPlaylist.add(playlist);
-                for (int i = 0; i < allPlaylist.size(); i++)
-            {
-             
-                    List<Media> playlistwithsongs = getPlaylist(allPlaylist.get(i));
-                    
             }
-            }
+            
             return allPlaylist;
-
         }
     }
+
     // retunere én playliste med dens sange
     public List<Media> getPlaylist(Playlist playlist) throws Exception
     {

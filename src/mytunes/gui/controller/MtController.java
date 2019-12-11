@@ -145,7 +145,7 @@ public class MtController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         populatePlaylistsTable();
-        //populatePlaylistMediaList();
+        populateSongsInPlaylistList();
         populateSongsTable();
 
         
