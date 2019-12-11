@@ -305,7 +305,7 @@ public class MtController implements Initializable
 
         PlaylistPopupController playlistPopupController = loader.getController();
         playlistPopupController.transfer(playlistModel); 
-        //SongPopupController.createSong(mediaModel);
+     
 
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
