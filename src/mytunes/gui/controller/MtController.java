@@ -176,8 +176,8 @@ public class MtController implements Initializable
 
     private void populateSongsInPlaylistList()
     {
-        //change to list view        
-        //playlistTable.setItems(playlistModel.getAllPlaylists());
+        // add data to listview
+        songsFromPlaylist.setItems(dataModel.getSongsOnPlaylist());
     }
 
     private void populateSongsTable()
