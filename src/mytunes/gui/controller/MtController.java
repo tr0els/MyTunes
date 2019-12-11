@@ -40,6 +40,7 @@ import mytunes.be.Media;
 import mytunes.be.Playlist;
 import mytunes.gui.model.MediaPlayerModel;
 import mytunes.dal.MockManager;
+import mytunes.gui.model.DataModel;
 import mytunes.gui.model.MediaModel;
 import mytunes.gui.model.PlaylistModel;
 
@@ -116,6 +117,7 @@ public class MtController implements Initializable
     
     private MediaModel mediaModel;
     private PlaylistModel playlistModel;
+    private DataModel dataModel;
 
     private MediaPlayerModel mpModel = new MediaPlayerModel();
 
@@ -168,7 +170,7 @@ public class MtController implements Initializable
         playlistsTimeTotalColumn.setCellValueFactory(cellData -> cellData.getValue().totalTimeProperty());
 
         // add data to the table
-        playlistsTable.setItems(playlistModel.getAllPlaylists());
+        playlistsTable.setItems(dataModel.getAllPlaylists());
     }
 
     private void populateSongsInPlaylistList()
@@ -391,7 +393,7 @@ public class MtController implements Initializable
     @FXML
     private void handleSongsFromPlayList(MouseEvent event)
     {
-        displaySongsFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
+        dataModel.displaySongsInPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
     }
 
     @FXML
@@ -422,7 +424,7 @@ public class MtController implements Initializable
 
         songsFromPlaylist.getItems().clear();
         countId = 0;
-        displaySongsFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
+        //displaySongsFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
     }
 
     @FXML
