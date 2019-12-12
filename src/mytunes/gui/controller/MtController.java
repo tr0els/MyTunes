@@ -117,7 +117,7 @@ public class MtController implements Initializable
 
     private MediaModel mediaModel;
     private PlaylistModel playlistModel;
-    private DataModel dataModel;
+    public DataModel dataModel;
 
     private MediaPlayerModel mpModel = new MediaPlayerModel();
 
@@ -154,6 +154,10 @@ public class MtController implements Initializable
     {
         mpModel.overRideSongList(songsTable.getItems(), songsTable.getSelectionModel().getSelectedIndex());
         mpModel.handlePlaySong(mediaView, currentSongLabel, pauseButton);
+        mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
+        currentSongLabel.setText(songsTable.getSelectionModel().getSelectedItem().getTitle() + "... is playing");
+        mediaView.getMediaPlayer().setVolume(0.5);
+        mpModel.playNextSong(mediaView, mediaModel, songsTable, currentSongLabel, pauseButton);
         
     }
 
@@ -297,7 +301,7 @@ public class MtController implements Initializable
     }
 
     @FXML
-    private void handleEditSong(ActionEvent event) throws IOException
+    private void handleEditSong(ActionEvent event) throws Exception
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/EditSongPopUp.fxml"));
         Parent root = loader.load();
@@ -305,7 +309,7 @@ public class MtController implements Initializable
         if (songsTable.getSelectionModel().getSelectedItem() != null)
         {
             EditSongPopUpController EditSongPopUpController = loader.getController();
-            EditSongPopUpController.transferMedia(songsTable.getSelectionModel().getSelectedItem());
+            EditSongPopUpController.transferMedia(songsTable.getSelectionModel().getSelectedItem(),dataModel);
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -340,7 +344,15 @@ public class MtController implements Initializable
         }
 
     }
-    
+
+    //WORKS
+    @FXML
+    private void handleSongsFromPlayList(MouseEvent event)
+    {
+        dataModel.setSelectedPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
+        populateSongsInPlaylistList(); // calls setItems again
+    }
+
     @FXML
     private void handleDeleteSongFromPlaylist(ActionEvent event)
     {
@@ -379,7 +391,7 @@ public class MtController implements Initializable
         {
             EditPlaylistViewController EditPlaylistViewController = loader.getController();
             EditPlaylistViewController.transferPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
-
+            EditPlaylistViewController.tranferDatamodel(dataModel);
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();

@@ -19,6 +19,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import mytunes.be.Media;
 import mytunes.bll.util.ConvertTime;
+import mytunes.gui.model.DataModel;
+import mytunes.gui.model.MediaModel;
 
 /**
  * FXML Controller class
@@ -50,8 +52,10 @@ public class EditSongPopUpController implements Initializable
     private TextField editYear;
 
     private Media media;
-    
+
     private ConvertTime CT = new ConvertTime();
+    
+    private DataModel dataModel;
 
     /**
      * Initializes the controller class.
@@ -61,7 +65,7 @@ public class EditSongPopUpController implements Initializable
     {
     }
 
-    public void transferMedia(Media media)
+    public void transferMedia(Media media, DataModel dataModel)
     {
         editTitle.setText(media.getTitle());
         editArtist.setText(media.getArtist());
@@ -69,8 +73,9 @@ public class EditSongPopUpController implements Initializable
         editTime.setText(CT.secToTime(media.getTime()));
         categories(media);
         this.media = media;
+        this.dataModel = dataModel;
     }
-    
+
     private void categories(Media media)
     {
         comboCategory.setItems(FXCollections.observableArrayList(
@@ -104,10 +109,15 @@ public class EditSongPopUpController implements Initializable
     @FXML
     private void handleEditFile(ActionEvent event)
     {
-        this.media.setTitle(editTitle.getText());
-        this.media.setArtist(editArtist.getText());
-        this.media.setYear(Integer.parseInt(editYear.getText()));
-        this.media.setTime(CT.timeToSec(editTime.getText()));
+
+        media.setTitle(editTitle.getText());
+        media.setArtist(editArtist.getText());
+        media.setYear(Integer.parseInt(editYear.getText()));
+        media.setTime(CT.timeToSec(editTime.getText()));
+        media.setNumPlays(10);
+
+        dataModel.editSong(media);
+        
         Stage stage = (Stage) editFileButton.getScene().getWindow();
         stage.close();
 
@@ -117,5 +127,7 @@ public class EditSongPopUpController implements Initializable
     private void handleCategory(ActionEvent event)
     {
     }
+    
+   
 
 }
