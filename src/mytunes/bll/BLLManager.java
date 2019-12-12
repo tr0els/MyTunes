@@ -83,6 +83,11 @@ public class BLLManager {
      playlistDB.deletePlaylist(playlist);
     
     }
+    
+    public void editPlaylist(Playlist playlist, String name) throws Exception 
+    {
+     playlistDB.updatePlaylist(playlist, name);
+    }
 
     // think this functionality will be needed, maybe use with listener
     Playlist getPlaylist(int id) { // id or index?

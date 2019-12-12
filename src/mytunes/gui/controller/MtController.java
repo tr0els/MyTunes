@@ -346,7 +346,7 @@ public class MtController implements Initializable
     }
 
     @FXML
-    private void handleEditSong(ActionEvent event) throws IOException
+    private void handleEditSong(ActionEvent event) throws Exception
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/EditSongPopUp.fxml"));
         Parent root = loader.load();
