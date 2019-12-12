@@ -5,13 +5,16 @@
  */
 package mytunes.gui.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
 import mytunes.bll.BLLManager;
+import mytunes.dal.MockManager;
 
 /**
  *
@@ -161,5 +164,25 @@ public class DataModel {
     public void deleteSong(Media media) {
         allSongs.remove(media);
         //bll.deleteSong(media);
+    }
+    
+    public ObservableList<Media> search(String query)
+    {
+        MockManager mM = new MockManager();
+        List<Media> searchBase = mM.getAllMedias();
+        List<Media> filter = new ArrayList<>();
+
+        for (Media song : searchBase)
+        {
+            if (song.getTitle().toLowerCase().contains(query.toLowerCase())
+                    || song.getArtist().toLowerCase().contains(query.toLowerCase()))
+            {
+                filter.add(song);
+            }
+        }
+
+        ObservableList<Media> result = FXCollections.observableList(filter);
+
+        return result;
     }
 }
