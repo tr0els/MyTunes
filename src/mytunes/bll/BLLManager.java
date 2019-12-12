@@ -42,11 +42,11 @@ public class BLLManager {
         //return null;
     }
 
-    public void updateMedia(Media media) {
-
+    public void updateSong(Media media) throws Exception {
+        mediaDB.deleteMedia(media);
     }
 
-    public void deleteMedia(Media media) {
+    public void deleteSong(Media media) {
 
     }
 
@@ -72,7 +72,6 @@ public class BLLManager {
     public void deletePlaylist(Playlist playlist) throws Exception 
     {
      playlistDB.deletePlaylist(playlist);
-    
     }
 
     public List<String> getAllCategories() {
