@@ -157,7 +157,7 @@ public class MtController implements Initializable
         mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
         currentSongLabel.setText(songsTable.getSelectionModel().getSelectedItem().getTitle() + "... is playing");
         mediaView.getMediaPlayer().setVolume(0.5);
-        mpModel.playNextSong(mediaView, mediaModel, songsTable, currentSongLabel, pauseButton);
+        mpModel.playNextSong(mediaView, currentSongLabel, pauseButton);
         
     }
 
@@ -433,7 +433,7 @@ public class MtController implements Initializable
     @FXML
     private void handleSongsFromPlaylist(MouseEvent event)
     {
-        dataModel.displaySongsInPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
+        dataModel.setSelectedPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
         populateSongsInPlaylistList();
     }
 
