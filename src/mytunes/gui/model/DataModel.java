@@ -82,7 +82,7 @@ public class DataModel {
     }
     
     public void deletePlaylist() throws Exception {
-        //bll.deletePlaylist(selectedPlaylist); // a try with catch would be a good idea here
+        bll.deletePlaylist(selectedPlaylist); // a try with catch would be a good idea here
         allPlaylists.remove(selectedPlaylist);
         songsOnSelectedPlaylist.clear();
         selectedPlaylist = null;
