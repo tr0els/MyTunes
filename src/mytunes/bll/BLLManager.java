@@ -92,7 +92,8 @@ public class BLLManager
 
     public void editPlaylist (Playlist playlist) throws Exception 
     {
-     playlistDB.updatePlaylist (playlist);
+     playlistDB.updatePlaylist(playlist);
+    }
 
     public void deletePlaylist(Playlist playlist) throws Exception
     {

@@ -66,7 +66,7 @@ public class EditPlaylistViewController implements Initializable
         stage.close();
     }
     
-    public void handelEditPlaylist () throws Exception 
+    public void handelEditPlaylist() throws Exception 
     {  
         pList.setName(titleTextField.getText());
         dataModel.updatePlaylist(pList);
