@@ -308,6 +308,19 @@ public class MtController implements Initializable
     }
 
     //WORKS
+    private void deleteSongFromPlaylist(Playlist list) throws Exception
+    {
+        int input = JOptionPane.showConfirmDialog(null, "Delete the song from the playlist?", "Select an Option...",
+                JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+
+        // 0=yes, 1=no.
+        if (input == JOptionPane.YES_OPTION)
+        {
+            dataModel.deleteSongFromPlaylist(songsFromPlaylist.getSelectionModel().getSelectedItem());
+        }
+
+    }
+
     @FXML
     private void handleSongsFromPlayList(MouseEvent event)
     {
@@ -316,7 +329,7 @@ public class MtController implements Initializable
     }
 
     @FXML
-    private void handleDeleteSongFromPlaylist(ActionEvent event)
+    private void handleDeleteSongFromPlaylist(ActionEvent event) throws Exception
     {
         if (songsFromPlaylist.getSelectionModel().getSelectedItem() != null)
         {
@@ -384,7 +397,7 @@ public class MtController implements Initializable
     }
 
     @FXML
-    private void handleDeleteSong(ActionEvent event)
+    private void handleDeleteSong(ActionEvent event) throws Exception
     {
         if (songsTable.getSelectionModel().getSelectedItem() != null)
         {

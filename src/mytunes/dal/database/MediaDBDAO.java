@@ -122,7 +122,7 @@ public class MediaDBDAO
     {
         Connection con = dbCon.getConnection();
         int id = media.getId();
-        String sql = "UPDATE songs_2 set source = ?, artist = ? ,title=?, time=?, year=?,category=?, numplays=? WHERE id="+id+";";
+        String sql = "UPDATE songs_2 set source = ?, artist = ? ,title=?, time=?, year=?,category=? WHERE id="+id+";";
          PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, media.getSource());
             ps.setString(2, media.getArtist());
@@ -130,7 +130,7 @@ public class MediaDBDAO
             ps.setInt(4, media.getTime());
             ps.setInt(5, media.getYear());
             ps.setInt(6, media.getCategory());
-            ps.setInt(7, media.getNumPlays());
+           // ps.setInt(7, media.getNumPlays());
         
         ps.executeUpdate();
         ps.close();
