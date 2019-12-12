@@ -117,8 +117,8 @@ public class DataModel {
     }
 
     // remove song from the currently selected playlist
-    public void deleteSongFromPlaylist(Media media) {
-        //bll.removeSongFromPlaylist(Media media);
+    public void deleteSongFromPlaylist(Media media) throws Exception {
+        bll.removeSongFromPlaylist(selectedPlaylist, media);
         songsOnSelectedPlaylist.remove(media);
     }
 
@@ -151,7 +151,7 @@ public class DataModel {
         bll.updateMedia(media);
     }
     
-    public void deleteSong(Media media) {
+    public void deleteSong(Media media) throws Exception {
         allSongs.remove(media);
         bll.deleteSong(media);
     }
