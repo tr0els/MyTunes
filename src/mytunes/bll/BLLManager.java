@@ -69,16 +69,16 @@ public class BLLManager {
        return playlist;
     }
     
+    public void updatePlaylist(Playlist playlist, String name) throws Exception 
+    {
+     playlistDB.updatePlaylist(playlist, name);
+    }
+    
     public void deletePlaylist(Playlist playlist) throws Exception 
     {
      playlistDB.deletePlaylist(playlist);
 
     
-    }
-    
-    public void editPlaylist(Playlist playlist, String name) throws Exception 
-    {
-     playlistDB.updatePlaylist(playlist, name);
     }
 
     // think this functionality will be needed, maybe use with listener
