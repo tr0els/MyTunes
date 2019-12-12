@@ -19,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import mytunes.be.Media;
 import mytunes.bll.util.ConvertTime;
+import mytunes.gui.model.MediaModel;
 
 /**
  * FXML Controller class
@@ -50,8 +51,10 @@ public class EditSongPopUpController implements Initializable
     private TextField editYear;
 
     private Media media;
-    
+
     private ConvertTime CT = new ConvertTime();
+
+    private MediaModel mediaModel;
 
     /**
      * Initializes the controller class.
@@ -70,7 +73,7 @@ public class EditSongPopUpController implements Initializable
         categories(media);
         this.media = media;
     }
-    
+
     private void categories(Media media)
     {
         comboCategory.setItems(FXCollections.observableArrayList(
@@ -102,12 +105,16 @@ public class EditSongPopUpController implements Initializable
     }
 
     @FXML
-    private void handleEditFile(ActionEvent event)
+    private void handleEditFile(ActionEvent event) throws Exception
     {
+
         this.media.setTitle(editTitle.getText());
         this.media.setArtist(editArtist.getText());
         this.media.setYear(Integer.parseInt(editYear.getText()));
         this.media.setTime(CT.timeToSec(editTime.getText()));
+
+        mediaModel.updateMedia(this.media);
+
         Stage stage = (Stage) editFileButton.getScene().getWindow();
         stage.close();
 
