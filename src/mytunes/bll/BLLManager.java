@@ -68,6 +68,12 @@ public class BLLManager {
        Playlist playlist = playlistDB.createPlaylist(name);
        return playlist;
     }
+    
+    public void deletePlaylist(Playlist playlist) throws Exception 
+    {
+     playlistDB.deletePlaylist(playlist);
+    
+    }
 
     public List<String> getAllCategories() {
         // return dal.getAllCategories(); <-- uncomment when getAllCategories is complete in dal

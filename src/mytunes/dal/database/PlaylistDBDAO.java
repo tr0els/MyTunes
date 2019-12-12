@@ -127,7 +127,7 @@ public class PlaylistDBDAO
         int pId = playlist.getId();
 
         String sqlPt = "DELETE FROM playlist_content_table where playlist_id = (?); ";
-        String sqlP = "DELETE FORM playlist where id=(?);";
+        String sqlP = "DELETE FROM playlist where id=(?);";
 
         PreparedStatement ps1 = con.prepareStatement(sqlPt);
         PreparedStatement ps2 = con.prepareStatement(sqlP);

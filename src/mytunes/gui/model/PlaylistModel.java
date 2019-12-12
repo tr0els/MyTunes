@@ -37,6 +37,13 @@ public class PlaylistModel {
         playlists.add(playlist);
      
     }
+    
+    public void deletePlaylist(Playlist playlist) throws Exception
+    {
+        bll.deletePlaylist(playlist);
+        playlists.remove(playlist);
+    }
+    
 
 //    public static void main(String[] args) throws Exception 
 //    {

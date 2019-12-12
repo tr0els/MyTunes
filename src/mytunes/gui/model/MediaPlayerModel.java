@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -74,6 +75,23 @@ public class MediaPlayerModel
             button.setText("Pause");
             
             songLabel.setText(media.getSelectionModel().getSelectedItem().getTitle() + "... is playing");
+            
+        });
+    }
+    
+    public void playNextSongPL(MediaView mv, MediaModel mediaModel, ListView media, Label songLabel, Button button, String title, int chosenSong, DataModel dataModel)
+    {
+        mv.getMediaPlayer().setOnEndOfMedia(() ->
+        {
+            Media med = new Media (new File(dataModel.getSongsOnPlaylist().get(chosenSong + 1).getSource()).toURI().toString());
+           
+            MediaPlayer mediaPlayer = new MediaPlayer(med);
+            
+            mv.setMediaPlayer(mediaPlayer);
+            mv.getMediaPlayer().play();
+            button.setText("Pause");
+            
+            songLabel.setText(title + "... is playing");
             
         });
     }
