@@ -50,11 +50,10 @@ public class DataModel {
      * methods currently selected playlist and songlist
      */
    
-    // updates which playlist is currently selected and puts all songs in the playlist in songsOnPlaylist
-    // Playlist or ObservableList<Playlist>??
-    public void setSelectedPlaylist(Playlist currentSelectedPlaylist) {
-        //selectedPlaylist.set(currentSelectedPlaylist); // or use set(newSelectedPlaylist); ??
-        songsOnSelectedPlaylist.setAll(currentSelectedPlaylist.getMedias());
+    // sets references to the currently selected playlist and also the associated list of songs
+    public void setSelectedPlaylist(Playlist playlist) {
+        songsOnSelectedPlaylist = playlist.getMedias();
+        selectedPlaylist = playlist;
     }    
     
     // sets the currently selected songlist (from either a playlist or all songs)
@@ -109,14 +108,6 @@ public class DataModel {
     // returns a list of the songs in the currently selected playlist
     public ObservableList<Media> getSongsOnPlaylist() {
         return songsOnSelectedPlaylist;
-    }
-    
-    // sets the songlist of the selected playlist as the content for the listview 
-    // (should be called from controller when a playlist is selected, the listview should hopefulle update automatically since it should run on the songsOnSelectedPlaylist)
-    public void displaySongsInPlaylist(Playlist playlist) { // or just Media?
-        // setSelectedPlaylist...
-        songsOnSelectedPlaylist = playlist.getMedias();
-        selectedPlaylist = playlist; // works
     }
     
     // adds song to the currently selected playlist

@@ -396,8 +396,8 @@ public class MtController implements Initializable
     @FXML
     private void handleSongsFromPlayList(MouseEvent event)
     {
-        dataModel.displaySongsInPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
-        populateSongsInPlaylistList();
+        dataModel.setSelectedPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
+        populateSongsInPlaylistList(); // calls setItems again
     }
 
     @FXML
