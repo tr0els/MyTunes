@@ -161,30 +161,6 @@ public class MtController implements Initializable
         
     }
 
-    private void handleSongFromPlaylist()
-    {
-        if (mediaView.getMediaPlayer().getStatus() == Status.PLAYING)
-        {
-            mediaView.getMediaPlayer().stop();
-            handleSongFromPlaylist2();
-            mediaView.getMediaPlayer().play();
-            pauseButton.setText("Pause");
-        } else if (mediaView.getMediaPlayer().getStatus() == Status.PAUSED || mediaView.getMediaPlayer().getStatus() == Status.STOPPED)
-        {
-            handleSongFromPlaylist2();
-        }
-    }
-
-    private void handleSongFromPlaylist2()
-    {
-        int chosenSong = songsFromPlaylist.getSelectionModel().getSelectedIndex();
-        mediaView.setMediaPlayer(mpModel.getSong(dataModel.getSongsOnPlaylist().get(chosenSong).getSource()));
-        currentSongLabel.setText(dataModel.getSongsOnPlaylist().get(chosenSong).getTitle() + "... is playing");
-        mediaView.getMediaPlayer().setVolume(0.5);
-        mpModel.playNextSong(mediaView, currentSongLabel, pauseButton);
-
-    }
-
     private void populatePlaylistsTable()
     {
         // initialize the columns
@@ -332,20 +308,6 @@ public class MtController implements Initializable
     }
 
     //WORKS
-    private void deleteSongFromPlaylist(Playlist list)
-    {
-        int input = JOptionPane.showConfirmDialog(null, "Delete the song from the playlist?", "Select an Option...",
-                JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
-
-        // 0=yes, 1=no.
-        if (input == JOptionPane.YES_OPTION)
-        {
-            dataModel.deleteSongFromPlaylist(songsFromPlaylist.getSelectionModel().getSelectedItem());
-        }
-
-    }
-
-    //WORKS
     @FXML
     private void handleSongsFromPlayList(MouseEvent event)
     {
@@ -358,7 +320,14 @@ public class MtController implements Initializable
     {
         if (songsFromPlaylist.getSelectionModel().getSelectedItem() != null)
         {
-            deleteSongFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
+            int input = JOptionPane.showConfirmDialog(null, "Delete the song from the playlist?", "Select an Option...",
+                JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+
+            // 0=yes, 1=no.
+            if (input == JOptionPane.YES_OPTION)
+            {
+                dataModel.deleteSongFromPlaylist(songsFromPlaylist.getSelectionModel().getSelectedItem());
+            }
         }
     }
 

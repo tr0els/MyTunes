@@ -60,7 +60,8 @@ public class MediaPlayerModel
             
 
         } 
-        else if (mediaView.getMediaPlayer().getStatus() == MediaPlayer.Status.PAUSED || mediaView.getMediaPlayer().getStatus() == MediaPlayer.Status.READY)
+        else if (mediaView.getMediaPlayer().getStatus() == MediaPlayer.Status.PAUSED || 
+                mediaView.getMediaPlayer().getStatus() == MediaPlayer.Status.READY)
         {
             mediaView.getMediaPlayer().play();
             button.setText("Pause");
