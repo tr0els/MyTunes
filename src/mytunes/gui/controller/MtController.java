@@ -492,8 +492,7 @@ public class MtController implements Initializable
         
             if (input == JOptionPane.YES_OPTION)
             {
-               Playlist playlist = playlistsTable.getSelectionModel().getSelectedItem();
-               playlistModel.deletePlaylist(playlist);
+               dataModel.deletePlaylist();
             } 
         }
     }
