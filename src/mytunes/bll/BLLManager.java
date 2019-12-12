@@ -59,16 +59,12 @@ public class BLLManager
         }
     }
 
-    public void deleteMedia(Media media)
-    {
-        
-    }
     public void updateSong(Media media) throws Exception {
-        mediaDB.deleteMedia(media);
+        mediaDB.updateMedia(media);
     }
     
-    public void deleteSong(Media media) {
-
+    public void deleteSong(Media media) throws Exception {
+        mediaDB.deleteMedia(media);
     }
 
     // search in allSongs list
