@@ -76,9 +76,9 @@ public class BLLManager {
     
     }
     
-    public void editPlaylist(Playlist playlist, String name) throws Exception 
+    public void editPlaylist (Playlist playlist) throws Exception 
     {
-     playlistDB.updatePlaylist(playlist, name);
+     playlistDB.updatePlaylist (playlist);
     }
 
     // think this functionality will be needed, maybe use with listener

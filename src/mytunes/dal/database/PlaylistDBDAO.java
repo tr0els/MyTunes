@@ -181,11 +181,13 @@ public class PlaylistDBDAO
     }
 
     //opdatere en playliste med navn 
-    public void updatePlaylist(Playlist playlist, String name) throws Exception
+    public void updatePlaylist( Playlist playlist) throws Exception
     {
         Connection con = dbCon.getConnection();
+        
         int pId = playlist.getId();
-
+        String name = playlist.getName();
+               
         String sql = "Update playlist set name = (?) where playlist_id = (?);";
 
         PreparedStatement pst = con.prepareStatement(sql);

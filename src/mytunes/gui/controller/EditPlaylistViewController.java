@@ -20,6 +20,7 @@ import mytunes.be.Playlist;
 import mytunes.gui.model.DataModel;
 import mytunes.gui.model.PlaylistModel;
 
+
 /**
  * FXML Controller class
  *
@@ -35,11 +36,11 @@ public class EditPlaylistViewController implements Initializable
     @FXML
     private Button saveButton;
     
-    private DataModel dataModel;
     
-    private Playlist pList;
     
-    PlaylistModel playlistModel; 
+    Playlist pList;
+    
+    DataModel dataModel;
 
     /**
      * Initializes the controller class.
@@ -51,9 +52,9 @@ public class EditPlaylistViewController implements Initializable
     }    
     
     public void transferPlaylist(Playlist pl)
-    {
-        titleTextField.setText(pl.getName());
+    {   
         pList = pl;
+        titleTextField.setText(pl.getName());
     }
     
     @FXML
@@ -66,8 +67,9 @@ public class EditPlaylistViewController implements Initializable
     }
     
     public void handelEditPlaylist () throws Exception 
-    {
-        dataModel.updatePlaylist(pList,titleTextField.getText());
+    {  
+        pList.setName(titleTextField.getText());
+        dataModel.updatePlaylist(pList);
     }
    
     
