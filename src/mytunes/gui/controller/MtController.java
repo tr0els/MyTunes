@@ -154,10 +154,6 @@ public class MtController implements Initializable
     {
         mpModel.overRideSongList(songsTable.getItems(), songsTable.getSelectionModel().getSelectedIndex());
         mpModel.handlePlaySong(mediaView, currentSongLabel, pauseButton);
-        mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
-        currentSongLabel.setText(songsTable.getSelectionModel().getSelectedItem().getTitle() + "... is playing");
-        mediaView.getMediaPlayer().setVolume(0.5);
-        mpModel.playNextSong(mediaView, currentSongLabel, pauseButton);
         
     }
 
@@ -410,13 +406,6 @@ public class MtController implements Initializable
                 dataModel.deleteSong(songsTable.getSelectionModel().getSelectedItem());
             }
         }
-    }
-
-    @FXML
-    private void handleSongsFromPlaylist(MouseEvent event)
-    {
-        dataModel.setSelectedPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
-        populateSongsInPlaylistList();
     }
 
     @FXML
