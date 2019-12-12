@@ -37,10 +37,11 @@ public class EditPlaylistViewController implements Initializable
     private Button saveButton;
     
     
+    DataModel dataModel; 
     
     Playlist pList;
     
-    DataModel dataModel;
+   
 
     /**
      * Initializes the controller class.
@@ -53,6 +54,7 @@ public class EditPlaylistViewController implements Initializable
     
     public void transferPlaylist(Playlist pl)
     {   
+        
         pList = pl;
         titleTextField.setText(pl.getName());
     }
@@ -71,6 +73,12 @@ public class EditPlaylistViewController implements Initializable
         pList.setName(titleTextField.getText());
         dataModel.updatePlaylist(pList);
     }
+    
+    public void  tranferDatamodel(DataModel model)
+    {
+        dataModel = model;
+    }
+            
    
     
 }

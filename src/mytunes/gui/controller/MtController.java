@@ -118,7 +118,7 @@ public class MtController implements Initializable
     
     private MediaModel mediaModel;
     private PlaylistModel playlistModel;
-    private DataModel dataModel;
+    public DataModel dataModel;
 
     private MediaPlayerModel mpModel = new MediaPlayerModel();
 
@@ -162,7 +162,7 @@ public class MtController implements Initializable
         currentSongLabel.setText(songsTable.getSelectionModel().getSelectedItem().getTitle() + "... is playing");
         mediaView.getMediaPlayer().setVolume(0.5);
         mpModel.playNextSong(mediaView, mediaModel, songsTable, currentSongLabel, pauseButton);
-        ;
+        
     }
     
     @FXML
@@ -438,7 +438,7 @@ public class MtController implements Initializable
         {
             EditPlaylistViewController EditPlaylistViewController = loader.getController();
             EditPlaylistViewController.transferPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
-
+            EditPlaylistViewController.tranferDatamodel(dataModel);
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
