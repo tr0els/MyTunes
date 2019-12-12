@@ -49,9 +49,10 @@ public class MediaModel
         return output;
     }
     
-    public void updateMedia(Media media) throws Exception
+    public void updateMedia(/*Media media*/)
     {
-        bll.updateMedia(media);
+        System.out.println("Step Two");
+        //bll.updateMedia(media);
     }
     
 }

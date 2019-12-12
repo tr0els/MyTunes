@@ -354,7 +354,7 @@ public class MtController implements Initializable
         if (songsTable.getSelectionModel().getSelectedItem() != null)
         {
             EditSongPopUpController EditSongPopUpController = loader.getController();
-            EditSongPopUpController.transferMedia(songsTable.getSelectionModel().getSelectedItem());
+            EditSongPopUpController.transferMedia(songsTable.getSelectionModel().getSelectedItem(),dataModel);
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));

@@ -8,6 +8,8 @@ package mytunes.bll;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
 import mytunes.dal.MockManager;
@@ -45,9 +47,16 @@ public class BLLManager
         //return null;
     }
 
-    public void updateMedia(Media media) throws Exception
+    public void updateMedia(Media media)
     {
-        mediaDB.updateMedia(media);
+        
+        try
+        {
+            mediaDB.updateMedia(media);
+        } catch (Exception ex)
+        {
+            Logger.getLogger(BLLManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void deleteMedia(Media media)

@@ -148,7 +148,7 @@ public class DataModel {
     // sends to bll the already edited media
     public void editSong(Media media) {
         // list is already updated so just pass object to bll ??
-        //bll.editSong(media);
+        bll.updateMedia(media);
     }
     
     public void deleteSong(Media media) {

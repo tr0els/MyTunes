@@ -19,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import mytunes.be.Media;
 import mytunes.bll.util.ConvertTime;
+import mytunes.gui.model.DataModel;
 import mytunes.gui.model.MediaModel;
 
 /**
@@ -53,8 +54,8 @@ public class EditSongPopUpController implements Initializable
     private Media media;
 
     private ConvertTime CT = new ConvertTime();
-
-    private MediaModel mediaModel;
+    
+    private DataModel dataModel;
 
     /**
      * Initializes the controller class.
@@ -64,7 +65,7 @@ public class EditSongPopUpController implements Initializable
     {
     }
 
-    public void transferMedia(Media media)
+    public void transferMedia(Media media, DataModel dataModel)
     {
         editTitle.setText(media.getTitle());
         editArtist.setText(media.getArtist());
@@ -72,6 +73,7 @@ public class EditSongPopUpController implements Initializable
         editTime.setText(CT.secToTime(media.getTime()));
         categories(media);
         this.media = media;
+        this.dataModel = dataModel;
     }
 
     private void categories(Media media)
@@ -105,16 +107,16 @@ public class EditSongPopUpController implements Initializable
     }
 
     @FXML
-    private void handleEditFile(ActionEvent event) throws Exception
+    private void handleEditFile(ActionEvent event)
     {
 
-        this.media.setTitle(editTitle.getText());
-        this.media.setArtist(editArtist.getText());
-        this.media.setYear(Integer.parseInt(editYear.getText()));
-        this.media.setTime(CT.timeToSec(editTime.getText()));
+        media.setTitle(editTitle.getText());
+        media.setArtist(editArtist.getText());
+        media.setYear(Integer.parseInt(editYear.getText()));
+        media.setTime(CT.timeToSec(editTime.getText()));
 
-        mediaModel.updateMedia(this.media);
-
+        dataModel.editSong(media);
+        
         Stage stage = (Stage) editFileButton.getScene().getWindow();
         stage.close();
 
