@@ -52,6 +52,13 @@ public class BLLManager
 
     public void deleteMedia(Media media)
     {
+        
+    }
+    public void updateSong(Media media) throws Exception {
+        mediaDB.deleteMedia(media);
+    }
+    
+    public void deleteSong(Media media) {
 
     }
 
@@ -79,8 +86,33 @@ public class BLLManager
 
     public void deletePlaylist(Playlist playlist) throws Exception
     {
+        
         playlistDB.deletePlaylist(playlist);
 
+        
+    }
+    
+    public void editPlaylist(Playlist playlist, String name) throws Exception 
+    {
+     playlistDB.updatePlaylist(playlist, name);
+    }
+
+    // think this functionality will be needed, maybe use with listener
+    Playlist getPlaylist(int id) { // id or index?
+        return null;
+    }
+
+    public Playlist getCurrentPlaylist() {
+        return null;
+    }
+
+    public void setCurrentPlaylist(Playlist playlist) {
+
+    }
+
+    // handle prev/next songs in controller instead? seems simpler
+    public Media getNextMediaInPlaylist() {
+        return null;
     }
 
     public List<String> getAllCategories()

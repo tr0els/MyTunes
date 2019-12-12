@@ -44,6 +44,12 @@ public class PlaylistModel {
         playlists.remove(playlist);
     }
     
+    public void editPlaylist(Playlist playlist, String name) throws Exception 
+    {
+       bll.editPlaylist(playlist, name);
+    }
+    
+    
 
 //    public static void main(String[] args) throws Exception 
 //    {

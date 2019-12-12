@@ -8,7 +8,6 @@ package mytunes.gui.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mytunes.be.Media;
@@ -56,7 +55,7 @@ public class DataModel {
         selectedPlaylist = playlist;
     }    
     
-    // sets the currently selected songlist (from either a playlist or all songs)
+    // sets a reference to currently selected songlist (from a playlist or all songs) --> not used but could be usefull for mediaplayer?
     public void setSelectedSonglist(ObservableList<Media> songlist) {
         selectedSonglist = songlist; // or use set?
     }
@@ -76,8 +75,8 @@ public class DataModel {
     }
     
     // sends to bll the already edited playlist
-    public void updatePlaylist(Playlist playlist) throws Exception {
-        //bll.editPlaylist(playlist);
+    public void updatePlaylist(Playlist playlist, String name) throws Exception {
+        bll.editPlaylist(playlist , name);
     }
     
     public void deletePlaylist() throws Exception {
@@ -154,7 +153,7 @@ public class DataModel {
     
     public void deleteSong(Media media) {
         allSongs.remove(media);
-        //bll.deleteSong(media);
+        bll.deleteSong(media);
     }
     
     public ObservableList<Media> search(String query)
