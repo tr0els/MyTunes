@@ -44,9 +44,9 @@ public class PlaylistModel {
         playlists.remove(playlist);
     }
     
-    public void editPlaylist(Playlist playlist, String name) throws Exception 
+    public void editPlaylist(Playlist playlist) throws Exception 
     {
-       bll.editPlaylist(playlist, name);
+       bll.editPlaylist(playlist);
     }
     
     
