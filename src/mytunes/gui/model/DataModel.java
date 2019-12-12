@@ -5,13 +5,15 @@
  */
 package mytunes.gui.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import javafx.beans.property.SimpleObjectProperty;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
 import mytunes.bll.BLLManager;
+import mytunes.dal.MockManager;
 
 /**
  *
@@ -27,7 +29,7 @@ public class DataModel {
     private ObservableList<Media> allSongs; // list of all songs
 
     // keep track of currently selected playlist and songlist (unused so far)
-    private SimpleObjectProperty<Playlist> selectedPlaylist; // reference to currently selected playlist
+    private Playlist selectedPlaylist; // reference to currently selected playlist
     private ObservableList<Media> selectedSonglist; // maybe for mediaplayer? reference to selected list of songs (songsInPlaylist or allSongs) --> should be set whenever songsInplaylist or allSongs are selected??        
     
     public DataModel() throws Exception {
@@ -36,7 +38,7 @@ public class DataModel {
         allPlaylists = FXCollections.observableArrayList();
         songsOnSelectedPlaylist = null; // or null and make a new obslist everytime its set? this is only given an already existing obslist so no need for a new right?
         allSongs = FXCollections.observableArrayList();
-        selectedPlaylist = new SimpleObjectProperty<>();
+        selectedPlaylist = null;
 
         // populate playlist table and all songs table
         allPlaylists.addAll(bll.getAllPlaylists());
@@ -47,14 +49,13 @@ public class DataModel {
      * methods currently selected playlist and songlist
      */
    
-    // updates which playlist is currently selected and puts all songs in the playlist in songsOnPlaylist
-    // Playlist or ObservableList<Playlist>??
-    public void setSelectedPlaylist(Playlist currentSelectedPlaylist) {
-        selectedPlaylist.set(currentSelectedPlaylist); // or use set(newSelectedPlaylist); ??
-        songsOnSelectedPlaylist.setAll(currentSelectedPlaylist.getMedias());
+    // sets references to the currently selected playlist and also the associated list of songs
+    public void setSelectedPlaylist(Playlist playlist) {
+        songsOnSelectedPlaylist = playlist.getMedias();
+        selectedPlaylist = playlist;
     }    
     
-    // sets the currently selected songlist (from either a playlist or all songs)
+    // sets a reference to currently selected songlist (from a playlist or all songs) --> not used but could be usefull for mediaplayer?
     public void setSelectedSonglist(ObservableList<Media> songlist) {
         selectedSonglist = songlist; // or use set?
     }
@@ -78,8 +79,12 @@ public class DataModel {
         bll.editPlaylist(playlist , name);
     }
     
-    public void deletePlaylist(Playlist playlist) throws Exception {
-        //bll.deletePlaylist(playlist);
+    public void deletePlaylist() throws Exception {
+        bll.deletePlaylist(selectedPlaylist); // a try with catch would be a good idea here
+        allPlaylists.remove(selectedPlaylist);
+        songsOnSelectedPlaylist.clear();
+        selectedPlaylist = null;
+        songsOnSelectedPlaylist = null;
     }
     
     // NOT DONE YET
@@ -96,7 +101,7 @@ public class DataModel {
     }
     
     /**
-    * methods for songlists
+    * methods for songs on a playlist
     */
     
     // returns a list of the songs in the currently selected playlist
@@ -104,17 +109,11 @@ public class DataModel {
         return songsOnSelectedPlaylist;
     }
     
-    // sets the songlist of the selected playlist as the content for the listview 
-    // (should be called from controller when a playlist is selected, the listview should hopefulle update automatically since it should run on the songsOnSelectedPlaylist)
-    public void displaySongsInPlaylist(Playlist playlist) { // or just Media?
-        songsOnSelectedPlaylist = playlist.getMedias();
-    }
-    
     // adds song to the currently selected playlist
-    public void addSongToPlaylist(Media media) {
-        //bll.addSongToPlaylist(media);
+    public void addSongToPlaylist(Media media) throws Exception {
+        bll.addSongToPlaylist(selectedPlaylist, media);
         songsOnSelectedPlaylist.add(media);
-        //selectedPlaylist.getValue().setNumSongs(songsOnPlaylist.size());
+        //selectedPlaylist.numSongsProperty().getValue() = "323".asObject();
     }
 
     // remove song from the currently selected playlist
@@ -154,6 +153,26 @@ public class DataModel {
     
     public void deleteSong(Media media) {
         allSongs.remove(media);
-        //bll.deleteSong(media);
+        bll.deleteSong(media);
+    }
+    
+    public ObservableList<Media> search(String query)
+    {
+        MockManager mM = new MockManager();
+        List<Media> searchBase = mM.getAllMedias();
+        List<Media> filter = new ArrayList<>();
+
+        for (Media song : searchBase)
+        {
+            if (song.getTitle().toLowerCase().contains(query.toLowerCase())
+                    || song.getArtist().toLowerCase().contains(query.toLowerCase()))
+            {
+                filter.add(song);
+            }
+        }
+
+        ObservableList<Media> result = FXCollections.observableList(filter);
+
+        return result;
     }
 }

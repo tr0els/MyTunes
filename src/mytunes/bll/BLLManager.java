@@ -25,11 +25,6 @@ public class BLLManager {
     private final MediaDBDAO mediaDB; 
     private final PlaylistDBDAO playlistDB;
 
-    // keep track of active playlist and media
-    private Playlist currentPlaylist;
-    private Media currentMedia;
-    // private int index needed?
-
     public BLLManager()throws Exception
     {
         mediaDB = new MediaDBDAO();
@@ -47,11 +42,11 @@ public class BLLManager {
         //return null;
     }
 
-    public void updateMedia(Media media) {
-
+    public void updateSong(Media media) throws Exception {
+        mediaDB.deleteMedia(media);
     }
 
-    public void deleteMedia(Media media) {
+    public void deleteSong(Media media) {
 
     }
 
@@ -59,13 +54,9 @@ public class BLLManager {
     public List<Media> searchMedias(String query) {
         return null;
     }
-
-    public Media getCurrentMedia() {
-        return null;
-    }
-
-    public void setCurrentMedia(Media media) {
-        
+    
+    public void addSongToPlaylist(Playlist playlist, Media media) throws Exception {
+        playlistDB.addToPlaylist(playlist, media);
     }
 
     public List<Playlist> getAllPlaylists() throws Exception {
@@ -81,6 +72,7 @@ public class BLLManager {
     public void deletePlaylist(Playlist playlist) throws Exception 
     {
      playlistDB.deletePlaylist(playlist);
+
     
     }
     

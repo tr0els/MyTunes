@@ -51,8 +51,6 @@ public class Playlist {
         return medias;
     }
 
-    // getMedias().add can also be called instead
-    // not sure how this exactly will work yet.. but this seems like the best aproach
     public void addMedia(Media media) {
         medias.add(media);
     }
