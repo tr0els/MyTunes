@@ -75,8 +75,8 @@ public class DataModel {
     }
     
     // sends to bll the already edited playlist
-    public void updatePlaylist(  Playlist playlist) throws Exception {
-        bll.editPlaylist( playlist );
+    public void updatePlaylist(Playlist playlist) throws Exception {
+        bll.editPlaylist(playlist);
     }
     
     public void deletePlaylist() throws Exception {

@@ -181,7 +181,7 @@ public class PlaylistDBDAO
     }
 
     //opdatere en playliste med navn 
-    public void updatePlaylist( Playlist playlist) throws Exception
+    public void updatePlaylist(Playlist playlist) throws Exception
     {
         Connection con = dbCon.getConnection();
         
