@@ -52,7 +52,7 @@ public class BLLManager
         
         try
         {
-            mediaDB.updateMedia(media);
+          mediaDB.updateMedia(media);
         } catch (Exception ex)
         {
             Logger.getLogger(BLLManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -63,12 +63,12 @@ public class BLLManager
     {
         
     }
-    public void updateSong(Media media) throws Exception {
-        mediaDB.deleteMedia(media);
+    public void updateSong(Media media) {
+       
     }
     
-    public void deleteSong(Media media) {
-
+    public void deleteSong(Media media) throws Exception {
+        mediaDB.deleteMedia(media);
     }
 
     // search in allSongs list
@@ -108,9 +108,13 @@ public class BLLManager
     public void deletePlaylist(Playlist playlist) throws Exception
     {
         playlistDB.deletePlaylist(playlist);  
-
     }
 
+    public void removeSongFromPlaylist(Playlist playlist, Media media) throws Exception 
+    {
+    playlistDB.removeFromPlaylist(playlist, media);
+    }
+    
     // think this functionality will be needed, maybe use with listener
     Playlist getPlaylist(int id) { // id or index?
         return null;
