@@ -372,7 +372,7 @@ public class MtController implements Initializable
 
     
     @FXML
-    private void addSongButton(ActionEvent event)
+    private void addSongButton(ActionEvent event) throws Exception
     {
         dataModel.addSongToPlaylist(songsTable.getSelectionModel().getSelectedItem());
     }

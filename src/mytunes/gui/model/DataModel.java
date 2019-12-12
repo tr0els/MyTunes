@@ -30,7 +30,7 @@ public class DataModel {
     private ObservableList<Media> allSongs; // list of all songs
 
     // keep track of currently selected playlist and songlist (unused so far)
-    private SimpleObjectProperty<Playlist> selectedPlaylist; // reference to currently selected playlist
+    private Playlist selectedPlaylist; // reference to currently selected playlist
     private ObservableList<Media> selectedSonglist; // maybe for mediaplayer? reference to selected list of songs (songsInPlaylist or allSongs) --> should be set whenever songsInplaylist or allSongs are selected??        
     
     public DataModel() throws Exception {
@@ -39,7 +39,7 @@ public class DataModel {
         allPlaylists = FXCollections.observableArrayList();
         songsOnSelectedPlaylist = null; // or null and make a new obslist everytime its set? this is only given an already existing obslist so no need for a new right?
         allSongs = FXCollections.observableArrayList();
-        selectedPlaylist = new SimpleObjectProperty<>();
+        selectedPlaylist = null;
 
         // populate playlist table and all songs table
         allPlaylists.addAll(bll.getAllPlaylists());
@@ -53,7 +53,7 @@ public class DataModel {
     // updates which playlist is currently selected and puts all songs in the playlist in songsOnPlaylist
     // Playlist or ObservableList<Playlist>??
     public void setSelectedPlaylist(Playlist currentSelectedPlaylist) {
-        selectedPlaylist.set(currentSelectedPlaylist); // or use set(newSelectedPlaylist); ??
+        //selectedPlaylist.set(currentSelectedPlaylist); // or use set(newSelectedPlaylist); ??
         songsOnSelectedPlaylist.setAll(currentSelectedPlaylist.getMedias());
     }    
     
@@ -81,8 +81,13 @@ public class DataModel {
         //bll.editPlaylist(playlist);
     }
     
-    public void deletePlaylist(Playlist playlist) throws Exception {
+    public void deletePlaylist() throws Exception {
         //bll.deletePlaylist(playlist);
+        allPlaylists.remove(selectedPlaylist);
+        songsOnSelectedPlaylist.clear();
+        selectedPlaylist = null;
+        songsOnSelectedPlaylist = null;
+        
     }
     
     // NOT DONE YET
@@ -99,7 +104,7 @@ public class DataModel {
     }
     
     /**
-    * methods for songlists
+    * methods for songs on a playlist
     */
     
     // returns a list of the songs in the currently selected playlist
@@ -110,14 +115,16 @@ public class DataModel {
     // sets the songlist of the selected playlist as the content for the listview 
     // (should be called from controller when a playlist is selected, the listview should hopefulle update automatically since it should run on the songsOnSelectedPlaylist)
     public void displaySongsInPlaylist(Playlist playlist) { // or just Media?
+        // setSelectedPlaylist...
         songsOnSelectedPlaylist = playlist.getMedias();
+        selectedPlaylist = playlist; // works
     }
     
     // adds song to the currently selected playlist
-    public void addSongToPlaylist(Media media) {
-        //bll.addSongToPlaylist(media);
+    public void addSongToPlaylist(Media media) throws Exception {
+        bll.addSongToPlaylist(selectedPlaylist, media);
         songsOnSelectedPlaylist.add(media);
-        //selectedPlaylist.getValue().setNumSongs(songsOnPlaylist.size());
+        //selectedPlaylist.numSongsProperty().getValue() = "323".asObject();
     }
 
     // remove song from the currently selected playlist
