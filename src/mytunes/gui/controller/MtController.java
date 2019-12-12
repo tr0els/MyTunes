@@ -113,7 +113,7 @@ public class MtController implements Initializable
     @FXML
     private Button deletePlaylistSongButton;
     @FXML
-    private ListView songsFromPlaylist;
+    private ListView<Media> songsFromPlaylist;
 
     
     private MediaModel mediaModel;
@@ -422,10 +422,7 @@ public class MtController implements Initializable
         
         if (input == JOptionPane.YES_OPTION)
         {
-            songLists = FXCollections.observableArrayList(list.getMedias());
-            Media selectedMedia = songLists.get(songsFromPlaylist.getSelectionModel().getSelectedIndex());
-            list.deleteMedia(selectedMedia);
-            songsFromPlaylist.getItems().remove(songsFromPlaylist.getSelectionModel().getSelectedItem());
+            dataModel.deleteSongFromPlaylist(songsFromPlaylist.getSelectionModel().getSelectedItem());
         }
 
     }
@@ -461,12 +458,9 @@ public class MtController implements Initializable
 
     private void changeOrderInPlaylist(int upOrDown)
     {
-        Collections.swap(playlistsTable.getSelectionModel().getSelectedItem().getMedias(), songsFromPlaylist.getSelectionModel().getSelectedIndex(),
+        dataModel.swapSongsInPlaylist(songsFromPlaylist.getSelectionModel().getSelectedIndex(), 
                 songsFromPlaylist.getSelectionModel().getSelectedIndex() + upOrDown);
-
-        songsFromPlaylist.getItems().clear();
-        countId = 0;
-        //displaySongsFromPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
+        
     }
 
     @FXML
