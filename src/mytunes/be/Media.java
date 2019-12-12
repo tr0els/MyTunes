@@ -40,6 +40,7 @@ public class Media {
         this.time = new SimpleIntegerProperty(time);
         this.year = new SimpleIntegerProperty(year);
         this.category = new SimpleIntegerProperty(category);
+        this.numPlays = new SimpleIntegerProperty();
     }
 
     public int getId() {

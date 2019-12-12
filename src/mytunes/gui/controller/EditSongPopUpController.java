@@ -114,6 +114,7 @@ public class EditSongPopUpController implements Initializable
         media.setArtist(editArtist.getText());
         media.setYear(Integer.parseInt(editYear.getText()));
         media.setTime(CT.timeToSec(editTime.getText()));
+        media.setNumPlays(10);
 
         dataModel.editSong(media);
         
