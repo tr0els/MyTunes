@@ -78,7 +78,11 @@ public class BLLManager {
        return playlist;
     }
     
+    public void deletePlaylist(Playlist playlist) throws Exception 
+    {
+     playlistDB.deletePlaylist(playlist);
     
+    }
 
     // think this functionality will be needed, maybe use with listener
     Playlist getPlaylist(int id) { // id or index?

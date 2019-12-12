@@ -481,7 +481,7 @@ public class MtController implements Initializable
     }
 
     @FXML
-    private void deletePlaylist(ActionEvent event)
+    private void deletePlaylist(ActionEvent event) throws Exception 
     {
         if(playlistsTable.getSelectionModel().getSelectedItem() != null)
         {
@@ -492,7 +492,8 @@ public class MtController implements Initializable
         
             if (input == JOptionPane.YES_OPTION)
             {
-                playlistsTable.getItems().remove(playlistsTable.getSelectionModel().getSelectedItem());
+               Playlist playlist = playlistsTable.getSelectionModel().getSelectedItem();
+               playlistModel.deletePlaylist(playlist);
             } 
         }
     }
