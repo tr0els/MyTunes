@@ -370,47 +370,12 @@ public class MtController implements Initializable
         songsTable.setItems(result);
     }
 
-    public ObservableList<Media> search(String query)
-    {
-        MockManager mM = new MockManager();
-        List<Media> searchBase = mM.getAllMedias();
-        List<Media> filter = new ArrayList<>();
-
-        for (Media song : searchBase)
-        {
-            if (song.getTitle().toLowerCase().contains(query.toLowerCase())
-                    || song.getArtist().toLowerCase().contains(query.toLowerCase()))
-            {
-                filter.add(song);
-            }
-        }
-
-        ObservableList<Media> result = FXCollections.observableList(filter);
-
-        return result;
-    }
-
+    
     @FXML
     private void addSongButton(ActionEvent event)
     {
         dataModel.addSongToPlaylist(songsTable.getSelectionModel().getSelectedItem());
     }
-
-//    //WORKS
-//    private void addSongToPlaylist(Playlist list)
-//    {
-//        Media selectedMedia = songsTable.getSelectionModel().getSelectedItem();
-//        list.addMedia(selectedMedia);
-//        countId++;
-//        songsFromPlaylist.getItems().add(countId + ": " + selectedMedia.getTitle());
-//    }
-
-//    // WORKS
-//    private void displaySongsFromPlaylist(Playlist list)
-//    {
-//        songLists = FXCollections.observableArrayList(list.getMedias());
-//        songsFromPlaylist.setItems(songLists);
-//    }
 
     //WORKS
     private void deleteSongFromPlaylist(Playlist list)
@@ -500,9 +465,6 @@ public class MtController implements Initializable
     @FXML
     private void handleDeleteSong(ActionEvent event)
     {
-        //songLists = FXCollections.observableArrayList(mediaModel.getAllMedias());
-        //Media selectedMedia = songLists.get(songsTable.getSelectionModel().getSelectedIndex());
-        // delete song from model.
         if(songsTable.getSelectionModel().getSelectedItem() != null)
         {
             int input = JOptionPane.showConfirmDialog(null,"Permanently delete the song?", "Select an Option...", 
@@ -512,7 +474,7 @@ public class MtController implements Initializable
         
             if (input == JOptionPane.YES_OPTION)
             {
-                songsTable.getItems().remove(songsTable.getSelectionModel().getSelectedItem());
+                dataModel.deleteSong(songsTable.getSelectionModel().getSelectedItem());
             } 
         }
     }
