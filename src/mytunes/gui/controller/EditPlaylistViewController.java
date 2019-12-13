@@ -6,19 +6,16 @@
 package mytunes.gui.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import mytunes.be.Playlist;
 import mytunes.gui.model.DataModel;
-import mytunes.gui.model._PlaylistModel;
 
 
 /**
