@@ -45,7 +45,7 @@
         </Button>
         <AnchorPane layoutX="550.0" prefHeight="100.0" prefWidth="235.0">
          <children>
-              <Button fx:id="closeProgram" layoutX="179.0" layoutY="16.0" mnemonicParsing="false" prefWidth="50.0" text="Close" />
+              <Button fx:id="closeProgram" layoutX="179.0" layoutY="16.0" mnemonicParsing="false" onAction="#CloseProgram" prefWidth="50.0" text="Close" />
          </children></AnchorPane>
         <Label fx:id="currentSongLabel" alignment="CENTER" layoutX="274.0" layoutY="98.0" prefHeight="25.0" prefWidth="250.0" textAlignment="CENTER" />
         <Button fx:id="swapSongUp" layoutX="250.0" layoutY="473.0" mnemonicParsing="false" onAction="#moveSongUpInPlaylist" text="▲" />
