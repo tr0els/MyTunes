@@ -5,14 +5,13 @@
  */
 package mytunes.bll;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
-import mytunes.dal.MockManager;
+import mytunes.dal.database.CategoryDBDAO;
 import mytunes.dal.database.MediaDBDAO;
 import mytunes.dal.database.PlaylistDBDAO;
 
@@ -27,11 +26,13 @@ public class BLLManager
     // private final MockManager mock = new MockManager();
     private final MediaDBDAO mediaDB;
     private final PlaylistDBDAO playlistDB;
+    private final CategoryDBDAO categoryDB;
 
     public BLLManager() throws Exception
     {
         mediaDB = new MediaDBDAO();
         playlistDB = new PlaylistDBDAO();
+        categoryDB = new CategoryDBDAO();
     }
 
     public List<Media> getAllMedias() throws Exception
@@ -72,10 +73,7 @@ public class BLLManager
         return null;
     }
 
-    public void addSongToPlaylist(Playlist playlist, Media media) throws Exception
-    {
-        playlistDB.addToPlaylist(playlist, media);
-    }
+
 
     public List<Playlist> getAllPlaylists() throws Exception
     {
@@ -92,46 +90,25 @@ public class BLLManager
     {
      playlistDB.updatePlaylist(playlist);
     }
-    
-
-    public void editPlaylist (Playlist playlist) throws Exception 
-    {
-
-     playlistDB.updatePlaylist (playlist);
-    }
 
     public void deletePlaylist(Playlist playlist) throws Exception
     {
         playlistDB.deletePlaylist(playlist);  
     }
-
-    public void removeSongFromPlaylist(Playlist playlist, Media media) throws Exception 
-    {
-    playlistDB.removeFromPlaylist(playlist, media);
-    }
     
-    // think this functionality will be needed, maybe use with listener
-    Playlist getPlaylist(int id) { // id or index?
-        return null;
-    }
-
-    public Playlist getCurrentPlaylist() {
-        return null;
-    }
-
-    public void setCurrentPlaylist(Playlist playlist) {
-
-    }
-
-    // handle prev/next songs in controller instead? seems simpler
-    public Media getNextMediaInPlaylist() {
-        return null;
-    }
-
-    public List<String> getAllCategories()
+    public void addSongToPlaylist(Playlist playlist, Media media) throws Exception
     {
-        // return dal.getAllCategories(); <-- uncomment when getAllCategories is complete in dal
-        return null;
+        playlistDB.addToPlaylist(playlist, media);
+    }
+
+    public void deleteSongFromPlaylist(Playlist playlist, Media media) throws Exception 
+    {
+        playlistDB.removeFromPlaylist(playlist, media);
+    }
+
+    public List<String> getAllCategories() throws Exception
+    {
+        return categoryDB.getAllCategories();
     }
 
     public List<Media> search(String query) throws Exception
