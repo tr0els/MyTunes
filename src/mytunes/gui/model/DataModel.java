@@ -5,7 +5,6 @@
  */
 package mytunes.gui.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -13,7 +12,6 @@ import javafx.collections.ObservableList;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
 import mytunes.bll.BLLManager;
-import mytunes.dal.MockManager;
 
 /**
  *
@@ -23,47 +21,31 @@ public class DataModel {
 
     private BLLManager bll;
 
-    // observable lists to hold data
     private ObservableList<Playlist> allPlaylists; // list of playlist
     private ObservableList<Media> songsOnSelectedPlaylist; // list of songs on currently selected playlist
     private ObservableList<Media> allSongs; // list of all songs
-
-    // keep track of currently selected playlist and songlist (unused so far)
     private Playlist selectedPlaylist; // reference to currently selected playlist
-    private ObservableList<Media> selectedSonglist; // maybe for mediaplayer? reference to selected list of songs (songsInPlaylist or allSongs) --> should be set whenever songsInplaylist or allSongs are selected??        
     
     public DataModel() throws Exception {
         bll = new BLLManager();
         
+        // initialize
         allPlaylists = FXCollections.observableArrayList();
-        songsOnSelectedPlaylist = null; // or null and make a new obslist everytime its set? this is only given an already existing obslist so no need for a new right?
+        songsOnSelectedPlaylist = null;
         allSongs = FXCollections.observableArrayList();
         selectedPlaylist = null;
 
-        // populate playlist table and all songs table
+        // populate playlist and all songs lists
         allPlaylists.addAll(bll.getAllPlaylists());
         allSongs.addAll(bll.getAllMedias());
     }
-    
-    /**
-     * methods currently selected playlist and songlist
-     */
-   
-    // sets references to the currently selected playlist and also the associated list of songs
+     
+    // set a reference to currently selected playlist and the playlists associated songlist
     public void setSelectedPlaylist(Playlist playlist) {
-        songsOnSelectedPlaylist = playlist.getMedias();
         selectedPlaylist = playlist;
+        songsOnSelectedPlaylist = playlist.getMedias();
     }    
-    
-    // sets a reference to currently selected songlist (from a playlist or all songs) --> not used but could be usefull for mediaplayer?
-    public void setSelectedSonglist(ObservableList<Media> songlist) {
-        selectedSonglist = songlist; // or use set?
-    }
-    
-    /**
-    * methods for playlists
-    */
-    
+   
     // returns an observable list of all playlists
     public ObservableList<Playlist> getAllPlaylists() {
         return allPlaylists;
@@ -76,7 +58,7 @@ public class DataModel {
     
     // sends to bll the already edited playlist
     public void updatePlaylist(Playlist playlist) throws Exception {
-        bll.editPlaylist(playlist);
+        bll.updatePlaylist(playlist);
     }
     
     public void deletePlaylist() throws Exception {
@@ -86,55 +68,40 @@ public class DataModel {
         selectedPlaylist = null;
         songsOnSelectedPlaylist = null;
     }
-    
-    // NOT DONE YET
-    // figure out how to implement this.
-    // one way would be to have a property in each playlist, so it works for each playlist
-    // the playlists add / remove song  methods must be used to update the count then
-    public void updateSongsTotalOnSelectedPlaylist() {
-        //selectedPlaylist.getValue().setNumSongs(songsOnSelectedPlaylist.size());
-    }
-
-    // NOT DONE YET
-    public void updateTimeTotalOnSelectedPlaylist() {
-        //selectedPlaylist.getValue().setNumSongs(songsOnPlaylist.size());
-    }
-    
-    /**
-    * methods for songs on a playlist
-    */
-    
+          
     // returns a list of the songs in the currently selected playlist
     public ObservableList<Media> getSongsOnPlaylist() {
         return songsOnSelectedPlaylist;
     }
     
-    // adds song to the currently selected playlist
+    // add song to the currently selected playlist
     public void addSongToPlaylist(Media media) throws Exception {
         bll.addSongToPlaylist(selectedPlaylist, media);
         songsOnSelectedPlaylist.add(media);
-        //selectedPlaylist.numSongsProperty().getValue() = "323".asObject();
+        // todo: update numSongs + time
     }
 
     // remove song from the currently selected playlist
     public void deleteSongFromPlaylist(Media media) throws Exception {
-        bll.removeSongFromPlaylist(selectedPlaylist, media);
+        bll.deleteSongFromPlaylist(selectedPlaylist, media);
         songsOnSelectedPlaylist.remove(media);
+        // todo: update numSongs + time
     }
 
     // change order of a song on the currently selected playlist
-    public void swapSongsInPlaylist(int i, int j) {
+    public void swapSongsInPlaylist(int i, int j) throws Exception {
         Collections.swap(songsOnSelectedPlaylist, i, j);
-        //bll.swapSongsInPlaylist(selectedPlaylist.getValue().getId(), songsOnPlaylist.get(i).getId(), songsOnPlaylist.get(j).getId());
+        //bll.swapSongsInPlaylist(selectedPlaylist.getValue().getId(), songsOnPlaylist.get(i).getId(), songsOnPlaylist.get(j).getId()); // todo
+    }
+    
+    // todo - figure out how to implement these in a smartish way
+    public void updateSongsTotalOnSelectedPlaylist() {
     }
 
-    
-    
+    // todo
+    public void updateTimeTotalOnSelectedPlaylist() {
+    }
 
-
-    
-    // methods for all songs
-    
     // return the observable list containing all songs
     public ObservableList<Media> getAllSongs() {
         return allSongs;
@@ -142,12 +109,11 @@ public class DataModel {
     
     public void createSong(String source, String artist, String title, int time, int year, int category) throws Exception {
         Media media = bll.createMedia(source, artist, title, time, year, category);
-        allSongs.add(media); // add to list here or in controller?
+        allSongs.add(media);
     }
     
-    // sends to bll the already edited media
-    public void editSong(Media media) {
-        // list is already updated so just pass object to bll ??
+    // pass updated object to bll, view is already updated (observable)
+    public void updateSong(Media media) {
         bll.updateMedia(media);
     }
     
@@ -156,23 +122,11 @@ public class DataModel {
         bll.deleteSong(media);
     }
     
-    public ObservableList<Media> search(String query)
+    public ObservableList<Media> getSearchResult(String input) throws Exception
     {
-        MockManager mM = new MockManager();
-        List<Media> searchBase = mM.getAllMedias();
-        List<Media> filter = new ArrayList<>();
-
-        for (Media song : searchBase)
-        {
-            if (song.getTitle().toLowerCase().contains(query.toLowerCase())
-                    || song.getArtist().toLowerCase().contains(query.toLowerCase()))
-            {
-                filter.add(song);
-            }
-        }
-
-        ObservableList<Media> result = FXCollections.observableList(filter);
-
-        return result;
+        List<Media> filter = bll.search(input);
+        ObservableList<Media> output = FXCollections.observableList(filter);
+        
+        return output;
     }
 }

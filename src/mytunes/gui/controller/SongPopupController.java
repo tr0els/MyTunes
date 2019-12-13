@@ -19,11 +19,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mytunes.bll.util.ConvertTime;
-import mytunes.gui.model.MediaModel;
+import mytunes.gui.model.DataModel;
 
 /**
  * FXML Controller class
@@ -71,7 +70,7 @@ public class SongPopupController implements Initializable
     
     ConvertTime CT = new ConvertTime();
     
-    MediaModel mediaModel;
+    DataModel dataModel;
 
     /**
      * Initializes the controller class.
@@ -208,16 +207,15 @@ public class SongPopupController implements Initializable
 
     public void handleCreateSong() throws Exception 
     {
-        mediaModel.createMovie(fileTextField.getText(), artistTextField.getText(), titleTextField.getText(), 
+        dataModel.createSong(fileTextField.getText(), artistTextField.getText(), titleTextField.getText(), 
                 CT.timeToSec(timeTextField.getText()), Integer.parseInt(yearTextField.getText()), 
                 comboCategory.getItems().indexOf(comboCategory.getSelectionModel().getSelectedItem()));
                 
     }
 
-    public void transfer(MediaModel model)
+    public void transfer(DataModel model)
     {
-        mediaModel = model;
+        dataModel = model;
     }
-
 }   
 

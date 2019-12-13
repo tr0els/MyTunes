@@ -7,15 +7,7 @@ package mytunes.gui.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.ResourceBundle;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,18 +24,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
 import mytunes.gui.model.MediaPlayerModel;
-import mytunes.dal.MockManager;
 import mytunes.gui.model.DataModel;
-import mytunes.gui.model.MediaModel;
-import mytunes.gui.model.PlaylistModel;
 
 /**
  *
@@ -62,6 +49,9 @@ public class MtController implements Initializable
     private TableColumn<Playlist, String> playlistsTimeTotalColumn;
 
     @FXML
+    private ListView<Media> songsFromPlaylist;    
+    
+    @FXML
     private TableView<Media> songsTable;
     @FXML
     private TableColumn<Media, String> songsTitleColumn;
@@ -70,8 +60,8 @@ public class MtController implements Initializable
     @FXML
     private TableColumn<Media, Integer> songsCategoryColumn;
     @FXML
-    private TableColumn<Media, String> songsTimeColumn;
-
+    private TableColumn<Media, String> songsTimeColumn;    
+    
     @FXML
     private Button closeProgram;
     @FXML
@@ -112,25 +102,15 @@ public class MtController implements Initializable
     private Button swapSongDown;
     @FXML
     private Button deletePlaylistSongButton;
-    @FXML
-    private ListView<Media> songsFromPlaylist;
 
-    private MediaModel mediaModel;
-    private PlaylistModel playlistModel;
     public DataModel dataModel;
-
+    
     private MediaPlayerModel mpModel = new MediaPlayerModel();
-
     private int currentSong = 0;
-
-    ObservableList<Media> songLists = null;
-
     private int countId = 0;
 
     public MtController() throws Exception
     {
-        mediaModel = new MediaModel();
-        playlistModel = new PlaylistModel();
         dataModel = new DataModel();
     }
 
@@ -148,7 +128,7 @@ public class MtController implements Initializable
         volumeSlider.setValue(50);
         volumeLabel.setText("50%");
 
-//        mpModel.songList = mpModel.getAllSongs(mediaModel.getAllMedias().get(int).getSource());
+//        mpModel.songList = mpModel.getAllSongs(dataModel.getAllSongs().get(int).getSource());
 //        mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
     }
 
@@ -203,7 +183,7 @@ public class MtController implements Initializable
         songsTimeColumn.setCellValueFactory(cellData -> cellData.getValue().timeProperty());
 
         // add data to the table
-        songsTable.setItems(mediaModel.getAllMedias());
+        songsTable.setItems(dataModel.getAllSongs());
     }
 
     /**
@@ -270,8 +250,7 @@ public class MtController implements Initializable
         Parent root = loader.load();
 
         SongPopupController SongPopupController = loader.getController();
-        SongPopupController.transfer(mediaModel);
-        //SongPopupController.createSong(mediaModel);
+        SongPopupController.transfer(dataModel);
 
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
@@ -285,7 +264,7 @@ public class MtController implements Initializable
         Parent root = loader.load();
 
         PlaylistPopupController playlistPopupController = loader.getController();
-        playlistPopupController.transfer(playlistModel);
+        playlistPopupController.transfer(dataModel);
 
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
@@ -301,7 +280,7 @@ public class MtController implements Initializable
         if (songsTable.getSelectionModel().getSelectedItem() != null)
         {
             EditSongPopUpController EditSongPopUpController = loader.getController();
-            EditSongPopUpController.transferMedia(songsTable.getSelectionModel().getSelectedItem(),dataModel);
+            EditSongPopUpController.transferMedia(songsTable.getSelectionModel().getSelectedItem(), dataModel);
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -313,7 +292,7 @@ public class MtController implements Initializable
     private void searchSong(KeyEvent event) throws Exception
     {
         String input = searchField.getText();
-        ObservableList<Media> result = mediaModel.getSearchResult(input);
+        ObservableList<Media> result = dataModel.getSearchResult(input);
         songsTable.setItems(result);
     }
 
@@ -354,22 +333,21 @@ public class MtController implements Initializable
     }
 
     @FXML
-    private void moveSongUpInPlaylist(ActionEvent event)
+    private void moveSongUpInPlaylist(ActionEvent event) throws Exception
     {
         changeOrderInPlaylist(-1);
     }
 
     @FXML
-    private void moveSongDownInPlaylist(ActionEvent event)
+    private void moveSongDownInPlaylist(ActionEvent event) throws Exception
     {
         changeOrderInPlaylist(+1);
     }
 
-    private void changeOrderInPlaylist(int upOrDown)
+    private void changeOrderInPlaylist(int upOrDown) throws Exception
     {
         dataModel.swapSongsInPlaylist(songsFromPlaylist.getSelectionModel().getSelectedIndex(),
                 songsFromPlaylist.getSelectionModel().getSelectedIndex() + upOrDown);
-
     }
 
     @FXML
@@ -454,5 +432,4 @@ public class MtController implements Initializable
         dataModel.setSelectedPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
         populateSongsInPlaylistList(); // calls setItems again
     }
-
 }

@@ -6,7 +6,6 @@
 package mytunes.gui.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -18,9 +17,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import mytunes.be.Media;
+import mytunes.bll.BLLManager;
 import mytunes.bll.util.ConvertTime;
 import mytunes.gui.model.DataModel;
-import mytunes.gui.model.MediaModel;
 
 /**
  * FXML Controller class
@@ -114,9 +113,8 @@ public class EditSongPopUpController implements Initializable
         media.setArtist(editArtist.getText());
         media.setYear(Integer.parseInt(editYear.getText()));
         media.setTime(CT.timeToSec(editTime.getText()));
-        media.setNumPlays(10);
 
-        dataModel.editSong(media);
+        dataModel.updateSong(media);
         
         Stage stage = (Stage) editFileButton.getScene().getWindow();
         stage.close();
