@@ -114,7 +114,7 @@ public class DataModel {
     
     // pass updated object to bll, view is already updated (observable)
     public void updateSong(Media media) {
-        bll.updateMedia(media);
+        bll.updateSong(media);
     }
     
     public void deleteSong(Media media) throws Exception {

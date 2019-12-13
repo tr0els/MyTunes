@@ -48,7 +48,7 @@ public class BLLManager
         //return null;
     }
 
-    public void updateMedia(Media media)
+    public void updateSong(Media media)
     {
         
         try
@@ -58,9 +58,6 @@ public class BLLManager
         {
             Logger.getLogger(BLLManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    public void updateSong(Media media) throws Exception {
-        mediaDB.updateMedia(media);
     }
     
     public void deleteSong(Media media) throws Exception {
