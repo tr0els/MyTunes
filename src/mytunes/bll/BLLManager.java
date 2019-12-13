@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
+import mytunes.bll.util.ConvertCategory;
 import mytunes.bll.util.SearchSongs;
 import mytunes.dal.database.CategoryDBDAO;
 import mytunes.dal.database.MediaDBDAO;
@@ -111,7 +112,15 @@ public class BLLManager
         return categoryDB.getAllCategories();
     }
     
+    public String categoryIdToName(int id) throws Exception {
+        List<String> allCategories = getAllCategories();
+        return ConvertCategory.categoryIdToName(allCategories, id);
+    }
     
+    public int categoryNameToId(String name) throws Exception {
+        List<String> allCategories = getAllCategories();
+        return ConvertCategory.categoryNameToId(allCategories, name);
+    }
 
     public List<Media> search(String query) throws Exception
     {

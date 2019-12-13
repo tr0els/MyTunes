@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
 import mytunes.bll.BLLManager;
+import mytunes.bll.util.ConvertCategory;
 
 /**
  *
@@ -120,6 +121,20 @@ public class DataModel {
     public void deleteSong(Media media) throws Exception {
         allSongs.remove(media);
         bll.deleteSong(media);
+    }
+    
+
+    public List<String> getAllCategories() throws Exception
+    {
+        return bll.getAllCategories();
+    }
+    
+    public String categoryIdToName(int id) throws Exception {
+        return bll.categoryIdToName(id);
+    }
+    
+    public int categoryIdToName(String name) throws Exception {
+        return bll.categoryNameToId(name);
     }
     
     public ObservableList<Media> getSearchResult(String input) throws Exception

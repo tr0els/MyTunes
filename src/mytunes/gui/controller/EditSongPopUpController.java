@@ -17,7 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import mytunes.be.Media;
-import mytunes.bll.BLLManager;
 import mytunes.bll.util.ConvertTime;
 import mytunes.gui.model.DataModel;
 
@@ -64,7 +63,7 @@ public class EditSongPopUpController implements Initializable
     {
     }
 
-    public void transferMedia(Media media, DataModel dataModel)
+    public void transferMedia(Media media, DataModel dataModel) throws Exception
     {
         editTitle.setText(media.getTitle());
         editArtist.setText(media.getArtist());
@@ -75,31 +74,9 @@ public class EditSongPopUpController implements Initializable
         this.dataModel = dataModel;
     }
 
-    private void categories(Media media)
+    private void categories(Media media) throws Exception
     {
-        comboCategory.setItems(FXCollections.observableArrayList(
-                "Blues",
-                "Classic Rock",
-                "Country",
-                "Dance",
-                "Disco",
-                "Funk",
-                "Grunge",
-                "Hip-Hop",
-                "Jazz",
-                "Metal",
-                "New Age",
-                "Oldies",
-                "Other",
-                "Pop",
-                "Rhythem and Blues",
-                "Rap",
-                "Reggae",
-                "Rock",
-                "Techno",
-                "Industrial",
-                "Alternative")
-        );
+        comboCategory.setItems(FXCollections.observableArrayList(dataModel.getAllCategories().toArray()) );
 
         comboCategory.getSelectionModel().select(media.getCategory());
 

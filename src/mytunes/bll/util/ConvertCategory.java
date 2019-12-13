@@ -6,30 +6,18 @@
 package mytunes.bll.util;
 
 import java.util.List;
-import mytunes.bll.BLLManager;
 
 /**
  *
  * @author Troels Klein
  */
-public class ConvertCategory {
+public class ConvertCategory { 
 
-    private final BLLManager bll; 
-          
-    public ConvertCategory() throws Exception
-    {
-         bll = new BLLManager();
-    }
-
-    public String categoryIdToName(int id) throws Exception {
-        List<String> allCategories = bll.getAllCategories();
-        
+    public static String categoryIdToName(List<String> allCategories,  int id) throws Exception {
         return allCategories.get(id);
     }
     
-    public int categoryNameToId(String name) throws Exception {
-        List<String> allCategories = bll.getAllCategories();
-        
+    public static int categoryNameToId(List<String> allCategories, String name) throws Exception {
         return allCategories.indexOf(name);
     }
 }
