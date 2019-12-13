@@ -434,4 +434,11 @@ public class MtController implements Initializable
         dataModel.setSelectedPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
         populateSongsInPlaylistList(); // calls setItems again
     }
+
+    @FXML
+    private void handleCloseProgram(ActionEvent event)
+    {
+        Stage stage = (Stage) closeProgram.getScene().getWindow();
+        stage.close();
+    }
 }

@@ -43,10 +43,7 @@
                 <Font name="Verdana" size="12.0" />
             </font>
         </Button>
-        <AnchorPane layoutX="550.0" prefHeight="100.0" prefWidth="235.0">
-         <children>
-              <Button fx:id="closeProgram" layoutX="179.0" layoutY="16.0" mnemonicParsing="false" prefWidth="50.0" text="Close" />
-         </children></AnchorPane>
+        <AnchorPane layoutX="550.0" prefHeight="100.0" prefWidth="235.0" />
         <Label fx:id="currentSongLabel" alignment="CENTER" layoutX="274.0" layoutY="98.0" prefHeight="25.0" prefWidth="250.0" textAlignment="CENTER" />
         <Button fx:id="swapSongUp" layoutX="250.0" layoutY="473.0" mnemonicParsing="false" onAction="#moveSongUpInPlaylist" text="▲" />
         <Button fx:id="swapSongDown" layoutX="285.0" layoutY="473.0" mnemonicParsing="false" onAction="#moveSongDownInPlaylist" text="▼" />
@@ -111,5 +108,6 @@
          </font>
       </Label>
           <TextField fx:id="searchField" layoutX="599.0" layoutY="118.0" onKeyTyped="#searchSong" prefHeight="25.0" prefWidth="185.0" />
+        <Button fx:id="closeProgram" layoutX="735.0" layoutY="473.0" mnemonicParsing="false" onAction="#handleCloseProgram" prefWidth="50.0" text="Close" />
     </children>
 </AnchorPane>
