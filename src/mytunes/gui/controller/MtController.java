@@ -49,6 +49,9 @@ public class MtController implements Initializable
     private TableColumn<Playlist, String> playlistsTimeTotalColumn;
 
     @FXML
+    private ListView<Media> songsFromPlaylist;    
+    
+    @FXML
     private TableView<Media> songsTable;
     @FXML
     private TableColumn<Media, String> songsTitleColumn;
@@ -57,8 +60,8 @@ public class MtController implements Initializable
     @FXML
     private TableColumn<Media, Integer> songsCategoryColumn;
     @FXML
-    private TableColumn<Media, String> songsTimeColumn;
-
+    private TableColumn<Media, String> songsTimeColumn;    
+    
     @FXML
     private Button closeProgram;
     @FXML
@@ -99,13 +102,11 @@ public class MtController implements Initializable
     private Button swapSongDown;
     @FXML
     private Button deletePlaylistSongButton;
-    @FXML
-    private ListView<Media> songsFromPlaylist;
 
     public DataModel dataModel;
+    
     private MediaPlayerModel mpModel = new MediaPlayerModel();
     private int currentSong = 0;
-    ObservableList<Media> songLists = null;
     private int countId = 0;
 
     public MtController() throws Exception
