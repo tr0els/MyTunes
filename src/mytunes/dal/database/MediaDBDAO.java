@@ -5,7 +5,6 @@
  */
 package mytunes.dal.database;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -26,20 +25,17 @@ public class MediaDBDAO
     {
         dbCon = new DatabaseConnector();
     }
-    
-// public static void main(String[] args) throws Exception
-//    {
-//        
-//        
-//            MediaDBDAO mediaDao = new MediaDBDAO();
-//            Media lotte = new Media(5, "mp.3", "Gruli", "Gris", 4,6000,1  );
-//            mediaDao.updateMedia(lotte);
-//            
-//            
-//        }     
-//    
-    
-    // Creates a song to be committet in the database, returns a media
+        
+    /* Creates a song to be committet in the database
+     * @param source 
+     * @param artist
+     * @param title
+     * @param time
+     * @param year
+     * @param category
+     * @param numplays
+     * @return Media
+     */
     public Media createMedia(String source, String artist, String title, int time, int year, int category, int numplays) throws Exception
     {
          Connection con = dbCon.getConnection();
@@ -57,21 +53,19 @@ public class MediaDBDAO
             if (affectedRows == 1)
             {
                 ResultSet rs = ps.getGeneratedKeys();
-                if (rs.next()) // <-- Remember to do this!!
+                if (rs.next()) 
                 {
                     int id = rs.getInt(1);
                     Media med = new Media(id, source, artist, title, time, year, category);
                     return med;
                 }
         
-            }
-       
-              
+            }              
      return null;
     }
 
     
-    // returns a ArrayList with all the medias from the Songs_2 tabel
+    // returns a List with all the Medias from the Songs_2 tabel
     public List<Media> getAllMedias() throws Exception 
     {
         try (Connection con = dbCon.getConnection())
@@ -95,29 +89,30 @@ public class MediaDBDAO
             
             }
             return allMedia;
-        
         }
     }
      
     //deletes a specific media form the table songs_2
+    //@param Media 
     public void deleteMedia(Media media) throws Exception
     {
-        try (Connection con = dbCon.getConnection())
-        {
+        Connection con = dbCon.getConnection();
+        
         int id = media.getId();
         String sql = "DELETE FROM songs_2 WHERE id=?;";
+        String sql2 = "delete from playlist_content_table where song_id =(?)";
         PreparedStatement ps = con.prepareStatement(sql);
+        PreparedStatement ps2 = con.prepareStatement(sql2);
         ps.setInt(1, id);
-        int affectedRows = ps.executeUpdate();
-        if (affectedRows != 1)
-        {
-        throw  new SQLException(); 
-        }
+        ps2.setInt(1, id);
         
-        }
+        ps2.executeUpdate();
+        ps.executeUpdate();
+      
     }
     
     //updates a media with new data to be saved to the database
+    //@param Media
     public void updateMedia(Media media) throws Exception
     {
         Connection con = dbCon.getConnection();
@@ -130,7 +125,7 @@ public class MediaDBDAO
             ps.setInt(4, media.getTime());
             ps.setInt(5, media.getYear());
             ps.setInt(6, media.getCategory());
-           // ps.setInt(7, media.getNumPlays());
+            //ps.setInt(7, media.getNumPlays());
         
         ps.executeUpdate();
         ps.close();

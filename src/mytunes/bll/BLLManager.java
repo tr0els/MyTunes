@@ -49,7 +49,7 @@ public class BLLManager
         //return null;
     }
 
-    public void updateMedia(Media media)
+    public void updateSong(Media media)
     {
         
         try
@@ -60,21 +60,10 @@ public class BLLManager
             Logger.getLogger(BLLManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void updateSong(Media media) throws Exception {
-        mediaDB.updateMedia(media);
-    }
     
     public void deleteSong(Media media) throws Exception {
         mediaDB.deleteMedia(media);
     }
-
-    // search in allSongs list
-    public List<Media> searchMedias(String query)
-    {
-        return null;
-    }
-
-
 
     public List<Playlist> getAllPlaylists() throws Exception
     {
@@ -122,6 +111,9 @@ public class BLLManager
         return ConvertCategory.categoryNameToId(allCategories, name);
     }
 
+    //search the songs table for the query input 
+    //@param query
+    //@returns list of media 
     public List<Media> search(String query) throws Exception
     {
         List<Media> searchBase = mediaDB.getAllMedias();

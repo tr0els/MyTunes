@@ -24,6 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
@@ -124,6 +125,9 @@ public class MtController implements Initializable
         populatePlaylistsTable();
         populateSongsInPlaylistList();
         populateSongsTable();
+        
+        volumeSlider.setValue(50);
+        volumeLabel.setText("50%");
 
 //        mpModel.songList = mpModel.getAllSongs(dataModel.getAllSongs().get(int).getSource());
 //        mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
@@ -132,9 +136,26 @@ public class MtController implements Initializable
     @FXML
     private void handleSong(MouseEvent event)
     {
-        mpModel.overRideSongList(songsTable.getItems(), songsTable.getSelectionModel().getSelectedIndex());
-        mpModel.handlePlaySong(mediaView, currentSongLabel, pauseButton);
+        if (mediaView.getMediaPlayer() == null || mediaView.getMediaPlayer().getStatus() == Status.UNKNOWN || mediaView.getMediaPlayer().getStatus() == Status.READY)
+        {
+            mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
+        }
         
+        if (mediaView.getMediaPlayer().getStatus() == Status.PLAYING)
+        {
+            mediaView.getMediaPlayer().stop();
+            mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
+            mediaView.getMediaPlayer().play();
+        }
+        
+        if (mediaView.getMediaPlayer().getStatus() == Status.PAUSED)
+        {
+            mediaView.getMediaPlayer().stop();
+            mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
+        }
+            
+        mpModel.overRideSongList(songsTable.getItems(), songsTable.getSelectionModel().getSelectedIndex());
+        mpModel.handlePlaySong(mediaView, currentSongLabel, pauseButton, volumeSlider);
     }
 
     private void populatePlaylistsTable()
@@ -186,11 +207,12 @@ public class MtController implements Initializable
     @FXML
     private void handleSkipForward(ActionEvent event)
     {
-        if (currentSong != mpModel.songList.size() - 1)
+        if (mpModel.getCurrentSong() != mpModel.songList.size() - 1)
         {
-            mpModel.handleSkip(1, mediaView, currentSongLabel, pauseButton);
-            currentSong++;
+            mpModel.handleSkip(1, mediaView, currentSongLabel, pauseButton, volumeSlider);
         }
+        
+        mediaView.getMediaPlayer().setVolume(volumeSlider.getValue());
     }
 
     /**
@@ -201,12 +223,12 @@ public class MtController implements Initializable
     @FXML
     private void handleSkipBackwards(ActionEvent event)
     {
-        if(currentSong != 0)
+        if(mpModel.getCurrentSong() != 0)
         {
-            mpModel.handleSkip(-1, mediaView, currentSongLabel, pauseButton);
-            currentSong--;
+            mpModel.handleSkip(-1, mediaView, currentSongLabel, pauseButton, volumeSlider);
         }
-        mpModel.musicVolume(mediaView.getMediaPlayer(), volumeSlider, volumeLabel);
+        
+        mediaView.getMediaPlayer().setVolume(volumeSlider.getValue());
     }
 
     /**
@@ -266,14 +288,6 @@ public class MtController implements Initializable
             stage.setScene(new Scene(root));
             stage.show();
         }
-    }
-
-    @FXML
-    private void searchSong(KeyEvent event) throws Exception
-    {
-        String input = searchField.getText();
-        ObservableList<Media> result = dataModel.getSearchResult(input);
-        songsTable.setItems(result);
     }
 
     @FXML
@@ -363,7 +377,6 @@ public class MtController implements Initializable
         }
     }
 
-    @FXML
     private void handleDeleteSong(ActionEvent event) throws Exception
     {
         if (songsTable.getSelectionModel().getSelectedItem() != null)
@@ -379,11 +392,29 @@ public class MtController implements Initializable
         }
     }
 
-    @FXML
     private void handlePlaySongFromPlaylist(MouseEvent event)
     {
+       if (mediaView.getMediaPlayer() == null || mediaView.getMediaPlayer().getStatus() == Status.UNKNOWN || mediaView.getMediaPlayer().getStatus() == Status.READY)
+        {
+            mediaView.setMediaPlayer(mpModel.getSong(songsFromPlaylist.getSelectionModel().getSelectedItem().getSource()));
+            
+        }
+        
+        if (mediaView.getMediaPlayer().getStatus() == Status.PLAYING)
+        {
+            mediaView.getMediaPlayer().stop();
+            mediaView.setMediaPlayer(mpModel.getSong(songsFromPlaylist.getSelectionModel().getSelectedItem().getSource()));
+            mediaView.getMediaPlayer().play();
+        }
+        
+        if (mediaView.getMediaPlayer().getStatus() == Status.PAUSED)
+        {
+            mediaView.getMediaPlayer().stop();
+            mediaView.setMediaPlayer(mpModel.getSong(songsFromPlaylist.getSelectionModel().getSelectedItem().getSource()));
+        }
+            
         mpModel.overRideSongList(songsFromPlaylist.getItems(), songsFromPlaylist.getSelectionModel().getSelectedIndex());
-        mpModel.handlePlaySong(mediaView, currentSongLabel, pauseButton);
+        mpModel.handlePlaySong(mediaView, currentSongLabel, pauseButton, volumeSlider);
     }
 
     @FXML
@@ -391,5 +422,20 @@ public class MtController implements Initializable
     {
         dataModel.setSelectedPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
         populateSongsInPlaylistList(); // calls setItems again
+    }
+
+    @FXML
+    private void handleCloseProgram(ActionEvent event)
+    {
+        Stage stage = (Stage) closeProgram.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void searchSong(KeyEvent event) throws Exception
+    {
+        String input = searchField.getText();
+        ObservableList<Media> result = dataModel.getSearchResult(input);
+        songsTable.setItems(result);
     }
 }

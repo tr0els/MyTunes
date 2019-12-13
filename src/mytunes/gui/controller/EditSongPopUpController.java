@@ -85,17 +85,18 @@ public class EditSongPopUpController implements Initializable
     @FXML
     private void handleEditFile(ActionEvent event)
     {
-
+        
         media.setTitle(editTitle.getText());
         media.setArtist(editArtist.getText());
         media.setYear(Integer.parseInt(editYear.getText()));
         media.setTime(CT.timeToSec(editTime.getText()));
+        media.setCategory(comboCategory.getSelectionModel().getSelectedIndex());
 
         dataModel.updateSong(media);
         
         Stage stage = (Stage) editFileButton.getScene().getWindow();
         stage.close();
-
+        
     }
 
     @FXML
