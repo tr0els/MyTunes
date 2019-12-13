@@ -5,12 +5,12 @@
  */
 package mytunes.bll;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
+import mytunes.bll.util.SearchSongs;
 import mytunes.dal.database.CategoryDBDAO;
 import mytunes.dal.database.MediaDBDAO;
 import mytunes.dal.database.PlaylistDBDAO;
@@ -110,22 +110,14 @@ public class BLLManager
     {
         return categoryDB.getAllCategories();
     }
+    
+    
 
     public List<Media> search(String query) throws Exception
     {
-
         List<Media> searchBase = mediaDB.getAllMedias();
-        List<Media> output = new ArrayList<>();
-
-        for (Media song : searchBase)
-        {
-            if (song.getTitle().toLowerCase().contains(query.toLowerCase())
-                    || song.getArtist().toLowerCase().contains(query.toLowerCase()))
-            {
-                output.add(song);
-            }
-        }
-
-        return output;
+        searchBase = SearchSongs.search(searchBase, query);
+        
+        return searchBase;
     }
 }
