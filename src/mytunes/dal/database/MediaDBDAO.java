@@ -130,7 +130,7 @@ public class MediaDBDAO
             ps.setInt(4, media.getTime());
             ps.setInt(5, media.getYear());
             ps.setInt(6, media.getCategory());
-           // ps.setInt(7, media.getNumPlays());
+            //ps.setInt(7, media.getNumPlays());
         
         ps.executeUpdate();
         ps.close();
