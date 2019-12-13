@@ -96,19 +96,19 @@ public class MediaDBDAO
     //@param Media 
     public void deleteMedia(Media media) throws Exception
     {
-        try (Connection con = dbCon.getConnection())
-        {
+        Connection con = dbCon.getConnection();
+        
         int id = media.getId();
         String sql = "DELETE FROM songs_2 WHERE id=?;";
+        String sql2 = "delete from playlist_content_table where song_id =(?)";
         PreparedStatement ps = con.prepareStatement(sql);
+        PreparedStatement ps2 = con.prepareStatement(sql2);
         ps.setInt(1, id);
-        int affectedRows = ps.executeUpdate();
-        if (affectedRows != 1)
-        {
-        throw  new SQLException(); 
-        }
+        ps2.setInt(1, id);
         
-        }
+        ps2.executeUpdate();
+        ps.executeUpdate();
+      
     }
     
     //updates a media with new data to be saved to the database
