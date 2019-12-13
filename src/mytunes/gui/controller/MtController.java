@@ -31,7 +31,6 @@ import mytunes.be.Media;
 import mytunes.be.Playlist;
 import mytunes.gui.model.MediaPlayerModel;
 import mytunes.gui.model.DataModel;
-import mytunes.gui.model._PlaylistModel;
 
 /**
  *
@@ -103,15 +102,10 @@ public class MtController implements Initializable
     @FXML
     private ListView<Media> songsFromPlaylist;
 
-    private _PlaylistModel playlistModel;
     public DataModel dataModel;
-
     private MediaPlayerModel mpModel = new MediaPlayerModel();
-
     private int currentSong = 0;
-
     ObservableList<Media> songLists = null;
-
     private int countId = 0;
 
     public MtController() throws Exception
