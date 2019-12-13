@@ -318,13 +318,6 @@ public class MtController implements Initializable
     }
 
     @FXML
-    private void handleSongsFromPlayList(MouseEvent event)
-    {
-        dataModel.setSelectedPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
-        populateSongsInPlaylistList(); // calls setItems again
-    }
-
-    @FXML
     private void handleDeleteSongFromPlaylist(ActionEvent event) throws Exception
     {
         if (songsFromPlaylist.getSelectionModel().getSelectedItem() != null)
@@ -413,6 +406,13 @@ public class MtController implements Initializable
     {
         mpModel.overRideSongList(songsFromPlaylist.getItems(), songsFromPlaylist.getSelectionModel().getSelectedIndex());
         mpModel.handlePlaySong(mediaView, currentSongLabel, pauseButton);
+    }
+
+    @FXML
+    private void handleSongsFromPlaylist(MouseEvent event)
+    {
+        dataModel.setSelectedPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
+        populateSongsInPlaylistList(); // calls setItems again
     }
 
 }
