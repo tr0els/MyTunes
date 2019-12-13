@@ -6,7 +6,6 @@
 package mytunes.gui.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -20,7 +19,6 @@ import javafx.stage.Stage;
 import mytunes.be.Media;
 import mytunes.bll.util.ConvertTime;
 import mytunes.gui.model.DataModel;
-import mytunes.gui.model.MediaModel;
 
 /**
  * FXML Controller class

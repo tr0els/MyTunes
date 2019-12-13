@@ -15,12 +15,12 @@ import mytunes.bll.BLLManager;
  *
  * @author Troels Klein
  */
-public class PlaylistModel {
+public class _PlaylistModel {
 
     private BLLManager bll;
     private ObservableList<Playlist> playlists;
 
-    public PlaylistModel() throws Exception 
+    public _PlaylistModel() throws Exception 
     {
         bll = new BLLManager();
         playlists = FXCollections.observableArrayList();

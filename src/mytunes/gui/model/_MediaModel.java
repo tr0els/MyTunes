@@ -15,13 +15,13 @@ import mytunes.bll.BLLManager;
  *
  * @author Troels Klein
  */
-public class MediaModel
+public class _MediaModel
 {
     
     private BLLManager bll;
     private ObservableList<Media> medias;
     
-    public MediaModel() throws Exception
+    public _MediaModel() throws Exception
     {
         bll = new BLLManager();
         medias = FXCollections.observableArrayList();

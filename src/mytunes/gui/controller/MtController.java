@@ -7,15 +7,7 @@ package mytunes.gui.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.ResourceBundle;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,18 +24,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
 import mytunes.gui.model.MediaPlayerModel;
-import mytunes.dal.MockManager;
 import mytunes.gui.model.DataModel;
-import mytunes.gui.model.MediaModel;
-import mytunes.gui.model.PlaylistModel;
+import mytunes.gui.model._PlaylistModel;
 
 /**
  *
@@ -115,7 +103,7 @@ public class MtController implements Initializable
     @FXML
     private ListView<Media> songsFromPlaylist;
 
-    private PlaylistModel playlistModel;
+    private _PlaylistModel playlistModel;
     public DataModel dataModel;
 
     private MediaPlayerModel mpModel = new MediaPlayerModel();

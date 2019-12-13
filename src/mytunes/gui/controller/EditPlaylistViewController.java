@@ -18,7 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import mytunes.be.Playlist;
 import mytunes.gui.model.DataModel;
-import mytunes.gui.model.PlaylistModel;
+import mytunes.gui.model._PlaylistModel;
 
 
 /**
