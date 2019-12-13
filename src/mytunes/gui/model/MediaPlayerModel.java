@@ -37,6 +37,11 @@ public class MediaPlayerModel
         return mediaPlayer;
     }
 
+    public int getCurrentSong()
+    {
+        return currentSong;
+    }
+
     /**
      * Checks if the current song is playing, paused or ready. Sets the button
      * text to Play or Pause, depending on if the song is playing or paused.
@@ -46,13 +51,13 @@ public class MediaPlayerModel
      */
     public void playAndPause(int currentSong, Button button, MediaView mediaView)
     {
-        if (mediaView.getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING)
+        if (mediaView.getMediaPlayer().getStatus() == Status.PLAYING)
         {
             mediaView.getMediaPlayer().pause();
             button.setText("Play");
 
-        } else if (mediaView.getMediaPlayer().getStatus() == MediaPlayer.Status.PAUSED
-                || mediaView.getMediaPlayer().getStatus() == MediaPlayer.Status.READY)
+        } else if (mediaView.getMediaPlayer().getStatus() == Status.PAUSED
+                || mediaView.getMediaPlayer().getStatus() == Status.READY)
         {
             mediaView.getMediaPlayer().play();
             button.setText("Pause");
@@ -60,13 +65,16 @@ public class MediaPlayerModel
         }
     }
 
-    public void playNextSong(MediaView mv, Label songLabel, Button button)
+    public void playNextSong(MediaView mv, Label songLabel, Button button, Slider vs)
     {
         mv.getMediaPlayer().setOnEndOfMedia(() ->
         {
-            currentSong++;
-            handleSongs(mv, songLabel, button, "Pause");
+            currentSong = currentSong + 1;
+            mv.getMediaPlayer().stop();
+            mv.setMediaPlayer(getSong(songList.get(currentSong).getSource()));
+            songLabel.setText(songList.get(currentSong).getTitle() + "... is playing");
             mv.getMediaPlayer().play();
+            handleSongs(mv, songLabel, button, "Pause", vs);
         });
 
     }
@@ -104,41 +112,53 @@ public class MediaPlayerModel
         currentSong = media;
     }
 
-    public void handleSkip(int upOrDown, MediaView mv, Label currentSongLabel, Button pauseButton)
+    public void handleSkip(int upOrDown, MediaView mv, Label currentSongLabel, Button pauseButton, Slider vs)
     {
         if (mv.getMediaPlayer().getStatus() == Status.PLAYING)
         {
             currentSong = currentSong + upOrDown;
             mv.getMediaPlayer().stop();
-            handleSongs(mv, currentSongLabel, pauseButton, "Pause");
+            mv.setMediaPlayer(getSong(songList.get(currentSong).getSource()));
+            currentSongLabel.setText(songList.get(currentSong).getTitle() + "... is playing");
+            handleSongs(mv, currentSongLabel, pauseButton, "Pause", vs);
             mv.getMediaPlayer().play();
             
-        } else if (mv.getMediaPlayer().getStatus() == Status.PAUSED || mv.getMediaPlayer().getStatus() == Status.STOPPED)
+        } else if (mv.getMediaPlayer().getStatus() == Status.PAUSED || mv.getMediaPlayer().getStatus() == Status.READY || mv.getMediaPlayer().getStatus() == Status.STOPPED )
         {
             currentSong = currentSong + upOrDown;
-            handleSongs(mv, currentSongLabel, pauseButton, "Play");
+            mv.getMediaPlayer().stop();
+            mv.setMediaPlayer(getSong(songList.get(currentSong).getSource()));
+            currentSongLabel.setText(songList.get(currentSong).getTitle() + "... is playing");
+            handleSongs(mv, currentSongLabel, pauseButton, "Play", vs);
         }
     }
 
-    public void handlePlaySong(MediaView mv, Label currentSongLabel, Button pauseButton)
+    public void handlePlaySong(MediaView mv, Label currentSongLabel, Button pauseButton, Slider vs)
     {
         if (mv.getMediaPlayer().getStatus() == Status.PLAYING)
         {
-            mv.getMediaPlayer().stop();
-            handleSongs(mv, currentSongLabel, pauseButton, "Pause");
-            mv.getMediaPlayer().play();
-        } else if (mv.getMediaPlayer().getStatus() == Status.PAUSED || mv.getMediaPlayer().getStatus() == Status.STOPPED)
+            handleSongs(mv, currentSongLabel, pauseButton, "Pause", vs);
+            
+            
+        } 
+        else if (mv.getMediaPlayer().getStatus() == Status.PAUSED || mv.getMediaPlayer().getStatus() == Status.READY || mv.getMediaPlayer().getStatus() == Status.STOPPED)
         {
-            handleSongs(mv, currentSongLabel, pauseButton, "Play");
+            handleSongs(mv, currentSongLabel, pauseButton, "Play", vs);
+            
+        }
+        
+        else
+        {
+            currentSongLabel.setText(songList.get(currentSong).getTitle() + "... is playing");
+            playNextSong(mv, currentSongLabel, pauseButton, vs);
         }
     }
 
-    private void handleSongs(MediaView mv, Label currentSongLabel, Button pauseButton, String playOrPause)
+    private void handleSongs(MediaView mv, Label currentSongLabel, Button pauseButton, String playOrPause, Slider vs)
     {
-        mv.setMediaPlayer(getSong(songList.get(currentSong).getSource()));
-        currentSongLabel.setText(songList.get(currentSong).getTitle() + "... is playing");
         pauseButton.setText(playOrPause);
-        mv.getMediaPlayer().setVolume(0.5);
-        playNextSong(mv, currentSongLabel, pauseButton);
+        mv.getMediaPlayer().setVolume(vs.getValue());
+        playNextSong(mv, currentSongLabel, pauseButton, vs);
+        
     }
 }
