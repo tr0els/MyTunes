@@ -136,7 +136,7 @@ public class MtController implements Initializable
     @FXML
     private void handleSong(MouseEvent event)
     {
-        if (mediaView.getMediaPlayer() == null || mediaView.getMediaPlayer().getStatus() == Status.UNKNOWN)
+        if (mediaView.getMediaPlayer() == null || mediaView.getMediaPlayer().getStatus() == Status.UNKNOWN || mediaView.getMediaPlayer().getStatus() == Status.READY)
         {
             mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
         }
@@ -212,7 +212,7 @@ public class MtController implements Initializable
             mpModel.handleSkip(1, mediaView, currentSongLabel, pauseButton, volumeSlider);
         }
         
-        mpModel.musicVolume(mediaView.getMediaPlayer(), volumeSlider, volumeLabel);
+        mediaView.getMediaPlayer().setVolume(volumeSlider.getValue());
     }
 
     /**
@@ -227,7 +227,8 @@ public class MtController implements Initializable
         {
             mpModel.handleSkip(-1, mediaView, currentSongLabel, pauseButton, volumeSlider);
         }
-        mpModel.musicVolume(mediaView.getMediaPlayer(), volumeSlider, volumeLabel);
+        
+        mediaView.getMediaPlayer().setVolume(volumeSlider.getValue());
     }
 
     /**
@@ -403,7 +404,7 @@ public class MtController implements Initializable
     @FXML
     private void handlePlaySongFromPlaylist(MouseEvent event)
     {
-       if (mediaView.getMediaPlayer() == null || mediaView.getMediaPlayer().getStatus() == Status.UNKNOWN)
+       if (mediaView.getMediaPlayer() == null || mediaView.getMediaPlayer().getStatus() == Status.UNKNOWN || mediaView.getMediaPlayer().getStatus() == Status.READY)
         {
             mediaView.setMediaPlayer(mpModel.getSong(songsFromPlaylist.getSelectionModel().getSelectedItem().getSource()));
             
