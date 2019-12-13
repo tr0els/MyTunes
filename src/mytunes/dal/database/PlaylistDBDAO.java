@@ -33,7 +33,9 @@ public class PlaylistDBDAO
     }
 
                  
-    //opretter en ny playlist 
+    //creates a new playlist 
+    //@param name
+    //@return Playlist
     public Playlist createPlaylist(String name) throws Exception
     {
         Connection con = dbCon.getConnection();
@@ -56,7 +58,8 @@ public class PlaylistDBDAO
         return null;
     }
 
-    //retunere alle playlister 
+    //returns an ObservableList with playlists from playlist table
+    //@return ObservableList with playlists
     public ObservableList<Playlist> getAllPlaylist() throws Exception
     {
         try (Connection con = dbCon.getConnection())
@@ -90,7 +93,9 @@ public class PlaylistDBDAO
         }
     }
 
-    // retunere én playliste med dens sange
+    //returens a single playlist with its songs 
+    //@param playlist 
+    //@return a List of medias 
     public List<Media> getPlaylist(Playlist playlist) throws Exception
     {
         Connection con = dbCon.getConnection();
@@ -117,7 +122,6 @@ public class PlaylistDBDAO
 
         }
         return playlistWithSongs;
-
     }
 
     //sletter en playliste 
@@ -141,7 +145,9 @@ public class PlaylistDBDAO
 
     }
 
-    //tilføjer en sang til en playliste 
+    //Adds a song to a playlist 
+    //@param playlist 
+    //@Param Media 
     public void addToPlaylist(Playlist playlist, Media media) throws Exception
     {
 
@@ -161,7 +167,9 @@ public class PlaylistDBDAO
 
     }
 
-    //fjerner en sang fra en playliste 
+    //removes a song from a single playlist 
+    //@param playlist 
+    //@param media 
     public void removeFromPlaylist(Playlist playlist, Media media) throws Exception
     {
         Connection con = dbCon.getConnection();
@@ -180,7 +188,8 @@ public class PlaylistDBDAO
 
     }
 
-    //opdatere en playliste med navn 
+    //updates a singel playlist with is new name
+    //@param playlist 
     public void updatePlaylist(Playlist playlist) throws Exception
     {
         Connection con = dbCon.getConnection();

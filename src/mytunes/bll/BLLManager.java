@@ -68,12 +68,10 @@ public class BLLManager
     }
 
     // search in allSongs list
-    public List<Media> searchMedias(String query)
-    {
-        return null;
-    }
-
-
+//    public List<Media> searchMedias(String query)
+//    {
+//        return null;
+//    }
 
     public List<Playlist> getAllPlaylists() throws Exception
     {
@@ -110,10 +108,12 @@ public class BLLManager
     {
         return categoryDB.getAllCategories();
     }
-
+    
+    //search the songs table for the query input 
+    //@param query
+    //@returns list of media 
     public List<Media> search(String query) throws Exception
     {
-
         List<Media> searchBase = mediaDB.getAllMedias();
         List<Media> output = new ArrayList<>();
 
