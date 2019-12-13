@@ -72,7 +72,6 @@
         <Button fx:id="newSongButton" layoutX="450.0" layoutY="473.0" mnemonicParsing="false" onAction="#openSongPopup" text="New..." />
         <Button fx:id="editSongButton" layoutX="503.0" layoutY="473.0" mnemonicParsing="false" onAction="#handleEditSong" text="Edit..." />
         <Button fx:id="deleteSongButton" layoutX="559.0" layoutY="473.0" mnemonicParsing="false" text="Delete" />
-        <TextField fx:id="searchField" layoutX="598.0" layoutY="118.0" onKeyTyped="#searchSong" prefHeight="25.0" prefWidth="185.0" />
         <Label fx:id="searchLabel" contentDisplay="CENTER" layoutX="559.0" layoutY="118.0" prefHeight="25.0" prefWidth="50.0" text="Search" textAlignment="RIGHT" />
         <Slider fx:id="volumeSlider" layoutX="53.0" layoutY="111.0" onDragDetected="#handleMusicVolume" prefHeight="25.0" prefWidth="120.0" />
         <Label fx:id="volumeLabel" contentDisplay="CENTER" layoutX="173.0" layoutY="111.0" prefHeight="25.0" prefWidth="50.0" text="0%" textAlignment="RIGHT" />
@@ -111,6 +110,6 @@
             <Font size="36.0" />
          </font>
       </Label>
-          <TextField fx:id="searchField" layoutX="600.0" layoutY="118.0" onKeyTyped="#searchSong" prefHeight="25.0" prefWidth="185.0" />
+          <TextField fx:id="searchField" layoutX="599.0" layoutY="118.0" onKeyTyped="#searchSong" prefHeight="25.0" prefWidth="185.0" />
     </children>
 </AnchorPane>

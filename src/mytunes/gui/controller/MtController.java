@@ -144,6 +144,9 @@ public class MtController implements Initializable
         populatePlaylistsTable();
         populateSongsInPlaylistList();
         populateSongsTable();
+        
+        volumeSlider.setValue(50);
+        volumeLabel.setText("50%");
 
 //        mpModel.songList = mpModel.getAllSongs(mediaModel.getAllMedias().get(int).getSource());
 //        mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
@@ -152,9 +155,26 @@ public class MtController implements Initializable
     @FXML
     private void handleSong(MouseEvent event)
     {
-        mpModel.overRideSongList(songsTable.getItems(), songsTable.getSelectionModel().getSelectedIndex());
-        mpModel.handlePlaySong(mediaView, currentSongLabel, pauseButton);
+        if (mediaView.getMediaPlayer() == null || mediaView.getMediaPlayer().getStatus() == Status.UNKNOWN)
+        {
+            mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
+        }
         
+        if (mediaView.getMediaPlayer().getStatus() == Status.PLAYING)
+        {
+            mediaView.getMediaPlayer().stop();
+            mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
+            mediaView.getMediaPlayer().play();
+        }
+        
+        if (mediaView.getMediaPlayer().getStatus() == Status.PAUSED)
+        {
+            mediaView.getMediaPlayer().stop();
+            mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
+        }
+            
+        mpModel.overRideSongList(songsTable.getItems(), songsTable.getSelectionModel().getSelectedIndex());
+        mpModel.handlePlaySong(mediaView, currentSongLabel, pauseButton, volumeSlider);
     }
 
     private void populatePlaylistsTable()
@@ -206,11 +226,12 @@ public class MtController implements Initializable
     @FXML
     private void handleSkipForward(ActionEvent event)
     {
-        if (currentSong != mpModel.songList.size() - 1)
+        if (mpModel.getCurrentSong() != mpModel.songList.size() - 1)
         {
-            mpModel.handleSkip(1, mediaView, currentSongLabel, pauseButton);
-            currentSong++;
+            mpModel.handleSkip(1, mediaView, currentSongLabel, pauseButton, volumeSlider);
         }
+        
+        mpModel.musicVolume(mediaView.getMediaPlayer(), volumeSlider, volumeLabel);
     }
 
     /**
@@ -221,10 +242,9 @@ public class MtController implements Initializable
     @FXML
     private void handleSkipBackwards(ActionEvent event)
     {
-        if(currentSong != 0)
+        if(mpModel.getCurrentSong() != 0)
         {
-            mpModel.handleSkip(-1, mediaView, currentSongLabel, pauseButton);
-            currentSong--;
+            mpModel.handleSkip(-1, mediaView, currentSongLabel, pauseButton, volumeSlider);
         }
         mpModel.musicVolume(mediaView.getMediaPlayer(), volumeSlider, volumeLabel);
     }
@@ -404,13 +424,33 @@ public class MtController implements Initializable
     @FXML
     private void handlePlaySongFromPlaylist(MouseEvent event)
     {
+       if (mediaView.getMediaPlayer() == null || mediaView.getMediaPlayer().getStatus() == Status.UNKNOWN)
+        {
+            mediaView.setMediaPlayer(mpModel.getSong(songsFromPlaylist.getSelectionModel().getSelectedItem().getSource()));
+            
+        }
+        
+        if (mediaView.getMediaPlayer().getStatus() == Status.PLAYING)
+        {
+            mediaView.getMediaPlayer().stop();
+            mediaView.setMediaPlayer(mpModel.getSong(songsFromPlaylist.getSelectionModel().getSelectedItem().getSource()));
+            mediaView.getMediaPlayer().play();
+        }
+        
+        if (mediaView.getMediaPlayer().getStatus() == Status.PAUSED)
+        {
+            mediaView.getMediaPlayer().stop();
+            mediaView.setMediaPlayer(mpModel.getSong(songsFromPlaylist.getSelectionModel().getSelectedItem().getSource()));
+        }
+            
         mpModel.overRideSongList(songsFromPlaylist.getItems(), songsFromPlaylist.getSelectionModel().getSelectedIndex());
-        mpModel.handlePlaySong(mediaView, currentSongLabel, pauseButton);
+        mpModel.handlePlaySong(mediaView, currentSongLabel, pauseButton, volumeSlider);
     }
 
     @FXML
     private void handleSongsFromPlaylist(MouseEvent event)
     {
+        
         dataModel.setSelectedPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
         populateSongsInPlaylistList(); // calls setItems again
     }
