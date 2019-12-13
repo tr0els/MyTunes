@@ -291,14 +291,6 @@ public class MtController implements Initializable
     }
 
     @FXML
-    private void searchSong(KeyEvent event) throws Exception
-    {
-        String input = searchField.getText();
-        ObservableList<Media> result = dataModel.getSearchResult(input);
-        songsTable.setItems(result);
-    }
-
-    @FXML
     private void addSongButton(ActionEvent event) throws Exception
     {
         dataModel.addSongToPlaylist(songsTable.getSelectionModel().getSelectedItem());
@@ -385,7 +377,6 @@ public class MtController implements Initializable
         }
     }
 
-    @FXML
     private void handleDeleteSong(ActionEvent event) throws Exception
     {
         if (songsTable.getSelectionModel().getSelectedItem() != null)
@@ -401,7 +392,6 @@ public class MtController implements Initializable
         }
     }
 
-    @FXML
     private void handlePlaySongFromPlaylist(MouseEvent event)
     {
        if (mediaView.getMediaPlayer() == null || mediaView.getMediaPlayer().getStatus() == Status.UNKNOWN || mediaView.getMediaPlayer().getStatus() == Status.READY)
@@ -430,8 +420,22 @@ public class MtController implements Initializable
     @FXML
     private void handleSongsFromPlaylist(MouseEvent event)
     {
-        
         dataModel.setSelectedPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
         populateSongsInPlaylistList(); // calls setItems again
+    }
+
+    @FXML
+    private void handleCloseProgram(ActionEvent event)
+    {
+        Stage stage = (Stage) closeProgram.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void searchSong(KeyEvent event) throws Exception
+    {
+        String input = searchField.getText();
+        ObservableList<Media> result = dataModel.getSearchResult(input);
+        songsTable.setItems(result);
     }
 }
