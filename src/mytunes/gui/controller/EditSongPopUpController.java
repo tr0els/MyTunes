@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import mytunes.be.Media;
+import mytunes.bll.BLLManager;
 import mytunes.bll.util.ConvertTime;
 import mytunes.gui.model.DataModel;
 
