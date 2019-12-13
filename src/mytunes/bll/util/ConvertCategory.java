@@ -26,4 +26,10 @@ public class ConvertCategory {
         
         return allCategories.get(id);
     }
+    
+    public int categoryNameToId(String name) throws Exception {
+        List<String> allCategories = bll.getAllCategories();
+        
+        return allCategories.indexOf(name);
+    }
 }
