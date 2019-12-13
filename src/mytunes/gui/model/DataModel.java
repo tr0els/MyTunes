@@ -58,7 +58,7 @@ public class DataModel {
     
     // sends to bll the already edited playlist
     public void updatePlaylist(Playlist playlist) throws Exception {
-        bll.editPlaylist(playlist);
+        bll.updatePlaylist(playlist);
     }
     
     public void deletePlaylist() throws Exception {
@@ -83,7 +83,7 @@ public class DataModel {
 
     // remove song from the currently selected playlist
     public void deleteSongFromPlaylist(Media media) throws Exception {
-        bll.removeSongFromPlaylist(selectedPlaylist, media);
+        bll.deleteSongFromPlaylist(selectedPlaylist, media);
         songsOnSelectedPlaylist.remove(media);
         // todo: update numSongs + time
     }
