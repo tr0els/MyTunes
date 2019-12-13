@@ -39,6 +39,7 @@ public class MediaModel
         medias.add(media);
     }
     
+    /*
     public ObservableList<Media> getSearchResult(String input) throws Exception
     {
         
@@ -48,6 +49,7 @@ public class MediaModel
         
         return output;
     }
+    */
     
     public void updateMedia(/*Media media*/)
     {
