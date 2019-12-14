@@ -30,6 +30,11 @@ public class MediaPlayerModel
 
     int currentSong = 0;
 
+    /**
+     * Makes a new mediaplayer, by getting a source. 
+     * @param source
+     * @return 
+     */
     public MediaPlayer getSong(String source)
     {
         Media med = new Media(new File(source).toURI().toString());
@@ -37,6 +42,10 @@ public class MediaPlayerModel
         return mediaPlayer;
     }
 
+    /**
+     * Returns the value of the current song. 
+     * @return 
+     */
     public int getCurrentSong()
     {
         return currentSong;
@@ -65,6 +74,14 @@ public class MediaPlayerModel
         }
     }
 
+    /**
+     * Gets and plays the next song from all songs or the current playlist, 
+     * when the current song ends. 
+     * @param mv
+     * @param songLabel
+     * @param button
+     * @param vs 
+     */
     public void playNextSong(MediaView mv, Label songLabel, Button button, Slider vs)
     {
         mv.getMediaPlayer().setOnEndOfMedia(() ->
@@ -79,6 +96,14 @@ public class MediaPlayerModel
 
     }
 
+    /**
+     * Binds the volume of the music to a slider that changes 
+     * the volume of the song playing, when dragged. 
+     * The label changes when there is a change in the sliders value.
+     * @param currSong
+     * @param volumeSlider
+     * @param volumeLabel 
+     */
     public void musicVolume(MediaPlayer currSong, Slider volumeSlider, Label volumeLabel)
     {
         volumeSlider.setValue(currSong.getVolume() * 100);
@@ -106,12 +131,25 @@ public class MediaPlayerModel
 
     }
 
+    /**
+     * Overrides the observable list and the int when a new song is chosen. 
+     * @param items
+     * @param media 
+     */
     public void overRideSongList(ObservableList<mytunes.be.Media> items, int media)
     {
         songList = items;
         currentSong = media;
     }
-
+    
+    /**
+     * Stops the current song and plays the next song. 
+     * @param upOrDown
+     * @param mv
+     * @param currentSongLabel
+     * @param pauseButton
+     * @param vs 
+     */
     public void handleSkip(int upOrDown, MediaView mv, Label currentSongLabel, Button pauseButton, Slider vs)
     {
         if (mv.getMediaPlayer().getStatus() == Status.PLAYING)
@@ -133,6 +171,13 @@ public class MediaPlayerModel
         }
     }
 
+    /**
+     * Plays a chosen song.
+     * @param mv
+     * @param currentSongLabel
+     * @param pauseButton
+     * @param vs 
+     */
     public void handlePlaySong(MediaView mv, Label currentSongLabel, Button pauseButton, Slider vs)
     {
         if (mv.getMediaPlayer().getStatus() == Status.PLAYING)
@@ -154,6 +199,14 @@ public class MediaPlayerModel
         }
     }
 
+    /**
+     * Helps with playing a chosen song. 
+     * @param mv
+     * @param currentSongLabel
+     * @param pauseButton
+     * @param playOrPause
+     * @param vs 
+     */
     private void handleSongs(MediaView mv, Label currentSongLabel, Button pauseButton, String playOrPause, Slider vs)
     {
         pauseButton.setText(playOrPause);
