@@ -8,6 +8,7 @@ package mytunes.gui.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,9 +51,7 @@ public class EditSongPopUpController implements Initializable
     private TextField editYear;
 
     private Media media;
-
     private ConvertTime CT = new ConvertTime();
-    
     private DataModel dataModel;
 
     /**
@@ -69,23 +68,26 @@ public class EditSongPopUpController implements Initializable
         editArtist.setText(media.getArtist());
         editYear.setText(media.getYear() + "");
         editTime.setText(CT.secToTime(media.getTime()));
-        categories(media);
+        
         this.media = media;
         this.dataModel = dataModel;
+        
+        categories(media);    
     }
 
     private void categories(Media media) throws Exception
     {
-        comboCategory.setItems(FXCollections.observableArrayList(dataModel.getAllCategories().toArray()) );
-
-        comboCategory.getSelectionModel().select(media.getCategory());
-
+        ObservableList<String> categories = FXCollections.observableArrayList();
+        categories.addAll(dataModel.getAllCategories());
+        
+        comboCategory.setItems(categories);
+        comboCategory.getSelectionModel().select(media.getCategory()); // use when category is int
+        //comboCategory.getSelectionModel().select(dataModel.categoryNameToId(media.getCategory())); // use when category is string
     }
 
     @FXML
     private void handleEditFile(ActionEvent event)
     {
-        
         media.setTitle(editTitle.getText());
         media.setArtist(editArtist.getText());
         media.setYear(Integer.parseInt(editYear.getText()));
@@ -96,14 +98,10 @@ public class EditSongPopUpController implements Initializable
         
         Stage stage = (Stage) editFileButton.getScene().getWindow();
         stage.close();
-        
     }
 
     @FXML
     private void handleCategory(ActionEvent event)
     {
     }
-    
-   
-
 }
