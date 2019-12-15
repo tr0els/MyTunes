@@ -10,7 +10,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
-import mytunes.bll.util.ConvertTime;
 
 /**
  *
@@ -91,12 +90,8 @@ public class Media {
         this.time.set(time);
     }
     
-    public StringProperty timeProperty() {
-        
-        ConvertTime convertTime = new ConvertTime();
-        String formattedTime = convertTime.secToTime(getTime());
-        
-        return new SimpleStringProperty(formattedTime);
+    public ObservableValue<Integer> timeProperty() {
+        return time.asObject();
     } 
     
     public int getYear() {
@@ -139,25 +134,5 @@ public class Media {
     public String toString()
     {
         return getTitle();
-    }
-    
-    
-    // not using this yet, so remember to remove later if still unused
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Media other = (Media) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        return true;
     }
 }

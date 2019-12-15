@@ -12,7 +12,6 @@ import javafx.collections.ObservableList;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
 import mytunes.bll.BLLManager;
-import mytunes.bll.util.ConvertCategory;
 
 /**
  *
@@ -26,6 +25,7 @@ public class DataModel {
     private ObservableList<Media> songsOnSelectedPlaylist; // list of songs on currently selected playlist
     private ObservableList<Media> allSongs; // list of all songs
     private Playlist selectedPlaylist; // reference to currently selected playlist
+    private List<String> allCategories;
     
     public DataModel() throws Exception {
         bll = new BLLManager();
@@ -39,6 +39,9 @@ public class DataModel {
         // populate playlist and all songs lists
         allPlaylists.addAll(bll.getAllPlaylists());
         allSongs.addAll(bll.getAllMedias());
+        
+        // list of all categories
+        allCategories = bll.getAllCategories();
     }
      
     // set a reference to currently selected playlist and the playlists associated songlist
@@ -124,9 +127,9 @@ public class DataModel {
     }
     
 
-    public List<String> getAllCategories() throws Exception
+    public List<String> getAllCategories()
     {
-        return bll.getAllCategories();
+        return allCategories;
     }
     
     public String categoryIdToName(int id) throws Exception {
@@ -136,6 +139,14 @@ public class DataModel {
     public int categoryIdToName(String name) throws Exception {
         return bll.categoryNameToId(name);
     }
+    
+    public String secToTime(int sec) {
+        return bll.secToTime(sec);
+    }
+    
+    public int timeToSec(String time) {
+        return bll.timeToSec(time);
+    }    
     
     public ObservableList<Media> getSearchResult(String input) throws Exception
     {

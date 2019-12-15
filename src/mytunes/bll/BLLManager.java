@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import mytunes.be.Media;
 import mytunes.be.Playlist;
 import mytunes.bll.util.ConvertCategory;
+import mytunes.bll.util.ConvertTime;
 import mytunes.bll.util.SearchSongs;
 import mytunes.dal.database.CategoryDBDAO;
 import mytunes.dal.database.MediaDBDAO;
@@ -110,6 +111,14 @@ public class BLLManager
         List<String> allCategories = getAllCategories();
         return ConvertCategory.categoryNameToId(allCategories, name);
     }
+    
+    public String secToTime(int sec) {
+        return ConvertTime.secToTime(sec);
+    }
+    
+    public int timeToSec(String time) {
+        return ConvertTime.timeToSec(time);
+    }    
 
     //search the songs table for the query input 
     //@param query

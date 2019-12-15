@@ -12,7 +12,7 @@ package mytunes.bll.util;
 public class ConvertTime
 {
 
-    public String secToTime(int sec)
+    public static String secToTime(int sec)
     {
 
         int hours = 0;
@@ -62,7 +62,7 @@ public class ConvertTime
         return time;
     }
 
-    public int timeToSec(String time)
+    public static int timeToSec(String time)
     {
 
         String[] split = time.split(":");

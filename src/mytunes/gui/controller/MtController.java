@@ -7,6 +7,8 @@ package mytunes.gui.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -27,6 +30,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.media.MediaView;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import mytunes.be.Media;
@@ -61,7 +65,7 @@ public class MtController implements Initializable {
     @FXML
     private TableColumn<Media, Integer> songsCategoryColumn;
     @FXML
-    private TableColumn<Media, String> songsTimeColumn;
+    private TableColumn<Media, Integer> songsTimeColumn;
 
     @FXML
     private Button closeProgram;
@@ -169,7 +173,7 @@ public class MtController implements Initializable {
     }
 
     private void populateSongsInPlaylistList() {
-        // custom display of content
+        // custom rendering of the list cell
         songsFromPlaylist.setCellFactory(param -> new ListCell<Media>() {
             @Override
             protected void updateItem(Media item, boolean empty) {
@@ -178,11 +182,11 @@ public class MtController implements Initializable {
                 if (empty || item == null || item.getTitle() == null) {
                     setText(null);
                 } else {
-                    setText((this.getIndex() + 1) + ". " +  item.getTitle());
+                    setText((this.getIndex() + 1) + ". " + item.getTitle());
                 }
             }
         });
-        
+
         // add data to listview
         songsFromPlaylist.setItems(dataModel.getSongsOnPlaylist());
     }
@@ -193,6 +197,36 @@ public class MtController implements Initializable {
         songsArtistColumn.setCellValueFactory(cellData -> cellData.getValue().artistProperty());
         songsCategoryColumn.setCellValueFactory(cellData -> cellData.getValue().categoryProperty());
         songsTimeColumn.setCellValueFactory(cellData -> cellData.getValue().timeProperty());
+
+        // custom rendering of the category table cell
+        songsCategoryColumn.setCellFactory(column -> new TableCell<Media, Integer>() {
+
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null || item == -1) {
+                    setText(null);
+                } else {
+                    setText(dataModel.getAllCategories().get(item));
+                }
+            }
+        });        
+        
+        // custom rendering of the time table cell
+        songsTimeColumn.setCellFactory(column -> new TableCell<Media, Integer>() {
+
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(dataModel.secToTime(item));
+                }
+            }
+        });
 
         // add data to the table
         songsTable.setItems(dataModel.getAllSongs());
@@ -205,6 +239,7 @@ public class MtController implements Initializable {
      * @param event
      */
     @FXML
+
     private void handlePlayAndPause(ActionEvent event) {
         mpModel.playAndPause(currentSong, pauseButton, mediaView);
     }
