@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
@@ -37,8 +38,7 @@ import mytunes.gui.model.DataModel;
  *
  * @author Troels Klein
  */
-public class MtController implements Initializable
-{
+public class MtController implements Initializable {
 
     @FXML
     private TableView<Playlist> playlistsTable;
@@ -50,8 +50,8 @@ public class MtController implements Initializable
     private TableColumn<Playlist, String> playlistsTimeTotalColumn;
 
     @FXML
-    private ListView<Media> songsFromPlaylist;    
-    
+    private ListView<Media> songsFromPlaylist;
+
     @FXML
     private TableView<Media> songsTable;
     @FXML
@@ -61,8 +61,8 @@ public class MtController implements Initializable
     @FXML
     private TableColumn<Media, Integer> songsCategoryColumn;
     @FXML
-    private TableColumn<Media, String> songsTimeColumn;    
-    
+    private TableColumn<Media, String> songsTimeColumn;
+
     @FXML
     private Button closeProgram;
     @FXML
@@ -105,13 +105,12 @@ public class MtController implements Initializable
     private Button deletePlaylistSongButton;
 
     public DataModel dataModel;
-    
+
     private MediaPlayerModel mpModel = new MediaPlayerModel();
     private int currentSong = 0;
     private int countId = 0;
 
-    public MtController() throws Exception
-    {
+    public MtController() throws Exception {
         dataModel = new DataModel();
     }
 
@@ -120,12 +119,11 @@ public class MtController implements Initializable
      * after the FXML file has been loaded.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         populatePlaylistsTable();
         populateSongsInPlaylistList();
         populateSongsTable();
-        
+
         volumeSlider.setValue(50);
         volumeLabel.setText("50%");
 
@@ -133,40 +131,34 @@ public class MtController implements Initializable
 //        mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
     }
 
-    
     /**
-     * Stops the song if one is currently playing. 
-     * Gets the source of the song the user has picked. 
-     * Plays the new song. 
-     * @param event 
+     * Stops the song if one is currently playing. Gets the source of the song
+     * the user has picked. Plays the new song.
+     *
+     * @param event
      */
     @FXML
-    private void handleSong(MouseEvent event)
-    {
-        if (mediaView.getMediaPlayer() == null || mediaView.getMediaPlayer().getStatus() == Status.UNKNOWN || mediaView.getMediaPlayer().getStatus() == Status.READY)
-        {
+    private void handleSong(MouseEvent event) {
+        if (mediaView.getMediaPlayer() == null || mediaView.getMediaPlayer().getStatus() == Status.UNKNOWN || mediaView.getMediaPlayer().getStatus() == Status.READY) {
             mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
         }
-        
-        if (mediaView.getMediaPlayer().getStatus() == Status.PLAYING)
-        {
+
+        if (mediaView.getMediaPlayer().getStatus() == Status.PLAYING) {
             mediaView.getMediaPlayer().stop();
             mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
             mediaView.getMediaPlayer().play();
         }
-        
-        if (mediaView.getMediaPlayer().getStatus() == Status.PAUSED)
-        {
+
+        if (mediaView.getMediaPlayer().getStatus() == Status.PAUSED) {
             mediaView.getMediaPlayer().stop();
             mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
         }
-            
+
         mpModel.overRideSongList(songsTable.getItems(), songsTable.getSelectionModel().getSelectedIndex());
         mpModel.handlePlaySong(mediaView, currentSongLabel, pauseButton, volumeSlider);
     }
 
-    private void populatePlaylistsTable()
-    {
+    private void populatePlaylistsTable() {
         // initialize the columns
         playlistsNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         playlistsNumSongsColumn.setCellValueFactory(cellData -> cellData.getValue().numSongsProperty());
@@ -176,14 +168,26 @@ public class MtController implements Initializable
         playlistsTable.setItems(dataModel.getAllPlaylists());
     }
 
-    private void populateSongsInPlaylistList()
-    {
+    private void populateSongsInPlaylistList() {
+        // custom display of content
+        songsFromPlaylist.setCellFactory(param -> new ListCell<Media>() {
+            @Override
+            protected void updateItem(Media item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null || item.getTitle() == null) {
+                    setText(null);
+                } else {
+                    setText((this.getIndex() + 1) + ". " +  item.getTitle());
+                }
+            }
+        });
+        
         // add data to listview
         songsFromPlaylist.setItems(dataModel.getSongsOnPlaylist());
     }
 
-    private void populateSongsTable()
-    {
+    private void populateSongsTable() {
         // initialize the columns
         songsTitleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
         songsArtistColumn.setCellValueFactory(cellData -> cellData.getValue().artistProperty());
@@ -201,8 +205,7 @@ public class MtController implements Initializable
      * @param event
      */
     @FXML
-    private void handlePlayAndPause(ActionEvent event)
-    {
+    private void handlePlayAndPause(ActionEvent event) {
         mpModel.playAndPause(currentSong, pauseButton, mediaView);
     }
 
@@ -212,13 +215,11 @@ public class MtController implements Initializable
      * @param event
      */
     @FXML
-    private void handleSkipForward(ActionEvent event)
-    {
-        if (mpModel.getCurrentSong() != mpModel.songList.size() - 1)
-        {
+    private void handleSkipForward(ActionEvent event) {
+        if (mpModel.getCurrentSong() != mpModel.songList.size() - 1) {
             mpModel.handleSkip(1, mediaView, currentSongLabel, pauseButton, volumeSlider);
         }
-        
+
         mediaView.getMediaPlayer().setVolume(volumeSlider.getValue());
     }
 
@@ -228,13 +229,11 @@ public class MtController implements Initializable
      * @param event
      */
     @FXML
-    private void handleSkipBackwards(ActionEvent event)
-    {
-        if(mpModel.getCurrentSong() != 0)
-        {
+    private void handleSkipBackwards(ActionEvent event) {
+        if (mpModel.getCurrentSong() != 0) {
             mpModel.handleSkip(-1, mediaView, currentSongLabel, pauseButton, volumeSlider);
         }
-        
+
         mediaView.getMediaPlayer().setVolume(volumeSlider.getValue());
     }
 
@@ -245,20 +244,19 @@ public class MtController implements Initializable
      * @param event
      */
     @FXML
-    private void handleMusicVolume()
-    {
+    private void handleMusicVolume() {
         mpModel.musicVolume(mediaView.getMediaPlayer(), volumeSlider, volumeLabel);
 
     }
 
     /**
-     * Opens a new stage that lets you create a new song. 
+     * Opens a new stage that lets you create a new song.
+     *
      * @param event
-     * @throws Exception 
+     * @throws Exception
      */
     @FXML
-    private void openSongPopup(ActionEvent event) throws Exception
-    {
+    private void openSongPopup(ActionEvent event) throws Exception {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/SongPopupView.fxml"));
         Parent root = loader.load();
@@ -272,13 +270,13 @@ public class MtController implements Initializable
     }
 
     /**
-     * Opens a new stage that lets you create a new playlist. 
+     * Opens a new stage that lets you create a new playlist.
+     *
      * @param event
-     * @throws Exception 
+     * @throws Exception
      */
     @FXML
-    private void openPlaylistPopup(ActionEvent event) throws Exception
-    {
+    private void openPlaylistPopup(ActionEvent event) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/PlaylistPopupView.fxml"));
         Parent root = loader.load();
 
@@ -291,18 +289,17 @@ public class MtController implements Initializable
     }
 
     /**
-     * Opens a new stage that lets you edit a song. 
+     * Opens a new stage that lets you edit a song.
+     *
      * @param event
-     * @throws Exception 
+     * @throws Exception
      */
     @FXML
-    private void handleEditSong(ActionEvent event) throws Exception
-    {
+    private void handleEditSong(ActionEvent event) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/EditSongPopUp.fxml"));
         Parent root = loader.load();
 
-        if (songsTable.getSelectionModel().getSelectedItem() != null)
-        {
+        if (songsTable.getSelectionModel().getSelectedItem() != null) {
             EditSongPopUpController EditSongPopUpController = loader.getController();
             EditSongPopUpController.transferMedia(songsTable.getSelectionModel().getSelectedItem(), dataModel);
 
@@ -314,20 +311,21 @@ public class MtController implements Initializable
 
     /**
      * A button that adds a chosen song to the currently picked playlist.
+     *
      * @param event
-     * @throws Exception 
+     * @throws Exception
      */
     @FXML
-    private void addSongButton(ActionEvent event) throws Exception
-    {
+    private void addSongButton(ActionEvent event) throws Exception {
         dataModel.addSongToPlaylist(songsTable.getSelectionModel().getSelectedItem());
     }
 
     /**
-     * Deletes a chosen song from the currently picked playlist. 
-     * Opens a dialogbox that asks if you're sure.
+     * Deletes a chosen song from the currently picked playlist. Opens a
+     * dialogbox that asks if you're sure.
+     *
      * @param list
-     * @throws Exception 
+     * @throws Exception
      */
 //    private void deleteSongFromPlaylist(Playlist list) throws Exception
 //    {
@@ -341,78 +339,74 @@ public class MtController implements Initializable
 //        }
 //
 //    }
-
     /**
      * A button that deletes a chosen song from the currently picked playlist.
      * Opens a dialogbox that asks if you're sure.
+     *
      * @param list
-     * @throws Exception 
+     * @throws Exception
      */
     @FXML
-    private void handleDeleteSongFromPlaylist(ActionEvent event) throws Exception
-    {
-        if (songsFromPlaylist.getSelectionModel().getSelectedItem() != null)
-        {
+    private void handleDeleteSongFromPlaylist(ActionEvent event) throws Exception {
+        if (songsFromPlaylist.getSelectionModel().getSelectedItem() != null) {
             int input = JOptionPane.showConfirmDialog(null, "Delete the song from the playlist?", "Select an Option...",
-                JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
 
             // 0=yes, 1=no.
-            if (input == JOptionPane.YES_OPTION)
-            {
+            if (input == JOptionPane.YES_OPTION) {
                 dataModel.deleteSongFromPlaylist(songsFromPlaylist.getSelectionModel().getSelectedItem());
             }
         }
     }
 
     /**
-     * A button that switches two chosen songs in the current playlist.
-     * This button puts the chosen song 1 line down. 
+     * A button that switches two chosen songs in the current playlist. This
+     * button puts the chosen song 1 line down.
+     *
      * @param event
-     * @throws Exception 
+     * @throws Exception
      */
     @FXML
-    private void moveSongUpInPlaylist(ActionEvent event) throws Exception
-    {
+    private void moveSongUpInPlaylist(ActionEvent event) throws Exception {
         changeOrderInPlaylist(-1);
     }
 
     /**
-     * A button that swaps one chosen song with the one above or below. 
-     * This button puts the chosen song 1 line up.
+     * A button that swaps one chosen song with the one above or below. This
+     * button puts the chosen song 1 line up.
+     *
      * @param event
-     * @throws Exception 
+     * @throws Exception
      */
     @FXML
-    private void moveSongDownInPlaylist(ActionEvent event) throws Exception
-    {
+    private void moveSongDownInPlaylist(ActionEvent event) throws Exception {
         changeOrderInPlaylist(+1);
     }
 
     /**
-     * Swaps one chosen song with the one above or below. 
+     * Swaps one chosen song with the one above or below.
+     *
      * @param upOrDown
-     * @throws Exception 
+     * @throws Exception
      */
-    private void changeOrderInPlaylist(int upOrDown) throws Exception
-    {
+    private void changeOrderInPlaylist(int upOrDown) throws Exception {
         dataModel.swapSongsInPlaylist(songsFromPlaylist.getSelectionModel().getSelectedIndex(),
                 songsFromPlaylist.getSelectionModel().getSelectedIndex() + upOrDown);
     }
-    
+
     /**
-     * A button that opens a new stage where you can 
-     * edit the information about the chosen song.
+     * A button that opens a new stage where you can edit the information about
+     * the chosen song.
+     *
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
-    private void editPlaylist(ActionEvent event) throws IOException
-    {
+    private void editPlaylist(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/EditPlaylistView.fxml"));
         Parent root = loader.load();
 
-        if (playlistsTable.getSelectionModel().getSelectedItem() != null)
-        {
+        if (playlistsTable.getSelectionModel().getSelectedItem() != null) {
             EditPlaylistViewController EditPlaylistViewController = loader.getController();
             EditPlaylistViewController.transferPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
             EditPlaylistViewController.tranferDatamodel(dataModel);
@@ -423,109 +417,101 @@ public class MtController implements Initializable
     }
 
     /**
-     * A button that deletes a chosen playlist.
-     * Opens a dialogbox that asks if you're sure.
+     * A button that deletes a chosen playlist. Opens a dialogbox that asks if
+     * you're sure.
+     *
      * @param event
-     * @throws Exception 
+     * @throws Exception
      */
     @FXML
-    private void deletePlaylist(ActionEvent event) throws Exception
-    {
-        if (playlistsTable.getSelectionModel().getSelectedItem() != null)
-        {
+    private void deletePlaylist(ActionEvent event) throws Exception {
+        if (playlistsTable.getSelectionModel().getSelectedItem() != null) {
             int input = JOptionPane.showConfirmDialog(null, "Permanently delete the playlist?", "Select an Option...",
                     JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
 
             // 0=yes, 1=no.
-            if (input == JOptionPane.YES_OPTION)
-            {
+            if (input == JOptionPane.YES_OPTION) {
                 dataModel.deletePlaylist();
             }
         }
     }
 
     /**
-     * Method that deletes a chosen song.
-     * Opens a dialogbox that asks if you're sure.
+     * Method that deletes a chosen song. Opens a dialogbox that asks if you're
+     * sure.
+     *
      * @param event
-     * @throws Exception 
+     * @throws Exception
      */
-    private void handleDeleteSong(ActionEvent event) throws Exception
-    {
-        if (songsTable.getSelectionModel().getSelectedItem() != null)
-        {
+    private void handleDeleteSong(ActionEvent event) throws Exception {
+        if (songsTable.getSelectionModel().getSelectedItem() != null) {
             int input = JOptionPane.showConfirmDialog(null, "Permanently delete the song?", "Select an Option...",
                     JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
 
             // 0=yes, 1=no.
-            if (input == JOptionPane.YES_OPTION)
-            {
+            if (input == JOptionPane.YES_OPTION) {
                 dataModel.deleteSong(songsTable.getSelectionModel().getSelectedItem());
             }
         }
     }
 
     /**
-     * Stops the song if one is currently playing. 
-     * Gets the source of the song the user has picked in the current playlist. 
-     * Plays the new song. 
-     * @param event 
+     * Stops the song if one is currently playing. Gets the source of the song
+     * the user has picked in the current playlist. Plays the new song.
+     *
+     * @param event
      */
-    private void handlePlaySongFromPlaylist(MouseEvent event)
-    {
-       if (mediaView.getMediaPlayer() == null || mediaView.getMediaPlayer().getStatus() == Status.UNKNOWN || mediaView.getMediaPlayer().getStatus() == Status.READY)
-        {
+    private void handlePlaySongFromPlaylist(MouseEvent event) {
+        if (mediaView.getMediaPlayer() == null || mediaView.getMediaPlayer().getStatus() == Status.UNKNOWN || mediaView.getMediaPlayer().getStatus() == Status.READY) {
             mediaView.setMediaPlayer(mpModel.getSong(songsFromPlaylist.getSelectionModel().getSelectedItem().getSource()));
-            
+
         }
-        
-        if (mediaView.getMediaPlayer().getStatus() == Status.PLAYING)
-        {
+
+        if (mediaView.getMediaPlayer().getStatus() == Status.PLAYING) {
             mediaView.getMediaPlayer().stop();
             mediaView.setMediaPlayer(mpModel.getSong(songsFromPlaylist.getSelectionModel().getSelectedItem().getSource()));
             mediaView.getMediaPlayer().play();
         }
-        
-        if (mediaView.getMediaPlayer().getStatus() == Status.PAUSED)
-        {
+
+        if (mediaView.getMediaPlayer().getStatus() == Status.PAUSED) {
             mediaView.getMediaPlayer().stop();
             mediaView.setMediaPlayer(mpModel.getSong(songsFromPlaylist.getSelectionModel().getSelectedItem().getSource()));
         }
-            
+
         mpModel.overRideSongList(songsFromPlaylist.getItems(), songsFromPlaylist.getSelectionModel().getSelectedIndex());
         mpModel.handlePlaySong(mediaView, currentSongLabel, pauseButton, volumeSlider);
     }
 
     /**
-     * Displays the songs from the chosen playlist. 
-     * @param event 
+     * Displays the songs from the chosen playlist.
+     *
+     * @param event
      */
     @FXML
-    private void handleSongsFromPlaylist(MouseEvent event)
-    {
+    private void handleSongsFromPlaylist(MouseEvent event) {
         dataModel.setSelectedPlaylist(playlistsTable.getSelectionModel().getSelectedItem());
         populateSongsInPlaylistList(); // calls setItems again
     }
 
     /**
      * Closes the program.
-     * @param event 
+     *
+     * @param event
      */
     @FXML
-    private void handleCloseProgram(ActionEvent event)
-    {
+    private void handleCloseProgram(ActionEvent event) {
         Stage stage = (Stage) closeProgram.getScene().getWindow();
         stage.close();
     }
 
     /**
-     * Uses the keys pressed to search between the songs. 
+     * Uses the keys pressed to search between the songs.
+     *
      * @param event
-     * @throws Exception 
+     * @throws Exception
      */
     @FXML
-    private void searchSong(KeyEvent event) throws Exception
-    {
+    private void searchSong(KeyEvent event) throws Exception {
         String input = searchField.getText();
         ObservableList<Media> result = dataModel.getSearchResult(input);
         songsTable.setItems(result);
