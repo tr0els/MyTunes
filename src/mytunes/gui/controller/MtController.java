@@ -174,7 +174,6 @@ public class MtController implements Initializable {
 
     private void populateSongsInPlaylistList() {
         // custom rendering of the list cell
-        /*
         songsFromPlaylist.setCellFactory(param -> new ListCell<Media>() {
             @Override
             protected void updateItem(Media item, boolean empty) {
@@ -187,7 +186,6 @@ public class MtController implements Initializable {
                 }
             }
         });
-        */
 
         // add data to listview
         songsFromPlaylist.setItems(dataModel.getSongsOnPlaylist());
