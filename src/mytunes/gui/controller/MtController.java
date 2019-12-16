@@ -352,25 +352,7 @@ public class MtController implements Initializable {
         dataModel.addSongToPlaylist(songsTable.getSelectionModel().getSelectedItem());
     }
 
-    /**
-     * Deletes a chosen song from the currently picked playlist. Opens a
-     * dialogbox that asks if you're sure.
-     *
-     * @param list
-     * @throws Exception
-     */
-//    private void deleteSongFromPlaylist(Playlist list) throws Exception
-//    {
-//        int input = JOptionPane.showConfirmDialog(null, "Delete the song from the playlist?", "Select an Option...",
-//                JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
-//
-//        // 0=yes, 1=no.
-//        if (input == JOptionPane.YES_OPTION)
-//        {
-//            dataModel.deleteSongFromPlaylist(songsFromPlaylist.getSelectionModel().getSelectedItem());
-//        }
-//
-//    }
+   
     /**
      * A button that deletes a chosen song from the currently picked playlist.
      * Opens a dialogbox that asks if you're sure.
@@ -493,22 +475,26 @@ public class MtController implements Initializable {
      *
      * @param event
      */
-    private void handlePlaySongFromPlaylist(MouseEvent event) {
-        if (mediaView.getMediaPlayer() == null || mediaView.getMediaPlayer().getStatus() == Status.UNKNOWN || mediaView.getMediaPlayer().getStatus() == Status.READY) {
-            mediaView.setMediaPlayer(mpModel.getSong(songsFromPlaylist.getSelectionModel().getSelectedItem().getSource()));
+    @FXML
+    private void handlePlaySongFromPlaylist(MouseEvent event) 
+    {
+        if (mediaView.getMediaPlayer() == null || mediaView.getMediaPlayer().getStatus() == Status.UNKNOWN || mediaView.getMediaPlayer().getStatus() == Status.READY) 
+            {
+                mediaView.setMediaPlayer(mpModel.getSong(songsFromPlaylist.getSelectionModel().getSelectedItem().getSource()));
+            }
 
-        }
+        else if (mediaView.getMediaPlayer().getStatus() == Status.PLAYING) 
+            {
+                mediaView.getMediaPlayer().stop();
+                mediaView.setMediaPlayer(mpModel.getSong(songsFromPlaylist.getSelectionModel().getSelectedItem().getSource()));
+                mediaView.getMediaPlayer().play();
+            }
 
-        if (mediaView.getMediaPlayer().getStatus() == Status.PLAYING) {
-            mediaView.getMediaPlayer().stop();
-            mediaView.setMediaPlayer(mpModel.getSong(songsFromPlaylist.getSelectionModel().getSelectedItem().getSource()));
-            mediaView.getMediaPlayer().play();
-        }
-
-        if (mediaView.getMediaPlayer().getStatus() == Status.PAUSED) {
-            mediaView.getMediaPlayer().stop();
-            mediaView.setMediaPlayer(mpModel.getSong(songsFromPlaylist.getSelectionModel().getSelectedItem().getSource()));
-        }
+        else if (mediaView.getMediaPlayer().getStatus() == Status.PAUSED) 
+            {
+                mediaView.getMediaPlayer().stop();
+                mediaView.setMediaPlayer(mpModel.getSong(songsFromPlaylist.getSelectionModel().getSelectedItem().getSource()));
+            }
 
         mpModel.overRideSongList(songsFromPlaylist.getItems(), songsFromPlaylist.getSelectionModel().getSelectedIndex());
         mpModel.handlePlaySong(mediaView, currentSongLabel, pauseButton, volumeSlider);

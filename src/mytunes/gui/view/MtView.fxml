@@ -47,7 +47,7 @@
         <Label fx:id="currentSongLabel" alignment="CENTER" layoutX="274.0" layoutY="98.0" prefHeight="25.0" prefWidth="250.0" textAlignment="CENTER" />
         <Button fx:id="swapSongUp" layoutX="250.0" layoutY="473.0" mnemonicParsing="false" onAction="#moveSongUpInPlaylist" text="▲" />
         <Button fx:id="swapSongDown" layoutX="285.0" layoutY="473.0" mnemonicParsing="false" onAction="#moveSongDownInPlaylist" text="▼" />
-        <ListView fx:id="songsFromPlaylist" layoutX="251.0" layoutY="165.0" prefHeight="300.0" prefWidth="154.0" />
+        <ListView fx:id="songsFromPlaylist" layoutX="251.0" layoutY="165.0" onMouseClicked="#handlePlaySongFromPlaylist" prefHeight="300.0" prefWidth="154.0" />
         <Label layoutX="14.0" layoutY="147.0" text="Playlists">
             <font>
                 <Font name="System Bold" size="12.0" />
