@@ -136,7 +136,7 @@ public class DataModel {
         return bll.categoryIdToName(id);
     }
     
-    public int categoryIdToName(String name) throws Exception {
+    public int categoryNameToId(String name) throws Exception {
         return bll.categoryNameToId(name);
     }
     
