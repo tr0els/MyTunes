@@ -52,11 +52,12 @@ public class MediaPlayerModel
     }
 
     /**
-     * Checks if the current song is playing, paused or ready. Sets the button
-     * text to Play or Pause, depending on if the song is playing or paused.
+     * Checks if the current song is playing, paused or ready.Sets the button
+ text to Play or Pause, depending on if the song is playing or paused.
      *
      * @param currentSong
      * @param button
+     * @param mediaView
      */
     public void playAndPause(int currentSong, Button button, MediaView mediaView)
     {
