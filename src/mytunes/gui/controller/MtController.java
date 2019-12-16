@@ -158,7 +158,7 @@ public class MtController implements Initializable {
             mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
         }
 
-        mpModel.overRideSongList(songsTable.getItems(), songsTable.getSelectionModel().getSelectedIndex());
+        mpModel.overWriteSongList(songsTable.getItems(), songsTable.getSelectionModel().getSelectedIndex());
         mpModel.handlePlaySong(mediaView, currentSongLabel, pauseButton, volumeSlider);
     }
 
@@ -501,7 +501,7 @@ public class MtController implements Initializable {
                 mediaView.setMediaPlayer(mpModel.getSong(songsFromPlaylist.getSelectionModel().getSelectedItem().getSource()));
             }
 
-        mpModel.overRideSongList(songsFromPlaylist.getItems(), songsFromPlaylist.getSelectionModel().getSelectedIndex());
+        mpModel.overWriteSongList(songsFromPlaylist.getItems(), songsFromPlaylist.getSelectionModel().getSelectedIndex());
         mpModel.handlePlaySong(mediaView, currentSongLabel, pauseButton, volumeSlider);
     }
 
