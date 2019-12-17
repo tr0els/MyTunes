@@ -26,10 +26,17 @@ import javafx.scene.media.MediaView;
 public class MediaPlayerModel
 {
 
-    public ObservableList<mytunes.be.Media> songList;
+    private ObservableList<mytunes.be.Media> songList;
+    private int currentSong = 0;
 
-    int currentSong = 0;
-
+    /**
+     * Returns the currently selected list of songs
+     * @return
+     */
+    public ObservableList getSongList() {
+        return songList;
+    }
+    
     /**
      * Makes a new mediaplayer, by getting a source. 
      * @param source
