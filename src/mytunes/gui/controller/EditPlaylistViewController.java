@@ -49,6 +49,11 @@ public class EditPlaylistViewController implements Initializable
         // TODO
     }    
     
+    /**
+     * Overrides pList with the chosen playlist.
+     * Sets playlist name in the textfield in the pop up. 
+     * @param pl 
+     */
     public void transferPlaylist(Playlist pl)
     {   
         

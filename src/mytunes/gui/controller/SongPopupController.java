@@ -98,6 +98,10 @@ public class SongPopupController implements Initializable
         getMetaData(media);
     }
 
+    /**
+     * Checks the song for metadata.
+     * @param med 
+     */
     public void getMetaData(Media med)
     {
         med.getMetadata().addListener((MapChangeListener<String, Object>) change ->
@@ -110,6 +114,11 @@ public class SongPopupController implements Initializable
         });
     }
 
+    /**
+     * Displays metadata any is found. 
+     * @param key
+     * @param value 
+     */
     public void handleMetadata(String key, Object value)
     {
         if (key.equals("title"))
@@ -135,6 +144,11 @@ public class SongPopupController implements Initializable
 
     }
 
+    /**
+     * Calls the handleCreateSong method when the create button is pressed. 
+     * @param event
+     * @throws Exception 
+     */
     @FXML
     private void createMedia(ActionEvent event) throws Exception
     {
@@ -143,6 +157,10 @@ public class SongPopupController implements Initializable
         stage.close();
     }
 
+    /**
+     * Inserts metadata.
+     * @param event 
+     */
     @FXML
     private void handleInsertMetaData(ActionEvent event)
     {
@@ -177,6 +195,7 @@ public class SongPopupController implements Initializable
         }
     }
 
+    
     private void categories()
     {
         comboCategory.setItems(FXCollections.observableArrayList(
@@ -205,6 +224,10 @@ public class SongPopupController implements Initializable
 
     }
 
+    /**
+     * Creates a song.
+     * @throws Exception 
+     */
     public void handleCreateSong() throws Exception 
     {
         dataModel.createSong(fileTextField.getText(), artistTextField.getText(), titleTextField.getText(), 
@@ -213,6 +236,10 @@ public class SongPopupController implements Initializable
                 
     }
 
+    /**
+     * Gets the datamodel. 
+     * @param model 
+     */
     public void transfer(DataModel model)
     {
         dataModel = model;
