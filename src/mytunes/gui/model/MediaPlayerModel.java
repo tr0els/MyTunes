@@ -137,7 +137,7 @@ public class MediaPlayerModel
      * @param items
      * @param media 
      */
-    public void overRideSongList(ObservableList<mytunes.be.Media> items, int media)
+    public void overWriteSongList(ObservableList<mytunes.be.Media> items, int media)
     {
         songList = items;
         currentSong = media;

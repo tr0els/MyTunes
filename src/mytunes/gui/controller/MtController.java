@@ -457,6 +457,7 @@ public class MtController implements Initializable {
      * @param event
      * @throws Exception
      */
+    @FXML
     private void handleDeleteSong(ActionEvent event) throws Exception {
         if (songsTable.getSelectionModel().getSelectedItem() != null) {
             int input = JOptionPane.showConfirmDialog(null, "Permanently delete the song?", "Select an Option...",
