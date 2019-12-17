@@ -62,6 +62,13 @@ public class EditSongPopUpController implements Initializable
     {
     }
 
+    /**
+     * Gets information about the chosen song from the main view. 
+     * Shows the songs information in the pop up. 
+     * @param media
+     * @param dataModel
+     * @throws Exception 
+     */
     public void transferMedia(Media media, DataModel dataModel) throws Exception
     {
         editTitle.setText(media.getTitle());
@@ -75,6 +82,11 @@ public class EditSongPopUpController implements Initializable
         categories(media);    
     }
 
+    /**
+     * Fills the comboBox with the categories from the database. 
+     * @param media
+     * @throws Exception 
+     */
     private void categories(Media media) throws Exception
     {
         ObservableList<String> categories = FXCollections.observableArrayList();
@@ -85,6 +97,10 @@ public class EditSongPopUpController implements Initializable
         //comboCategory.getSelectionModel().select(dataModel.categoryNameToId(media.getCategory())); // use when category is string
     }
 
+    /**
+     * Gets the edits made to the song and saves them.
+     * @param event 
+     */
     @FXML
     private void handleEditFile(ActionEvent event)
     {

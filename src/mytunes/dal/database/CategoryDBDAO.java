@@ -25,6 +25,7 @@ public class CategoryDBDAO {
     }
 
     //Get a list of all the Categorys 
+    //@return List of Strings 
     public List<String> getAllCategories() throws Exception {
         try (Connection con = dbCon.getConnection()) {
             String sql = "SELECT name FROM CATEGORY;";

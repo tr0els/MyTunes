@@ -41,7 +41,7 @@ public class PlaylistPopupController implements Initializable
     {
         // TODO
     }    
-
+    //creates a new playlist
     @FXML
     private void createPlaylist(ActionEvent event) throws Exception
     {
@@ -49,12 +49,12 @@ public class PlaylistPopupController implements Initializable
         Stage stage = (Stage) createButton.getScene().getWindow();
         stage.close();
     }
-    
+    //handels createplaylsit
     public void handleCreatePlaylist() throws Exception 
     {   
           dataModel.createPlaylist(titleTextField.getText());
     }
-    
+    //transferre datamodel from MTcrontroller to this. 
     public void transfer(DataModel model)
     {
         dataModel = model;
