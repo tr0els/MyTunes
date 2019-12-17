@@ -54,13 +54,15 @@ public class EditPlaylistViewController implements Initializable
      * Sets playlist name in the textfield in the pop up. 
      * @param pl 
      */
+    // transport a playlist frm MTcontroller to this controller
+    //@para playlist
     public void transferPlaylist(Playlist pl)
     {   
-        
         pList = pl;
         titleTextField.setText(pl.getName());
     }
     
+    //saves update on playlist
     @FXML
     private void savePlaylist(ActionEvent event) throws Exception 
     {
@@ -70,12 +72,14 @@ public class EditPlaylistViewController implements Initializable
         stage.close();
     }
     
+    //handels update to playlist 
     public void handelEditPlaylist() throws Exception 
     {  
         pList.setName(titleTextField.getText());
         dataModel.updatePlaylist(pList);
     }
     
+    //tranfere Datamodel from MTcontroller to this
     public void  tranferDatamodel(DataModel model)
     {
         dataModel = model;

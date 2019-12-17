@@ -127,9 +127,6 @@ public class MtController implements Initializable {
 
         volumeSlider.setValue(50);
         volumeLabel.setText("50%");
-
-//        mpModel.songList = mpModel.getAllSongs(dataModel.getAllSongs().get(int).getSource());
-//        mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
     }
 
     /**
@@ -155,10 +152,13 @@ public class MtController implements Initializable {
             mediaView.setMediaPlayer(mpModel.getSong(songsTable.getSelectionModel().getSelectedItem().getSource()));
         }
 
-        mpModel.overWriteSongList(songsTable.getItems(), songsTable.getSelectionModel().getSelectedIndex());
+        mpModel.overRideSongList(songsTable.getItems(), songsTable.getSelectionModel().getSelectedIndex());
         mpModel.handlePlaySong(mediaView, currentSongLabel, pauseButton, volumeSlider);
     }
 
+    /**
+     * Populates the playlist tableview
+     */
     private void populatePlaylistsTable() {
         // initialize the columns
         playlistsNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
@@ -169,6 +169,10 @@ public class MtController implements Initializable {
         playlistsTable.setItems(dataModel.getAllPlaylists());
     }
 
+    /**
+     * Populates the songs in playlist listview 
+     * with all songs from the selected playlist
+     */
     private void populateSongsInPlaylistList() {
         // custom rendering of the list cell
         songsFromPlaylist.setCellFactory(param -> new ListCell<Media>() {
@@ -188,6 +192,9 @@ public class MtController implements Initializable {
         songsFromPlaylist.setItems(dataModel.getSongsOnPlaylist());
     }
 
+    /**
+     * Populates the all songs tableview
+     */
     private void populateSongsTable() {
         // initialize the columns
         songsTitleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
@@ -248,7 +255,7 @@ public class MtController implements Initializable {
      */
     @FXML
     private void handleSkipForward(ActionEvent event) {
-        if (mpModel.getCurrentSong() != mpModel.songList.size() - 1) {
+        if (mpModel.getCurrentSong() != mpModel.getSongList().size() - 1) {
             mpModel.handleSkip(1, mediaView, currentSongLabel, pauseButton, volumeSlider);
         }
 
@@ -457,6 +464,7 @@ public class MtController implements Initializable {
      * @param event
      * @throws Exception
      */
+    @FXML
     private void handleDeleteSong(ActionEvent event) throws Exception {
         if (songsTable.getSelectionModel().getSelectedItem() != null) {
             int input = JOptionPane.showConfirmDialog(null, "Permanently delete the song?", "Select an Option...",
@@ -496,7 +504,7 @@ public class MtController implements Initializable {
                 mediaView.setMediaPlayer(mpModel.getSong(songsFromPlaylist.getSelectionModel().getSelectedItem().getSource()));
             }
 
-        mpModel.overWriteSongList(songsFromPlaylist.getItems(), songsFromPlaylist.getSelectionModel().getSelectedIndex());
+        mpModel.overRideSongList(songsFromPlaylist.getItems(), songsFromPlaylist.getSelectionModel().getSelectedIndex());
         mpModel.handlePlaySong(mediaView, currentSongLabel, pauseButton, volumeSlider);
     }
 
